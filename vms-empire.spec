@@ -1,5 +1,5 @@
 Name: vms-empire
-Version: 1.6
+Version: 1.7
 Release: 1
 URL: http://www.catb.org/~esr/vms-empire/
 Source: %{name}-%{version}.tar.gz
@@ -39,6 +39,10 @@ cp vms-empire.6 "$RPM_BUILD_ROOT"%{_mandir}/man6/
 %{_bindir}/vms-empire
 
 %changelog
+* Mon Sep 27 2004 Eric S. Raymond <esr@snark.thyrsus.com> 1.7-1
+- Documentation fixes.  The old empire.doc file has been replaced
+  by the man page.
+
 * Mon Dec 29 2003 Eric S. Raymond <esr@snark.thyrsus.com> 1.6-1
 - Source RPMs can be built by non-root user.
 

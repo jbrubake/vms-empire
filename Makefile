@@ -84,22 +84,12 @@ clobber: clean
 SOURCES = README NEWS vms-empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) MANIFEST vms-empire.spec
 
 vms-empire-$(VERS).tar.gz: $(SOURCES) vms-empire.6
-	@ls $(SOURCES) vms-empire.6 | sed s:^:vms-empire-$(VERS)/: >MANIFEST
+	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
 	@(cd ..; ln -s vms-empire vms-empire-$(VERS))
 	(cd ..; tar -czvf vms-empire/vms-empire-$(VERS).tar.gz `cat vms-empire/MANIFEST`)
 	@(cd ..; rm vms-empire-$(VERS))
 
 dist: vms-empire-$(VERS).tar.gz
 
-RPMROOT=/usr/src/redhat
-RPM = rpmbuild
-RPMFLAGS = -ba
-rpm: dist
-	cp vms-empire-$(VERS).tar.gz $(RPMROOT)/SOURCES;
-	cp vms-empire.spec $(RPMROOT)/SPECS
-	cd $(RPMROOT)/SPECS; $(RPM) $(RPMFLAGS) vms-empire.spec	
-	cp $(RPMROOT)/RPMS/`arch|sed 's/i[4-9]86/i386/'`/vms-empire-$(VERS)*.rpm .
-	cp $(RPMROOT)/SRPMS/vms-empire-$(VERS)*.src.rpm .
-
-
-
+release: vms-empire-$(VERS).tar.gz
+	shipper -f; rm -f CHANGES ANNOUNCE* *.6 *.html *.rpm *.lsm MANIFEST
