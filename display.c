@@ -35,6 +35,22 @@ static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
+#ifdef A_COLOR
+void init_colors()
+{
+    start_color();
+
+    init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
+    init_pair(COLOR_GREEN, COLOR_GREEN, COLOR_BLACK);
+    init_pair(COLOR_RED, COLOR_RED, COLOR_BLACK);
+    init_pair(COLOR_CYAN, COLOR_CYAN, COLOR_BLACK);
+    init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
+    init_pair(COLOR_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
+    init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+}
+#endif /* A_COLOR */
+
 /*
 This routine is called when the current display has been
 trashed and no sector is shown on the screen.
@@ -124,7 +140,7 @@ long loc;
 	r = loc_row (loc);
 	c = loc_col (loc);
 	(void) move (r-ref_row+NUMTOPS, c-ref_col);
-	(void) addch ((chtype)vmap[loc].contents);;
+	disp_square(&vmap[loc]);
 	save_cursor = loc; /* remember cursor location */
 	(void) move (r-ref_row+NUMTOPS, c-ref_col);
 }
@@ -222,6 +238,50 @@ int sector; /* sector to display */
 }
 
 /*
+Display the contents of a single map square.
+
+Fancy color hacks are done here. At the moment this is kind of bogus,
+because the color doesn't convey any extra information, it just looks
+pretty.
+*/
+
+
+static disp_square(vp)
+view_map_t *vp;
+{
+#ifdef A_COLOR
+	switch(vp->contents)
+	{
+	case '+':
+		attron(COLOR_PAIR(COLOR_GREEN));
+		break;
+	case '.':
+		attron(COLOR_PAIR(COLOR_BLUE));
+		break;
+	case 'a':
+	case 'f':
+	case 'p':
+	case 'd':
+	case 'b':
+	case 't':
+	case 'c':
+	case 'z':
+	case 'X':
+		attron(COLOR_PAIR(COLOR_RED));
+		break;
+	default:
+		attron(COLOR_PAIR(COLOR_WHITE));
+		break;
+	}
+#endif /* A_COLOR */
+	(void) addch ((chtype)vp->contents);
+#ifdef A_COLOR
+	attrset(0);
+#endif /* A_COLOR */
+}
+
+
+/*
 Display the portion of the map that appears on the screen.
 */
 
@@ -239,7 +299,7 @@ view_map_t vmap[];
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++) {
 		t = row_col_loc (r, c);
 		(void) move (r-ref_row+NUMTOPS, c-ref_col);
-		(void) addch ((chtype)vmap[t].contents);;
+		disp_square(&vmap[t]);
 	}
 }
 

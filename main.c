@@ -20,13 +20,16 @@ options:
 	       
     -d delay:  number of milliseconds to delay between output.
                default is 2000 (2 seconds).
+
+    -S saveinterval: sets turn interval between saves.
+	       default is 10
 */
 
 #include <stdio.h>
 #include "empire.h"
 #include "extern.h"
 
-#define OPTFLAGS "w:s:d:"
+#define OPTFLAGS "w:s:d:S:"
 
 main (argc, argv)
 int argc;
@@ -37,12 +40,13 @@ char *argv[];
 	extern int optind;
 	extern int opterr;      /* set to 1 to suppress error msg */
 	int errflg = 0;
-	int wflg, sflg, dflg;
+	int wflg, sflg, dflg, Sflg;
 	int land;
 	
 	wflg = 70; /* set defaults */
 	sflg = 5;
 	dflg = 2000;
+	Sflg = 10;
 
 	/*
 	 * extract command line options
@@ -58,6 +62,9 @@ char *argv[];
 			break;
 		case 'd':
 			dflg = atoi (optarg);
+			break;
+		case 'S':
+			Sflg = atoi (optarg);
 			break;
 		case '?': /* illegal option? */
 			errflg++;
@@ -86,6 +93,7 @@ char *argv[];
 	SMOOTH = sflg;
 	WATER_RATIO = wflg;
 	delay_time = dflg;
+	save_interval = Sflg;
 
 	/* compute min distance between cities */
 	land = MAP_SIZE * (100 - WATER_RATIO) / 100; /* available land */

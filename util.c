@@ -69,6 +69,9 @@ ttinit()
 	(void) initscr();
 	(void) noecho();
 	(void) crmode();
+#ifdef A_COLOR
+	init_colors();
+#endif /* A_COLOR */
 	lines = LINES;
 	cols = COLS;
 	if (lines > MAP_HEIGHT + NUMTOPS + 1)

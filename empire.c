@@ -23,6 +23,7 @@ empire () {
 	void print_zoom();
 
 	char order;
+	int turn = 0;
 
 	ttinit (); /* init tty */
 	rndini (); /* init random number generator */
@@ -42,7 +43,8 @@ empire () {
 	    if (automove) { /* don't ask for cmd in auto mode */
 		user_move ();
 		comp_move (1);
-		save_game ();
+		if (++turn % save_interval == 0)
+			save_game ();
 	    }
 	    else {
 		prompt (0); /* blank top line */
