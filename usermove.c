@@ -16,6 +16,10 @@ usermove.c -- Let the user move her troops.
 #include "empire.h"
 #include "extern.h"
 
+void fatal();
+void move_to_dest();
+void move_army_to_city();
+
 void
 user_move () {
 	void piece_move();
@@ -408,8 +412,6 @@ void
 move_land (obj)
 piece_info_t *obj;
 {
-	void move_to_dest();
-
 	long best_dist, best_loc;
 	long new_dist;
 	piece_info_t *p;
@@ -599,8 +601,6 @@ void
 user_skip (obj)
 piece_info_t *obj;
 {
-	void move_army_to_city();
-
 	if (obj->type == ARMY && user_map[obj->loc].contents == 'O')
 		move_army_to_city (obj, obj->loc);
 	else obj->moved++;
@@ -869,8 +869,6 @@ user_dir_army (obj, loc)
 piece_info_t *obj;
 long loc;
 {
-	void fatal();
-	
 	int enemy_killed;
 	
 	enemy_killed = FALSE;

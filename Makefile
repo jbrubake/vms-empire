@@ -6,15 +6,6 @@
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-# Change the line below for your compiler.  You will probably want
-# 'cc'.  ('mcc' is a "merge compiler" that takes errors, merges them
-# with the source, and tosses you into an editor.  I also use various
-# cross compilers on this line.)
-
-#CC = mcc
-#CC = cpccc
-CC = cc
-
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
 
@@ -23,8 +14,8 @@ SYS = SYSV
 
 # Use -g to compile the program for debugging.
 
-#DEBUG = -g -DDEBUG
-DEBUG = -O
+DEBUG = -g -DDEBUG
+#DEBUG = -O
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE
@@ -32,13 +23,12 @@ PROFILE =
 
 # Define all necessary libraries.  'curses' is necessary.  'termcap'
 # is needed on BSD systems.
-LIBS = -lcurses
+LIBS = -ldcurses
 #LIBS = -lcurses -ltermcap
 
 # You shouldn't have to modify anything below this line.
 
-FLAGS = $(DEBUG) $(PROFILE) -c -D$(SYS)
-CCCMD = $(CC) $(FLAGS)
+CFLAGS = $(DEBUG) $(PROFILE) -D$(SYS)
 INS   = /etc/install
 
 FILES = \
@@ -79,9 +69,6 @@ all: empire
 
 empire: $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
-
-$(OFILES): extern.h empire.h
-	$(CCCMD) $<
 
 lint: $(FILES)
 	lint -u -D$(SYS) $(FILES) -lcurses

@@ -29,6 +29,9 @@ For each move the user wants us to make, we do the following:
 
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
+int load_army();
+	void move_objective();
+
 void
 comp_move (nmoves) 
 int nmoves;
@@ -498,7 +501,6 @@ army_move (obj)
 piece_info_t *obj;
 {
 	long move_away();
-	void move_objective();
 	long find_attack();
 	void make_army_load_map(), make_unload_map(), make_tt_load_map();
 	void board_ship();

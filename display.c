@@ -1,4 +1,4 @@
-/* $Id$  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.5 1992/08/18 22:39:00 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -34,6 +34,9 @@ static int ref_col;
 static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
+
+static void show_loc();
+static disp_square();
 
 #ifdef A_COLOR
 void init_colors()
@@ -104,7 +107,7 @@ int whose; /* whose map to display */
 view_map_t vmap[];
 long loc; /* location to display */
 {
-	void print_sector(), show_loc();
+	void print_sector();
 	
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
@@ -246,7 +249,7 @@ pretty.
 */
 
 
-static disp_square(vp)
+static int disp_square(vp)
 view_map_t *vp;
 {
 #ifdef A_COLOR

@@ -22,13 +22,15 @@ edit.c -- Routines to handle edit mode commands.
 #include "empire.h"
 #include "extern.h"
 
+void e_move();
+
 void
 edit(edit_cursor)
 long edit_cursor;
 {
 	char e_cursor();
 	void e_leave(), e_print(), e_random();
-	void e_stasis(), e_move(), e_end(), e_wake(), e_sleep();
+	void e_stasis(), e_end(), e_wake(), e_sleep();
 	void e_info(), e_prod(), e_help(), e_explore();
 	void e_fill(), e_land(), e_city_func(), e_transport();
 	void e_attack(), e_repair();

@@ -75,7 +75,7 @@ Find the square root of an integer.  We actually return the floor
 of the square root using Newton's method.
 */
 
-int sqrt (n)
+int isqrt (n)
 int n;
 {
 	int guess;

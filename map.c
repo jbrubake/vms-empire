@@ -1,4 +1,4 @@
-/* $Id$  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: map.c,v 1.2 1990/03/30 11:23:26 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -42,6 +42,7 @@ STATIC int objective_cost();
 STATIC int terrain_type();
 STATIC void start_perimeter();
 STATIC void add_cell();
+STATIC int vmap_count_path ();
 
 static perimeter_t p1; /* perimeter list for use as needed */
 static perimeter_t p2;

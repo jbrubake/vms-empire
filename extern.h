@@ -1,4 +1,4 @@
-/* $Id$  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.2 1990/03/29 23:22:44 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -172,7 +172,7 @@ int get_range();
 void rndini(); /* math routines */
 long irand();
 int dist();
-int sqrt();
+int isqrt();
 
 int find_nearest_city();
 city_info_t *find_city(); /* object routines */

@@ -1,4 +1,4 @@
-/* $Id$  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: main.c,v 1.2 1990/03/29 23:22:23 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -98,7 +98,7 @@ char *argv[];
 	/* compute min distance between cities */
 	land = MAP_SIZE * (100 - WATER_RATIO) / 100; /* available land */
 	land /= NUM_CITY; /* land per city */
-	MIN_CITY_DIST = sqrt (land); /* distance between cities */
+	MIN_CITY_DIST = isqrt (land); /* distance between cities */
 
 	empire (); /* call main routine */
 	return (0);

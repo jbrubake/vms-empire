@@ -1,4 +1,4 @@
-/* $Id$  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: empire.c,v 1.2 1990/03/29 23:22:07 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -16,6 +16,8 @@ parser, and the simple commands.
 #include <curses.h>
 #include "empire.h"
 #include "extern.h"
+
+void c_examine(), c_movie();
 
 void
 empire () {
@@ -64,8 +66,8 @@ void
 do_command (orders)
 char orders;
 {
-	void c_debug(), c_quit(), c_sector(), c_map(), c_examine();
-	void c_give(), c_movie();
+	void c_debug(), c_quit(), c_sector(), c_map();
+	void c_give();
 
 	char e;
 	int ncycle;

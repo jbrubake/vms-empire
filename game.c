@@ -22,6 +22,8 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "empire.h"
 #include "extern.h"
 
+long remove_land();
+
 /*
 Initialize a new game.  Here we generate a new random map, put cities
 on the map, select cities for each opponent, and zero out the lists of
@@ -165,7 +167,7 @@ for a city, we remove land cells which are too close to the city.
 static long land[MAP_SIZE];
 
 void place_cities () {
-	long regen_land(), remove_land();
+	long regen_land();
 
 	long placed, i, loc;
 	long num_land;
