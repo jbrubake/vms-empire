@@ -1,7 +1,7 @@
 Name: vms-empire
-Version: 1.2
+Version: 1.3
 Release: 1
-Source: locke.ccil.org:/pub/esr/vms-empire-1.2.tar.gz
+Source: locke.ccil.org:/pub/esr/vms-empire-1.3.tar.gz
 Copyright: BSD-like
 Group: Games
 Summary: Solitaire Empire (sometimes called `VMS Empire')

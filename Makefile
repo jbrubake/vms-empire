@@ -8,7 +8,7 @@
 
 # Note: When the version changes, you also have to change
 # the RPM spec file and the LSM.
-VERS=1.2
+VERS=1.3
 
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
