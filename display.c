@@ -256,7 +256,7 @@ view_map_t *vp;
 		attron(COLOR_PAIR(COLOR_GREEN));
 		break;
 	case '.':
-		attron(A_BOLD | COLOR_PAIR(COLOR_BLUE));
+		attron(COLOR_PAIR(COLOR_CYAN));
 		break;
 	case 'a':
 	case 'f':
@@ -278,6 +278,7 @@ view_map_t *vp;
 	(void) addch ((chtype)vp->contents);
 #ifdef A_COLOR
 	attrset(0);
+	attron(COLOR_PAIR(COLOR_WHITE));
 #endif /* A_COLOR */
 }
 
