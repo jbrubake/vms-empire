@@ -80,7 +80,7 @@ clean:
 	rm -f *.o TAGS
 
 clobber: clean
-	rm -f empire
+	rm -f empire empire.tar*
 
 install: empire
 	$(INS) -o -f /usr/local/games empire
@@ -92,7 +92,7 @@ SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST
 
 empire.tar: $(SOURCES)
 	tar -cvf empire.tar $(SOURCES)
-empire.tar.gz:
+empire.tar.gz: empire.tar
 	gzip empire.tar
 
 empire.shar: $(SOURCES)
