@@ -588,34 +588,37 @@ int inc_lcost; /* cost to enter new land cells */
 perimeter_t *waterp; /* pointer to new water perimeter */
 perimeter_t *landp; /* pointer to new land perimeter */
 {
-	long i;
-	int j;
+	register long i;
+	register int j;
 	long new_loc;
 	int obj_cost;
-	int new_type;
+	register int new_type;
 
 	for (i = 0; i < curp->len; i++) /* for each perimeter cell... */
-	FOR_ADJ_ON (curp->list[i], new_loc, j) /* for each adjacent cell... */
-	if (pmap[new_loc].cost == INFINITY) {
-		new_type = terrain_type (pmap, vmap, move_info, curp->list[i], new_loc);
+	FOR_ADJ_ON (curp->list[i], new_loc, j) {/* for each adjacent cell... */
+		register path_map_t *pm = pmap + new_loc;
 
-		if (new_type == T_LAND && (type & T_LAND))
-			add_cell (pmap, new_loc, landp, new_type, cur_cost, inc_lcost);
-		else if (new_type == T_WATER && (type & T_WATER))
-			add_cell (pmap, new_loc, waterp, new_type, cur_cost, inc_wcost);
-		else if (new_type == T_UNKNOWN) { /* unreachable cell? */
-			pmap[new_loc].terrain = new_type;
-			pmap[new_loc].cost = cur_cost + INFINITY/2;
-			pmap[new_loc].inc_cost = INFINITY/2;
-		}
-		if (pmap[new_loc].cost != INFINITY) { /* did we expand? */
-			obj_cost = objective_cost (vmap, move_info, new_loc, cur_cost);
-			if (obj_cost < best_cost) {
-				best_cost = obj_cost;
-				best_loc = new_loc;
-				if (new_type == T_UNKNOWN) {
-					pmap[new_loc].cost = cur_cost + 2;
-					pmap[new_loc].inc_cost = 2;
+		if (pm->cost == INFINITY) {
+			new_type = terrain_type (pmap, vmap, move_info, curp->list[i], new_loc);
+
+			if (new_type == T_LAND && (type & T_LAND))
+				add_cell (pmap, new_loc, landp, new_type, cur_cost, inc_lcost);
+			else if (new_type == T_WATER && (type & T_WATER))
+				add_cell (pmap, new_loc, waterp, new_type, cur_cost, inc_wcost);
+			else if (new_type == T_UNKNOWN) { /* unreachable cell? */
+				pm->terrain = new_type;
+				pm->cost = cur_cost + INFINITY/2;
+				pm->inc_cost = INFINITY/2;
+			}
+			if (pmap[new_loc].cost != INFINITY) { /* did we expand? */
+				obj_cost = objective_cost (vmap, move_info, new_loc, cur_cost);
+				if (obj_cost < best_cost) {
+					best_cost = obj_cost;
+					best_loc = new_loc;
+					if (new_type == T_UNKNOWN) {
+						pm->cost=cur_cost+2;
+						pm->inc_cost = 2;
+					}
 				}
 			}
 		}
@@ -633,9 +636,11 @@ int terrain;
 int cur_cost;
 int inc_cost;
 {
-	pmap[new_loc].terrain = terrain;
-	pmap[new_loc].inc_cost = inc_cost;
-	pmap[new_loc].cost = cur_cost + inc_cost;
+	register	path_map_t	*pm = &pmap[new_loc];
+
+	pm->terrain = terrain;
+	pm->inc_cost = inc_cost;
+	pm->cost = cur_cost + inc_cost;
 
 	perim->list[perim->len] = new_loc;
 	perim->len += 1;
