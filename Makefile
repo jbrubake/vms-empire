@@ -68,10 +68,10 @@ OFILES = \
 	usermove.o \
 	util.o
 
-all: empire
+all: vms-empire
 
-empire: $(OFILES)
-	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
+vms-empire: $(OFILES)
+	$(CC) $(PROFILE) -o vms-empire $(OFILES) $(LIBS)
 
 TAGS: $(HEADERS) $(FILES)
 	etags $(HEADERS) $(FILES)
@@ -83,27 +83,30 @@ clean:
 	rm -f *.o TAGS
 
 clobber: clean
-	rm -f empire empire.tar*
+	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST empire.lsm empire.spec
+SOURCES = READ.ME vms-empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST vms-empire.lsm vms-empire.spec
 
-empire-$(VERS).tar.gz: $(SOURCES)
-	@ls $(SOURCES) | sed s:^:empire-$(VERS)/: >MANIFEST
-	@(cd ..; ln -s empire empire-$(VERS))
-	(cd ..; tar -czvf empire/empire-$(VERS).tar.gz `cat empire/MANIFEST`)
-	@(cd ..; rm empire-$(VERS))
+vms-empire-$(VERS).tar.gz: $(SOURCES)
+	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
+	@(cd ..; ln -s vms-empire vms-empire-$(VERS))
+	(cd ..; tar -czvf vms-empire/vms-empire-$(VERS).tar.gz `cat vms-empire/MANIFEST`)
+	@(cd ..; rm vms-empire-$(VERS))
 
-empire-$(VERS).shar:
-	shar $(SOURCES) >empire-$(VERS).shar
+vms-empire-$(VERS).shar:
+	shar $(SOURCES) >vms-empire-$(VERS).shar
 
-dist: empire-$(VERS).tar.gz
+dist: vms-empire-$(VERS).tar.gz
 
 RPMROOT=/usr/src/redhat
 RPM = rpm
 RPMFLAGS = -ba
 rpm: dist
-	cp empire-$(VERS).tar.gz $(RPMROOT)/SOURCES;
-	cp empire.spec $(RPMROOT)/SPECS
-	cd $(RPMROOT)/SPECS; $(RPM) $(RPMFLAGS) empire.spec	
-	cp $(RPMROOT)/RPMS/`arch|sed 's/i[4-9]86/i386/'`/empire-$(VERS)*.rpm .
-	cp $(RPMROOT)/SRPMS/empire-$(VERS)*.src.rpm .
+	cp vms-empire-$(VERS).tar.gz $(RPMROOT)/SOURCES;
+	cp vms-empire.spec $(RPMROOT)/SPECS
+	cd $(RPMROOT)/SPECS; $(RPM) $(RPMFLAGS) vms-empire.spec	
+	cp $(RPMROOT)/RPMS/`arch|sed 's/i[4-9]86/i386/'`/vms-empire-$(VERS)*.rpm .
+	cp $(RPMROOT)/SRPMS/vms-empire-$(VERS)*.src.rpm .
+
+
+
