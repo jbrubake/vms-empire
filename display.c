@@ -265,6 +265,7 @@ view_map_t *vp;
 	case 'b':
 	case 't':
 	case 'c':
+	case 's':
 	case 'z':
 	case 'X':
 		attron(COLOR_PAIR(COLOR_RED));
