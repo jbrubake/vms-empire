@@ -7,6 +7,8 @@
  * and warranty information.
  */
 
+(Notes tagged with ESR describe Eric S. Raymond's changes)
+
 Bugs
 ----
 
@@ -91,6 +93,8 @@ this routine accounts for roughly 20% to 30% of the processing time.
 If we take subroutines like 'strchr' and 'terrain_type' into account
 as well, this routine accounts for more like 50% of the processing.
 However, on a mainframe, the game plays sufficiently fast.
+
+ESR: I've done some tuning of expand_perimeter.
 
 4)  Allow multiple computer players and/or multiple human players.
 Allow the players to come in over a network of workstations.
@@ -601,6 +605,8 @@ A command line argument would also be useful for telling the
 program how often the game should be saved.  Actually, all
 command line arguments should have associated environment variables
 that can be used to set defaults.
+
+ESR: I've added a save-interval option.
 
 4)  When the user types "q" to quit, the program should exit
 immediately if the game has been saved.  If the game hasn't been

@@ -47,7 +47,7 @@ FILES = \
 	usermove.c \
 	util.c
 
-SHARFILES = COPYING $(FILES) bugs README makefile empire.6 empire.h extern.h
+HEADERS = empire.h extern.h
 
 OFILES = \
 	attack.o \
@@ -70,17 +70,17 @@ all: empire
 empire: $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
 
+TAGS: $(HEADERS) $(FILES)
+	etags $(HEADERS) $(FILES)
+
 lint: $(FILES)
 	lint -u -D$(SYS) $(FILES) -lcurses
 
 clean:
-	rm -f *.o
+	rm -f *.o TAGS
 
 clobber: clean
 	rm -f empire
-
-sharsplit: $(SHARFILES)
-	sharsplit -m -r -o empire $(SHARFILES)
 
 install: empire
 	$(INS) -o -f /usr/local/games empire
@@ -88,7 +88,7 @@ install: empire
 installman: empire.6
 	$(INS) -f /usr/local/man/man6 empire.6
 
-SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) empire.h extern.h MANIFEST
+SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST
 
 empire.tar: $(SOURCES)
 	tar -cvf empire.tar $(SOURCES)
