@@ -20,15 +20,14 @@ simulations out there.
 %setup -q
 
 %build
-make
-make vms-empire.6
+make %{?_smp_mflags} vms-empire vms-empire.6
 
 %install
 [ "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
-mkdir -p "$RPM_BUILD_ROOT"/usr/bin
-mkdir -p "$RPM_BUILD_ROOT"/usr/share/man/man6/
-cp vms-empire "$RPM_BUILD_ROOT"/usr/bin
-cp vms-empire.6 "$RPM_BUILD_ROOT"/usr/share/man/man6/
+mkdir -p "$RPM_BUILD_ROOT"%{_bindir}
+mkdir -p "$RPM_BUILD_ROOT"%{_mandir}/man6/
+cp vms-empire "$RPM_BUILD_ROOT"%{_bindir}
+cp vms-empire.6 "$RPM_BUILD_ROOT"%{_mandir}/man6/
 
 %clean
 [ "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"

@@ -1,5 +1,7 @@
 			vms-empire news
 
+See vms-empire.spec for more recent news.
+
 1.4: Thu Aug  1 14:53:41 EDT 2002
 	Packaging tweaks.  RPM spec fixes.  READ.ME broken up into
 	READ.ME and NEWS.  Obsolete bug notes removed.  Option -f to

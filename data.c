@@ -12,7 +12,7 @@ Static data.
 
 One of our hopes is that changing the types of pieces that
 exist in the game is mostly a matter of modifying this file.
-However, see also the help routine, empire.h, and empire.doc.
+However, see also the help routine, empire.h, and empire.6.
 */
 
 #include "empire.h"

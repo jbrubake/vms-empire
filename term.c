@@ -422,7 +422,7 @@ int nlines;
 	clear_screen ();
 
 	pos_str (NUMTOPS, 1, text[0],0,0,0,0,0,0,0,0); /* mode */
-	pos_str (NUMTOPS, 41, "See empire.doc for more information.",0,0,0,0,0,0,0,0);
+	pos_str (NUMTOPS, 41, "See empire(6) for more information.",0,0,0,0,0,0,0,0);
 
 	for (i = 1; i < nlines; i++) {
 		if (i > text_lines)
