@@ -17,8 +17,8 @@ make
 
 %install
 cp vms-empire /usr/bin
-cp vms-empire.6 /usr/man/man6/vms-empire.6
+cp vms-empire.6 /usr/share/man/man6/vms-empire.6
 
 %files
-/usr/man/man6/vms-empire.6
+/usr/share/man/man6/vms-empire.6
 /usr/bin/vms-empire
