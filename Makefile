@@ -7,7 +7,7 @@
 # and warranty information.
 
 # Note: When the version changes, you also have to change the RPM spec file.
-VERS=1.4
+VERS=1.5
 
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
@@ -77,7 +77,7 @@ lint: $(FILES)
 	lint -u -D$(SYS) $(FILES) -lcurses
 
 clean:
-	rm -f *.o TAGS
+	rm -f *.o TAGS vms-empire
 
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
@@ -93,7 +93,7 @@ vms-empire-$(VERS).tar.gz: $(SOURCES) vms-empire.6
 dist: vms-empire-$(VERS).tar.gz
 
 RPMROOT=/usr/src/redhat
-RPM = rpm
+RPM = rpmbuild
 RPMFLAGS = -ba
 rpm: dist
 	cp vms-empire-$(VERS).tar.gz $(RPMROOT)/SOURCES;
