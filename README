@@ -148,6 +148,7 @@ ucbvax!edjames
 
 	My changes enable color on machines with terminfo color support, for
 	a dramatic improvement in appearance and readability of the display.
+	Color support, if present, will be auto-detected at compilation time.
 
 	They also implement and document a `save-interval' option, addressing
 	one of the misfeatures noted in the bugs file.
