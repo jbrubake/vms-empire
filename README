@@ -145,3 +145,22 @@ amdahl!chuck
 Ed James
 edjames@ic.berkeley.edu
 ucbvax!edjames
+
+	My changes enable color on machines with terminfo color support, for
+	a dramatic improvement in appearance and readability of the display.
+
+	They also implement and document a `save-interval' option, addressing
+	one of the misfeatures noted in the bugs file.
+
+	I've also tweaked the sources so they compile clean under GCC -- they
+	assumed the older K&R model of forward reference, causing many warning
+	references.
+
+	Finally, I've sped up expand_perimeter by cutting down on the
+	number of array references it has to compute. This eliminates several
+	multiplies from the inner loop, and is a technique that should be
+	applied much more widely in the code.
+
+Eric S. Raymond
+esr@snark.thyrsus.com
+(home page: //www.thyrsus.com/~esr/home.html)
