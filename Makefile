@@ -88,7 +88,7 @@ install: empire
 installman: empire.6
 	$(INS) -f /usr/local/man/man6 empire.6
 
-SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST
+SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST empire.lsm
 
 empire.tar: $(SOURCES)
 	tar -cvf empire.tar $(SOURCES)
