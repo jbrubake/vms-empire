@@ -6,6 +6,11 @@
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
+# Note: When the version changes, you also have to change
+#  * the name of the containing directory
+#  * the RPM spec file
+V=1.1
+
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
 
@@ -23,13 +28,12 @@ PROFILE =
 
 # Define all necessary libraries.  'curses' is necessary.  'termcap'
 # is needed on BSD systems.
-LIBS = -ldcurses
+LIBS = -lncurses
 #LIBS = -lcurses -ltermcap
 
 # You shouldn't have to modify anything below this line.
 
 CFLAGS = $(DEBUG) $(PROFILE) -D$(SYS)
-INS   = /etc/install
 
 FILES = \
 	attack.c \
@@ -82,18 +86,12 @@ clean:
 clobber: clean
 	rm -f empire empire.tar*
 
-install: empire
-	$(INS) -o -f /usr/local/games empire
-
-installman: empire.6
-	$(INS) -f /usr/local/man/man6 empire.6
-
-SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST empire.lsm
+SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST empire.lsm empire.spec
 
 empire.tar: $(SOURCES)
-	tar -cvf empire.tar $(SOURCES)
+	(cd ..; tar -cvf empire-$(V)/empire.tar `echo $(SOURCES) | sed "/\(^\| \)/s// empire-$(V)\//g"`)
 empire.tar.gz: empire.tar
-	gzip empire.tar
+	gzip -f empire.tar
 
 empire.shar: $(SOURCES)
 	shar $(SOURCES) >empire.shar
