@@ -30,6 +30,10 @@ For each move the user wants us to make, we do the following:
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
 int load_army(piece_info_t *obj);
+int lake( long loc );
+int overproduced( city_info_t *cityp, int *city_count );
+int nearby_load( piece_info_t *obj, long loc );
+int nearby_count( long loc );
 void move_objective(piece_info_t *obj,path_map_t pathmap[],long new_loc,char *adj_list);
 
 void
@@ -96,7 +100,7 @@ do_cities () {
 	for (i = 0; i < NUM_CITY; i++) /* produce and change */
 	if (city[i].owner == COMP) {
 		is_lake = lake (city[i].loc);
-		if (city[i].work++ >= (long)piece_attr[city[i].prod].build_time) {
+		if (city[i].work++ >= (long)piece_attr[(int)city[i].prod].build_time) {
 			produce (&city[i]);
 			comp_prod (&city[i], is_lake);
 		}
@@ -197,7 +201,7 @@ int is_lake;
 		
 	for (i = 0; i < NUM_CITY; i++)
 	if (city[i].owner == COMP && city[i].prod != NOPIECE) {
-		city_count[city[i].prod] += 1;
+		city_count[(int)city[i].prod] += 1;
 		total_cities += 1;
 	}
 	if (total_cities <= 10) ratio = ratio1;
@@ -253,9 +257,9 @@ int is_lake;
 	interest = (counts.comp_cities != 1 || interest);
 	
 	if (cityp->prod == NOPIECE
-	    || cityp->prod == ARMY && counts.comp_cities == 1
+	    || (cityp->prod == ARMY && counts.comp_cities == 1)
 	    || overproduced (cityp, city_count)
-	    || cityp->prod > FIGHTER && is_lake)
+	    || (cityp->prod > FIGHTER && is_lake) )
 		comp_set_needed (cityp, city_count, interest, is_lake);
 }
 	
@@ -290,8 +294,8 @@ int *city_count;
 	for (i = 0; i < NUM_OBJECTS; i++) {
 		/* return true if changing production would improve balance */
 		if (i != cityp->prod
-		 && ((city_count[cityp->prod] - 1) * ratio[i]
-		   > (city_count[i] + 1) * ratio[cityp->prod]))
+		 && ((city_count[(int)cityp->prod] - 1) * ratio[i]
+		   > (city_count[i] + 1) * ratio[(int)cityp->prod]))
   		return (TRUE);
 	}
 	return (FALSE);

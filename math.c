@@ -22,6 +22,7 @@ Other routines include:
     dist (a, b) -- returns the straight-line distance between two locations.
 */
 
+#include <stdlib.h>
 #include "empire.h"
 #include "extern.h"
 

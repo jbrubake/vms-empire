@@ -7,15 +7,19 @@
  * and warranty information.
  */
 
-C Empire Sources
+C Empire Sources (now called vms-empire).
 
 Here's my change-log. 
+
+1.3: Fri Apr 19 05:13:33 EDT 2002
+	Walt Stoneburner's clenup patch addressing all compiler errors and 
+	warnings, both in debug and in production mode; works with GCC v3.0.3.
 
 1.2: Fri Jul 28 01:10:00 EDT 2000
 	The victory-odds table in previous versions was seriously buggy.
 	I folded in corrections from Michael Self.  I also took changes
 	from James T. Jordan <kermyt@earthling.net>, who wrote some
-	speedups, added ANSI prototypes, and cleaned 
+	speedups, added ANSI prototypes, and cleaned up code.
 1.1: 
 	I colorized and speed-tuned this and added a
 	save-interval option. 

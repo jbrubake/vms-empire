@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.3 1994/12/01 15:54:36 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.4 2000/07/28 05:12:52 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -239,4 +239,6 @@ long time();
 void exit();
 void perror();
 void srand();
+#ifndef LINUX
 char *strcpy();
+#endif

@@ -13,13 +13,14 @@ VERS=1.2
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
 
+SYS = LINUX
 #SYS = BSD
-SYS = SYSV
+#SYS = SYSV
 
 # Use -g to compile the program for debugging.
 
-DEBUG = -g -DDEBUG
-#DEBUG = -O
+#DEBUG = -g -DDEBUG -Wall
+DEBUG = -O2
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE

@@ -19,6 +19,8 @@ usermove.c -- Let the user move her troops.
 void fatal(piece_info_t *obj,long loc,char *message,char *response);
 void move_to_dest(piece_info_t *obj,long dest);
 void move_army_to_city(piece_info_t *obj,long city_loc);
+int awake(piece_info_t *obj);
+extern int get_piece_name();
 
 void
 user_move () {

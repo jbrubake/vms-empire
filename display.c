@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.6 1994/12/01 15:54:31 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.7 2000/07/28 05:12:50 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -36,7 +36,8 @@ static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
 static void show_loc(view_map_t vmap[],long loc);
-static disp_square(view_map_t *vp);
+static void disp_square(view_map_t *vp);
+int on_screen(long loc);
 
 #ifdef A_COLOR
 void init_colors()
@@ -232,7 +233,7 @@ int sector; /* sector to display */
 		else pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ",0,0,0,0,0,0,0,0);
 	}
 	/* print round number */
-	(void) sprintf (jnkbuf, "Sector %d Round %d", sector, date);
+	(void) sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
 	for (r = 0; jnkbuf[r] != '\0'; r++) {
 		if (r+NUMTOPS >= MAP_HEIGHT) break;
 		(void) move (r+NUMTOPS, cols-NUMSIDES+4);
@@ -249,7 +250,7 @@ pretty.
 */
 
 
-static int disp_square(vp)
+static void disp_square(vp)
 view_map_t *vp;
 {
 #ifdef A_COLOR

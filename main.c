@@ -1,4 +1,4 @@
-/* $Id: main.c,v 1.2 1990/03/29 23:22:23 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: main.c,v 1.3 1994/12/01 15:54:38 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -26,12 +26,14 @@ options:
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "empire.h"
 #include "extern.h"
 
 #define OPTFLAGS "w:s:d:S:"
 
-main (argc, argv)
+int main (argc, argv)
 int argc;
 char *argv[];
 {

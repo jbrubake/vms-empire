@@ -23,6 +23,7 @@ edit.c -- Routines to handle edit mode commands.
 #include "extern.h"
 
 void e_move(long *path_start, long loc);
+extern int get_piece_name();
 
 void
 edit(edit_cursor)
@@ -600,7 +601,7 @@ long edit_cursor;
 			(void) sprintf (temp_buf, "%c:%s; ",
 				piece_attr[s].sname,
 				func_name[FUNCI(cityp->func[s])]);
-		else (void) sprintf (temp_buf, "%c: %d;",
+		else (void) sprintf (temp_buf, "%c: %ld;",
 				piece_attr[s].sname,
 				cityp->func[s]);
 		
@@ -608,10 +609,10 @@ long edit_cursor;
 	}
 
 	(void) sprintf (junk_buf2,
-		"City at location %d will complete %s on round %d",
+		"City at location %ld will complete %s on round %ld",
 		cityp->loc,
-		piece_attr[cityp->prod].article,
-		date + piece_attr[cityp->prod].build_time - cityp->work);
+		piece_attr[(int)cityp->prod].article,
+		date + piece_attr[(int)cityp->prod].build_time - cityp->work);
 
 	info (junk_buf2, jnkbuf, func_buf);
 }

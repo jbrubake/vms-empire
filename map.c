@@ -1,4 +1,4 @@
-/* $Id: map.c,v 1.3 1994/12/01 15:54:39 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: map.c,v 1.4 2000/07/28 05:12:53 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -427,7 +427,8 @@ int beat_cost;
 			print_pzoom ("After lwobj loop:", path_map, vmap);
 		
 		cur_cost += 2;
-		if (cur_water->len == 0 && new_land->len == 0 || best_cost <= cur_cost) {
+		if ( (cur_water->len == 0 && new_land->len == 0) || 
+                     (best_cost <= cur_cost) ) {
 			return best_loc;
 		}
 
@@ -435,6 +436,7 @@ int beat_cost;
 	}
 }
 
+#ifdef FUNCTION_WAS_NEVER_CALLED
 /*
 Return the cost to reach the adjacent cell of the correct type
 with the lowest cost.
@@ -458,6 +460,7 @@ int type;
 
 	return best;
 }
+#endif
 
 /*
 Find an objective moving from water to land.
@@ -511,7 +514,8 @@ move_info_t *move_info;
 			print_pzoom ("After wlobj loop:", path_map, vmap);
 		
 		cur_cost += 2;
-		if (cur_water->len == 0 && new_land->len == 0 || best_cost <= cur_cost) {
+		if ( (cur_water->len == 0 && new_land->len == 0) || 
+                     (best_cost <= cur_cost) ) {
 			return best_loc;
 		}
 		SWAP (cur_land, new_land);
@@ -681,6 +685,7 @@ int base_cost;
 	default:
 		ABORT;
 		/* NOTREACHED */
+                return -1;
 	}
 }
 
@@ -711,6 +716,7 @@ long to_loc;
 	}
 	ABORT;
 	/*NOTREACHED*/
+        return -1;
 }
 
 /*
@@ -1096,7 +1102,7 @@ char *adj_char;
 				
 				/* remember best location */
 				if (count > bestcount
-				    || count == bestcount && path_count > bestpath) {
+				    || (count == bestcount && path_count > bestpath) ) {
 					bestcount = count;
 					bestpath = path_count;
 					bestloc = new_loc;

@@ -23,6 +23,12 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "extern.h"
 
 long remove_land(long loc, long num_land);
+int select_cities();
+int find_next(long *mapi);
+int good_cont(long mapi);
+int xread(FILE *f, char *buf, int size);
+int xwrite(FILE *f, char *buf, int size);
+void stat_display( char *mbuf, int round);
 
 /*
 Initialize a new game.  Here we generate a new random map, put cities
@@ -794,7 +800,7 @@ The "xxxxx" field is the cumulative cost of building the hardware.
 /* in declared order, with city first */
 static char *pieces = "OAFPDSTCBZXafpdstcbz";
 
-stat_display (mbuf, round)
+void stat_display (mbuf, round)
 char *mbuf;
 int round;
 {
