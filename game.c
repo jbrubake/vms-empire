@@ -508,9 +508,9 @@ tell the user why.
 void save_game () {
 	FILE *f; /* file to save game in */
 
-	f = fopen ("empsave.dat", "w"); /* open for output */
+	f = fopen (savefile, "w"); /* open for output */
 	if (f == NULL) {
-		perror ("Cannot save empsave.dat");
+		perror ("Cannot save saved game");
 		return;
 	}
 	wbuf (map);
@@ -550,9 +550,9 @@ int restore_game () {
 	piece_info_t **list;
 	piece_info_t *obj;
 
-	f = fopen ("empsave.dat", "r"); /* open for input */
+	f = fopen (savefile, "r"); /* open for input */
 	if (f == NULL) {
-		perror ("Cannot open empsave.dat");
+		perror ("Cannot open saved game");
 		return (FALSE);
 	}
 	rbuf (map);
@@ -619,7 +619,7 @@ int restore_game () {
 	
 	(void) fclose (f);
 	kill_display (); /* what we had is no longer good */
-	topmsg (3, "Game restored from empsave.dat.",0,0,0,0,0,0,0,0);
+	topmsg (3, "Game restored from save file.",0,0,0,0,0,0,0,0);
 	return (TRUE);
 }
 	
@@ -655,7 +655,7 @@ int piece_type;
 }
 
 void inconsistent () {
-	(void) printf ("empsave.dat is inconsistent.  Please remove it.\n");
+	(void) printf ("saved game is inconsistent.  Please remove it.\n");
 	exit (1);
 }
 

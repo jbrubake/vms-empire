@@ -1,4 +1,4 @@
-.\" $Id: empire.6,v 1.2 1990/03/29 23:36:04 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+.\" $Id: empire.6,v 1.3 2000/07/28 05:12:50 esr Exp $  - (c) Copyright 1987, 1988 Chuck Simmons */
 .\"
 .\"   Copyright (C) 1987, 1988 Chuck Simmons
 .\"
@@ -9,7 +9,7 @@
 .SH NAME
 empire -- the wargame of the century
 .SH SYNOPSIS
-empire [-w water] [-s smooth] [-d delay]
+empire [-w water] [-s smooth] [-d delay] [ -S save-interval ] [ -f savefile ]
 .SH DESCRIPTION
 Empire is a simulation of a full-scale war between two
 emperors, the computer and you.  Naturally, there is only
@@ -54,14 +54,16 @@ The computer will have a hard time on this sort of map
 as it will try and produce lots of troop transports,
 which are fairly useless.
 .P
-There is one other option.
+There are two other option.
 .TP
 .BI \-S interval\^
-.P
 sets the \fIsave interval\fR for the game (default is 10). Once per
 \fIinterval\fR turns the game state will be automatically saved after
 your move. It will be saved in any case when you change modes or
 do various special things from command mode, such as `M' or `N'.
+.TP
+.BI \-f savefile
+Set the save file name (normally empsave.dat).
 .SH INTRODUCTION
 Empire is a war game played between you and the user.  The world
 on which the game takes place is a square rectangle containing cities,

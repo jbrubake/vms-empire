@@ -7,7 +7,7 @@
 # and warranty information.
 
 # Note: When the version changes, you also have to change the RPM spec file.
-VERS=1.3
+VERS=1.4
 
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
@@ -25,10 +25,7 @@ DEBUG = -O2
 #PROFILE = -p -DPROFILE
 PROFILE =
 
-# Define all necessary libraries.  'curses' is necessary.  'termcap'
-# is needed on BSD systems.
 LIBS = -lncurses
-#LIBS = -lcurses -ltermcap
 
 # You shouldn't have to modify anything below this line.
 

@@ -1,5 +1,5 @@
 Name: vms-empire
-Version: 1.3
+Version: 1.4
 Release: 1
 URL: http://www.tuxedo.org/~esr/vms-empire/
 Source: %{name}-%{version}.tar.gz

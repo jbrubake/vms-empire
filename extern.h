@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.4 2000/07/28 05:12:52 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.5 2002/04/19 09:17:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -84,6 +84,7 @@ char jnkbuf[STRSIZE]; /* general purpose temporary buffer */
 char save_movie; /* TRUE iff we should save movie screens */
 int user_score; /* "score" for user and computer */
 int comp_score;
+char *savefile;
 
 /* Screen updating macros */
 #define display_loc_u(loc) display_loc(USER,user_map,loc)

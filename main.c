@@ -1,4 +1,4 @@
-/* $Id: main.c,v 1.3 1994/12/01 15:54:38 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: main.c,v 1.4 2002/04/19 09:17:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -31,7 +31,7 @@ options:
 #include "empire.h"
 #include "extern.h"
 
-#define OPTFLAGS "w:s:d:S:"
+#define OPTFLAGS "w:s:d:S:f:"
 
 int main (argc, argv)
 int argc;
@@ -49,6 +49,7 @@ char *argv[];
 	sflg = 5;
 	dflg = 2000;
 	Sflg = 10;
+	savefile = "empsave.dat";
 
 	/*
 	 * extract command line options
@@ -67,6 +68,9 @@ char *argv[];
 			break;
 		case 'S':
 			Sflg = atoi (optarg);
+			break;
+		case 'f':
+			savefile = optarg;
 			break;
 		case '?': /* illegal option? */
 			errflg++;

@@ -35,61 +35,46 @@ unblock the damaged ship, and as soon as the damaged ship enters
 port, take the city.  Since ships in port are capturable, the user
 should now own one slightly damaged ship.
 
-5)  An assertion failed in 'attack_obj'.  Somehow this routine
-was passed a location where there was no defending object.  This
-implies that a view map was messed up.  I've no idea why.
-
-6)  Currently, a fighter's range is not decremented if it is not
+5)  Currently, a fighter's range is not decremented if it is not
 moved during a turn.  This could be called a feature, but I think
 I would really prefer that a fighter's range was decremented by at
 least one each turn.  The computer does not take advantage of this
 bug.
 
-7)  While playing a game, one of my cities was producing armies.
-At one point in the game, the city sudddenly decided that never
-again would it increment the build count.  Actually, at one point
-the build count seemed to be negative.  The count eventually reached
-zero and stayed there.  My hypothesis is that somewhere I'm trashing
-my data structures, and somehow the "owner" of the city got set to
-some incorrect value.
+6)  Movement of armies in "attack" mode seems a little strange.
 
-(Note that bugs (5) and (7) occured while there was an inconsitency
-in the 'kill_city' routine.  Hardware had its ownership modified,
-but it remained in the object list of the wrong user.  This
-could have caused some problems.  So potentially bugs 5 and 7 no
-longer exist.)
-
-8)  Movement of armies in "attack" mode seems a little strange.
-
-9)  Maybe in "sentry" mode, an army should wake up and go into "attack"
+7)  Maybe in "sentry" mode, an army should wake up and go into "attack"
 mode if an invader appears on the continent.  In any event, there
 should be some mechanism to allow a user to specify that an army
 should sit on the shore and wait for either a transport to pass by,
 or for an invader to appear on the continent.
 
-10)  When setting a city function, the computer should prompt
+8)  When setting a city function, the computer should prompt
 for the various pieces of input.  Even I have a hard time setting
 functions for cities.
 
 
-Code Cleanup (Enhancements to improve performance or generality)
-----------------------------------------------------------------
+Code Cleanup
+------------
 
-1)  How can we use minicurses?  minicurses is smaller and possibly
-faster than full blown curses.  The curses routines that I use
-which are not part of minicurses are 'clrtoeol', 'getstr', and 'getch'.
-These seem pretty fundamental, but I know very little about curses.
+1) The width and height of the map should be parameters to the
+program. Storage for the various data structures should be allocated
+dynamically instead of being stored in static tables.
 
-ESR: This is hardly an issue at this point.  Minicurses is dead, 
-and modern machines are *fast*.
+2)  Interrupts should be caught.  When an interrupt is received,
+the user should be asked if she really wants to quit, and she
+should be warned if the game will not be saved.
 
-2)  'vmap_cont' and 'vmap_mark_up_cont' would almost certainly be
+Performance Tuning
+------------------  
+
+1)  'vmap_cont' and 'vmap_mark_up_cont' would almost certainly be
 faster if we didn't recurse, but instead used something like the
 perimeter lists used in all the other map scanning algorithms.
 Since 'vmap_mark_up_cont' takes about 10% of the processing time,
 the performance improvements could be significant.
 
-3)  The real speed killer is 'expand_perimeter'.  This routine
+2)  The real speed killer is 'expand_perimeter'.  This routine
 is very generalized, and not all the generality is always needed.
 It might be better to write multiple non-general routines.  I believe
 this routine accounts for roughly 20% to 30% of the processing time.
@@ -97,22 +82,9 @@ If we take subroutines like 'strchr' and 'terrain_type' into account
 as well, this routine accounts for more like 50% of the processing.
 However, on a mainframe, the game plays sufficiently fast.
 
-ESR: I've done some tuning of expand_perimeter.
-
-4)  Allow multiple computer players and/or multiple human players.
-Allow the players to come in over a network of workstations.
-
-5)  The width and height of the map should be parameters to the
-program.
-
-6)  Interrupts should be caught.  When an interrupt is received,
-the user should be asked if she really wants to quit, and she
-should be warned if the game will not be saved.  This is particularly
-useful when playing over a noisy phone line that generates spurious
-interrupts.  (When will digitial telephone transmissions arrive?)
-
-7)  Storage for the various data structures should be allocated
-dynamically instead of being stored in static tables.
+ESR: I've done some tuning of expand_perimeter.  Further performance
+tuning is hardly an issue at this point.  Modern machines are *fast*.
+The above has been preserved as a historical note :-).
 
 
 Debugging Aids
@@ -609,7 +581,8 @@ program how often the game should be saved.  Actually, all
 command line arguments should have associated environment variables
 that can be used to set defaults.
 
-ESR: I've added a save-interval option.
+ESR: I've added a save-interval option, and another to set the
+savefile name.
 
 4)  When the user types "q" to quit, the program should exit
 immediately if the game has been saved.  If the game hasn't been
