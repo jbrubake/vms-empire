@@ -53,6 +53,15 @@ This produces a map with lots of land and a few lakes.
 The computer will have a hard time on this sort of map
 as it will try and produce lots of troop transports,
 which are fairly useless.
+.P
+There is one other option.
+.TP
+.BI \-S interval\^
+.P
+sets the \fIsave interval\fR for the game (default is 10). Once per
+\fIinterval\fR turns the game state will be automatically saved after
+your move. It will be saved in any case when you change modes or
+do various special things from command mode, such as `M' or `N'.
 .SH INTRODUCTION
 Empire is a war game played between you and the user.  The world
 on which the game takes place is a square rectangle containing cities,
@@ -401,17 +410,13 @@ Give the computer the number of free moves you specify.
 Display a sector on the screen.
 .TP
 .B Quit
-Quit the game.  (Note that your game will be saved in 'empsave.dat'
-after each command you give, and after each move you make.)
+Quit the game.
 .TP
 .B Restore
-Restore the game from empsave.dat.  (Currently, this command is useless
-since the game is restored when the program first starts up, and the
-game is saved after each move.)
+Restore the game from empsave.dat.
 .TP
 .B Save
-Save the game in empsave.dat.  (Currently, this command is useless
-since the game is saved after each of your commands and after each move.)
+Save the game in empsave.dat.
 .TP
 .B Trace
 This command toggles a flag.  When the flag is set,
