@@ -10,7 +10,8 @@
 C Empire Sources
 
 Eric S. Raymond colorized and speed-tuned this and added a
-save-interval option.  The rest of this history is Chuck Simmons's
+save-interval option.  Also, the victory-odds table in previous
+versions was seriously buggy. The rest of this history is Chuck Simmons's
 original notes.
 
 History
