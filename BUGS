@@ -80,6 +80,9 @@ faster than full blown curses.  The curses routines that I use
 which are not part of minicurses are 'clrtoeol', 'getstr', and 'getch'.
 These seem pretty fundamental, but I know very little about curses.
 
+ESR: This is hardly an issue at this point.  Minicurses is dead, 
+and modern machines are *fast*.
+
 2)  'vmap_cont' and 'vmap_mark_up_cont' would almost certainly be
 faster if we didn't recurse, but instead used something like the
 perimeter lists used in all the other map scanning algorithms.

@@ -6,8 +6,7 @@
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-# Note: When the version changes, you also have to change
-# the RPM spec file and the LSM.
+# Note: When the version changes, you also have to change the RPM spec file.
 VERS=1.3
 
 # Change the line below for your system.  If you are on a Sun or Vax,
@@ -86,16 +85,13 @@ clean:
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = READ.ME vms-empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST vms-empire.lsm vms-empire.spec
+SOURCES = READ.ME vms-empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) MANIFEST vms-empire.spec
 
-vms-empire-$(VERS).tar.gz: $(SOURCES)
-	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
+vms-empire-$(VERS).tar.gz: $(SOURCES) vms-empire.6
+	@ls $(SOURCES) vms-empire.6 | sed s:^:vms-empire-$(VERS)/: >MANIFEST
 	@(cd ..; ln -s vms-empire vms-empire-$(VERS))
 	(cd ..; tar -czvf vms-empire/vms-empire-$(VERS).tar.gz `cat vms-empire/MANIFEST`)
 	@(cd ..; rm vms-empire-$(VERS))
-
-vms-empire-$(VERS).shar:
-	shar $(SOURCES) >vms-empire-$(VERS).shar
 
 dist: vms-empire-$(VERS).tar.gz
 

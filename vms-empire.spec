@@ -1,13 +1,19 @@
 Name: vms-empire
 Version: 1.3
 Release: 1
-Source: locke.ccil.org:/pub/esr/vms-empire-1.3.tar.gz
-Copyright: BSD-like
+URL: http://www.tuxedo.org/~esr/vms-empire/
+Source: %{name}-%{version}.tar.gz
+License: GPL-like
 Group: Games
 Summary: Solitaire Empire (sometimes called `VMS Empire')
 
 %description
-Solitaire Empire (sometimes called `VMS Empire')
+Empire is a simulation of a full-scale war between two
+emperors, the computer and you.  Naturally, there is only
+room for one, so the object of the game is to destroy
+the other.  The computer plays by the same rules that you
+do.  This game is the ancestor of all the multiplayer Empire
+simulations out there.
 
 %prep
 %setup
@@ -22,3 +28,4 @@ cp vms-empire.6 /usr/share/man/man6/vms-empire.6
 %files
 /usr/share/man/man6/vms-empire.6
 /usr/bin/vms-empire
+%doc READ.ME NEWS
