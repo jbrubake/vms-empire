@@ -82,7 +82,7 @@ clean:
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = READ.ME vms-empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) MANIFEST vms-empire.spec
+SOURCES = READ.ME NEWS vms-empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) MANIFEST vms-empire.spec
 
 vms-empire-$(VERS).tar.gz: $(SOURCES) vms-empire.6
 	@ls $(SOURCES) vms-empire.6 | sed s:^:vms-empire-$(VERS)/: >MANIFEST
