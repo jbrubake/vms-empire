@@ -256,7 +256,7 @@ view_map_t *vp;
 		attron(COLOR_PAIR(COLOR_GREEN));
 		break;
 	case '.':
-		attron(COLOR_PAIR(COLOR_BLUE));
+		attron(A_BOLD | COLOR_PAIR(COLOR_BLUE));
 		break;
 	case 'a':
 	case 'f':
