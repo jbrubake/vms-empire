@@ -1,12 +1,12 @@
 Name: vms-empire
-Version: 1.5
+Version: 1.6
 Release: 1
-URL: http://www.tuxedo.org/~esr/vms-empire/
+URL: http://www.catb.org/~esr/vms-empire/
 Source: %{name}-%{version}.tar.gz
 License: GPL-like
 Group: Games
 Summary: Solitaire Empire (sometimes called `VMS Empire')
-%undefine __check_files
+BuildRoot: %{_tmppath}/%{name}-root
 
 %description
 Empire is a simulation of a full-scale war between two
@@ -17,21 +17,32 @@ do.  This game is the ancestor of all the multiplayer Empire
 simulations out there.
 
 %prep
-%setup
+%setup -q
 
 %build
 make
+make vms-empire.6
 
 %install
-cp vms-empire /usr/bin
-cp vms-empire.6 /usr/share/man/man6/vms-empire.6
+[ "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
+mkdir -p "$RPM_BUILD_ROOT"/usr/bin
+mkdir -p "$RPM_BUILD_ROOT"/usr/share/man/man6/
+cp vms-empire "$RPM_BUILD_ROOT"/usr/bin
+cp vms-empire.6 "$RPM_BUILD_ROOT"/usr/share/man/man6/
 
-%changelog
-* Tue Dec 16 2003 Eric S. Raymond <esr@snark.thyrsus.com> 1.5-1
-- Cleanup release with new build machinery.
+%clean
+[ "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf "$RPM_BUILD_ROOT"
 
 %files
-/usr/share/man/man6/vms-empire.6
-/usr/bin/vms-empire
-%doc READ.ME NEWS
+%doc README COPYING
+%defattr(-,root,root,-)
+%{_mandir}/man6/vms-empire.6*
+%{_bindir}/vms-empire
+
+%changelog
+* Mon Dec 29 2003 Eric S. Raymond <esr@snark.thyrsus.com> 1.6-1
+- Source RPMs can be built by non-root user.
+
+* Tue Dec 16 2003 Eric S. Raymond <esr@snark.thyrsus.com> 1.5-1
+- Cleanup release with new build machinery.
 
