@@ -1,4 +1,4 @@
-/* $Id: empire.c,v 1.2 1990/03/29 23:22:07 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: empire.c,v 1.3 1994/12/01 15:54:33 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -33,7 +33,7 @@ empire () {
 	clear_screen (); /* nothing on screen */
 	(void) move (7, 0);
 	ver ();
-	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
+	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n",0,0,0,0,0,0,0,0);
 	(void) refresh ();
 
 	if (!restore_game ()) /* try to restore previous game */
@@ -49,9 +49,9 @@ empire () {
 			save_game ();
 	    }
 	    else {
-		prompt (0); /* blank top line */
+		prompt (0,0,0,0,0,0,0,0,0); /* blank top line */
 		(void) refresh ();
-	        prompt ("Your orders? ");
+	        prompt ("Your orders? ",0,0,0,0,0,0,0,0);
 	        order = get_chx (); /* get a command */
 		do_command (order);
 	    }
@@ -75,7 +75,7 @@ char orders;
 	switch (orders) {
 	case 'A': /* turn on auto move mode */
 		automove = TRUE;
-		error ("Now in Auto-Mode");
+		error ("Now in Auto-Mode",0,0,0,0,0,0,0,0);
 		user_move ();
 		comp_move (1);
 		save_game ();
@@ -86,7 +86,7 @@ char orders;
 		break;
 	
 	case 'D': /* display round number */
-		error ("Round #%d", date);
+		error ("Round #%d", date,0,0,0,0,0,0,0);
 		break;
 
 	case 'E': /* examine enemy map */
@@ -144,13 +144,13 @@ char orders;
 	
 	case 'T': /* trace: toggle save_movie flag */
 		save_movie = !save_movie;
-		if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
-		else comment ("No longer saving movie screens.");
+		if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.",0,0,0,0,0,0,0,0);
+		else comment ("No longer saving movie screens.",0,0,0,0,0,0,0,0);
 		break;
 
 	case 'W': /* watch movie */
 		if (resigned || debug) replay_movie ();
-		else error ("You cannot watch movie until computer resigns.");
+		else error ("You cannot watch movie until computer resigns.",0,0,0,0,0,0,0,0);
 		break;
 	
 	case 'Z': /* print compressed map */
@@ -197,7 +197,8 @@ c_give () {
 		}
 	}
 	if (count == 0) {
-		error ("There are no unowned cities.");
+		error ("There are no unowned cities.",0,0,0,0,0,0,0,0);
+		ksend ("There are no unowned cities.",0,0,0,0,0,0,0,0);
 		return;
 	}
 	i = irand (count);
@@ -282,12 +283,12 @@ c_map () {
 	int i, j;
 	char line[MAP_HEIGHT+2];
 
-	prompt ("Filename? ");
+	prompt ("Filename? ",0,0,0,0,0,0,0,0);
 	get_str (jnkbuf, STRSIZE);
 
 	f = fopen (jnkbuf, "w");
 	if (f == NULL) {
-		error ("I can't open that file.");
+		error ("I can't open that file.",0,0,0,0,0,0,0,0);
 		return;
 	}
 	for (i = 0; i < MAP_WIDTH; i++) { /* for each column */

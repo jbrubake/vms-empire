@@ -177,7 +177,7 @@ but the way has been paved to allow user's to change attributes at the
 beginning of a game.
 */
 
-#define INFINITY 1000000 /* a large number */
+#define INFINITY 10000000 /* a large number */
 
 typedef struct piece_attr {
 	char sname; /* eg 'C' */

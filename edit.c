@@ -22,7 +22,7 @@ edit.c -- Routines to handle edit mode commands.
 #include "empire.h"
 #include "extern.h"
 
-void e_move();
+void e_move(long *path_start, long loc);
 
 void
 edit(edit_cursor)
@@ -571,7 +571,7 @@ long edit_cursor;
 	char temp_buf[STRSIZE];
 	char junk_buf2[STRSIZE];
 
-	error (0); /* clear line */
+	error (0,0,0,0,0,0,0,0,0); /* clear line */
 
 	f = 0; /* no fighters counted yet */
 	for (obj = map[edit_cursor].objp; obj != NULL;
@@ -639,6 +639,6 @@ get help
 void
 e_help () {
 	help (help_edit, edit_lines);
-	prompt ("Press any key to continue: ");
+	prompt ("Press any key to continue: ",0,0,0,0,0,0,0,0);
 	(void) get_chx ();
 }

@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.2 1990/03/29 23:22:44 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.3 1994/12/01 15:54:36 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -109,120 +109,130 @@ int comp_score;
 
 void empire();
 
-void attack();
-void comp_move();
+void attack(piece_info_t *att_obj, long loc);
+void comp_move(int nmoves);
 void user_move();
-void edit();
+void edit(long edit_cursor);
 
 /* map routines */
-void vmap_cont();
-void rmap_cont();
-void vmap_mark_up_cont();
-scan_counts_t vmap_cont_scan();
-scan_counts_t rmap_cont_scan();
-int map_cont_edge();
-long vmap_find_aobj();
-long vmap_find_wobj();
-long vmap_find_lobj();
-long vmap_find_lwobj();
-long vmap_find_wlobj();
-long vmap_find_dest();
-void vmap_prune_explore_locs();
-void vmap_mark_path();
-void vmap_mark_adjacent();
-void vmap_mark_near_path();
-long vmap_find_dir();
-int vmap_count_adjacent();
-int vmap_shore();
-int rmap_shore();
-int vmap_at_sea();
-int rmap_at_sea();
+void vmap_cont (int *cont_map, view_map_t *vmap, long loc, char bad_terrain);
+void rmap_cont (int *cont_map, long loc, char bad_terrain);
+void vmap_mark_up_cont (int *cont_map, view_map_t *vmap, long loc, char bad_terrain);
+scan_counts_t vmap_cont_scan (int *cont_map, view_map_t *vmap);
+scan_counts_t rmap_cont_scan (int *cont_map);
+int map_cont_edge (int *cont_map, long loc);
+long vmap_find_aobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
+long vmap_find_wobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
+long vmap_find_lobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
+long vmap_find_lwobj (path_map_t path_map[],view_map_t *vmap,long loc,move_info_t *move_info,int beat_cost);
+long vmap_find_wlobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
+long vmap_find_dest (path_map_t path_map[], view_map_t vmap[], long cur_loc, long dest_loc, int owner, int terrain);
+void vmap_prune_explore_locs (view_map_t *vmap);
+void vmap_mark_path (path_map_t *path_map, view_map_t *vmap, long dest);
+void vmap_mark_adjacent (path_map_t path_map[], long loc);
+void vmap_mark_near_path (path_map_t path_map[], long loc);
+long vmap_find_dir (path_map_t path_map[], view_map_t *vmap, long loc,  char *terrain, char *adjchar);
+int vmap_count_adjacent (view_map_t *vmap, long loc, char *adj_char);
+int vmap_shore (view_map_t *vmap, long loc);
+int rmap_shore (long loc);
+int vmap_at_sea (view_map_t *vmap, long loc);
+int rmap_at_sea (long loc);
 
-void kill_display(); /* display routines */
-void sector_change();
-int cur_sector();
-long cur_cursor();
-void display_loc();
-void display_locx();
-void print_sector();
-int move_cursor();
-void print_zoom();
-void print_pzoom();
-void print_xzoom();
-void display_score();
+void kill_display (); /* display routines */
+void sector_change ();
+int cur_sector ();
+long cur_cursor ();
+void display_loc (int whose, view_map_t vmap[], long loc);
+void display_locx (int whose, view_map_t vmap[], long loc);
+void print_sector (int whose, view_map_t vmap[], int sector);
+int move_cursor (long *cursor, int offset);
+void print_zoom (view_map_t *vmap);
+void print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap);
+void print_xzoom (view_map_t *vmap);
+void display_score ();
 #ifdef A_COLOR
-void init_colors();
+void init_colors ();
 #endif /* A_COLOR */
 
-void init_game(); /* game routines */
-void save_game();
-int restore_game();
-void save_movie_screen();
-void replay_movie();
+void init_game (); /* game routines */
+void save_game ();
+int restore_game ();
+void save_movie_screen ();
+void replay_movie ();
 
-void get_str(); /* input routines */
-void get_strq();
-char get_chx();
-int getint();
-char get_c();
-char get_cq();
-int getyn();
-int get_range();
+void get_str (char *buf, int sizep); /* input routines */
+void get_strq (char *buf, int sizep);
+char get_chx ();
+int getint (char *message);
+char get_c ();
+char get_cq ();
+int getyn (char *message);
+int get_range (char *message, int low, int high);
 
-void rndini(); /* math routines */
-long irand();
-int dist();
-int isqrt();
+void rndini (); /* math routines */
+long irand (long high);
+int dist (long a, long b);
+int isqrt (int n);
 
-int find_nearest_city();
-city_info_t *find_city(); /* object routines */
-piece_info_t *find_obj();
-piece_info_t *find_nfull();
-long find_transport();
-piece_info_t *find_obj_at_loc();
-int obj_moves();
-int obj_capacity();
-void kill_obj();
-void kill_city();
-void produce();
-void move_obj();
-void move_sat();
-int good_loc();
-void embark();
-void disembark();
-void describe_obj();
-void scan();
-void scan_sat();
-void set_prod();
+int find_nearest_city (long loc, int owner, long *city_loc);
+city_info_t *find_city (long loc); /* object routines */
+piece_info_t *find_obj (int type, long loc);
+piece_info_t *find_nfull (int type, long loc);
+long find_transport (int owner, long loc);
+piece_info_t *find_obj_at_loc (long loc);
+int obj_moves (piece_info_t *obj);
+int obj_capacity (piece_info_t *obj);
+void kill_obj (piece_info_t *obj, long loc);
+void kill_city (city_info_t *cityp);
+void produce (city_info_t *cityp);
+void move_obj (piece_info_t *obj, long new_loc);
+void move_sat (piece_info_t *obj);
+int good_loc (piece_info_t *obj, long loc);
+void embark (piece_info_t *ship, piece_info_t *obj);
+void disembark (piece_info_t *obj);
+void describe_obj (piece_info_t *obj);
+void scan (view_map_t vmap[], long loc);
+void scan_sat (view_map_t *vmap, long loc);
+void set_prod (city_info_t *cityp);
 
 /* terminal routines */
-void pdebug();
-void topini();
-void clreol();
-void topmsg();
-void prompt();
-void error();
-void info();
-void comment();
-void extra();
-void huh();
-void help();
-void set_need_delay();
+void pdebug (char *s, int a, int b, int c, int d, int e, int f, int g, int h);
+void topini ();
+void clreol (int linep, int colp);
+void topmsg (int linep, char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void topmsg1 (int linep, char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
+void topmsg2 (int linep, char *buf, char *a, int b, int c, int d, char *e, char *f, int g, int h);
+void prompt (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void prompt1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
+void prompt2 (char *buf, char *a, int b, int c, int d, char *e, char *f, int g, int h);
+void error (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void info (char *a, char *b, char *c);
+void comment (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void comment1 (char *buf,char *a, int b, int c, int d, int e, int f, int g, int h);
+void extra (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void huh ();
+void help (char **text, int nlines);
+void set_need_delay ();
+void ksend (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void ksend1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
 
 /* utility routines */
-void ttinit();
-void redraw();
-void clear_screen();
-void delay();
-void close_disp();
-void pos_str();
-void addprintf();
-void assert();
-void empend();
-void ver();
-char upper();
-void tupper();
-void check();
+void ttinit ();
+void redraw ();
+void clear_screen ();
+void delay ();
+void close_disp ();
+void pos_str (int row, int col, char *str, int a, int b, int c, int d, int e, int f, int g, int h);
+void pos_str1 (int row, int col, char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
+void addprintf (char *str, int a, int b, int c, int d, int e, int f, int g, int h);
+void addprintf1 (char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
+void addprintf2 (char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h);
+void assert (char *expression, char *file, int line);
+void empend ();
+void ver ();
+char upper (char c);
+void tupper (char *str);
+void check ();
 
 /* randon routines we use */
 long time();

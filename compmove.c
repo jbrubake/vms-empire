@@ -29,8 +29,8 @@ For each move the user wants us to make, we do the following:
 
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
-int load_army();
-	void move_objective();
+int load_army(piece_info_t *obj);
+void move_objective(piece_info_t *obj,path_map_t pathmap[],long new_loc,char *adj_list);
 
 void
 comp_move (nmoves) 
@@ -48,7 +48,7 @@ int nmoves;
 		scan (comp_map, obj->loc); /* refresh comp's view of world */
 
 	for (i = 1; i <= nmoves; i++) { /* for each move we get... */
-		comment ("Thinking...");
+		comment ("Thinking...",0,0,0,0,0,0,0,0);
 
 		(void) memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
 		vmap_prune_explore_locs (emap);
@@ -271,9 +271,7 @@ int type;
 {
 	if (cityp->prod == type) return;
 	
-	pdebug ("Changing city prod at %d from %d to %d\n",
-		cityp->loc, cityp->prod, type);
-	
+	pdebug ("Changing city prod at %d from %d to %d\n",cityp->loc, cityp->prod, type,0,0,0,0,0);
 	cityp->prod = type;
 	cityp->work = -(piece_attr[type].build_time / 5);
 }
@@ -435,7 +433,8 @@ piece_info_t *obj;
 			if (comp_map[obj->loc].contents == 'X')
 				obj->moved = piece_attr[FIGHTER].speed;
 			else if (obj->range == 0) {
-				pdebug ("Fighter at %d crashed and burned\n", obj->loc);
+				pdebug ("Fighter at %d crashed and burned\n", obj->loc,0,0,0,0,0,0,0);
+				ksend ("Fighter at %d crashed and burned\n", obj->loc,0,0,0,0,0,0,0);
 				kill_obj (obj, obj->loc); /* crash & burn */
 			}
 		}
@@ -916,7 +915,7 @@ piece_info_t *obj;
 			(void) memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
 			unmark_explore_locs (amap);
 			if (print_vmap == 'S') print_xzoom (amap);
-			new_loc = vmap_find_wobj (path_map, amap, obj->loc, &tt_explore);
+			new_loc = vmap_find_wobj (path_map, amap, obj->loc,&tt_explore);
 		}
 		
 		move_objective (obj, path_map, new_loc, "a ");
@@ -985,8 +984,7 @@ piece_info_t *obj;
 			obj->moved = piece_attr[obj->type].speed;
 			return;
 		}
-		new_loc = vmap_find_wobj (path_map, comp_map, obj->loc,
-					       &ship_repair);
+		new_loc = vmap_find_wobj (path_map, comp_map, obj->loc, &ship_repair);
 		adj_list = ".";
 
 	}
@@ -1001,8 +999,7 @@ piece_info_t *obj;
 		unmark_explore_locs (amap);
 		if (print_vmap == 'S') print_xzoom (amap);
 		
-		new_loc = vmap_find_wobj (path_map, amap, obj->loc,
-					       &ship_fight);
+		new_loc = vmap_find_wobj (path_map, amap, obj->loc,&ship_fight);
 		adj_list = ship_fight.objectives;
 	}
 
@@ -1030,8 +1027,7 @@ char *adj_list;
 	if (new_loc == obj->loc) {
 		obj->moved = piece_attr[obj->type].speed;
 		obj->range -= 1;
-		pdebug ("No destination found for %d at %d; func=%d\n",
-			obj->type, obj->loc, obj->func);
+		pdebug ("No destination found for %d at %d; func=%d\n",	obj->type, obj->loc, obj->func,0,0,0,0,0);
 		return;
 	}
 	old_loc = obj->loc; /* remember where we are */
@@ -1074,8 +1070,7 @@ char *adj_list;
 		obj->moved = piece_attr[obj->type].speed;
 		
 		if (obj->type == ARMY && obj->ship) ;
-		else pdebug ("Cannot move %d at %d toward objective; func=%d\n",
-			     obj->type, obj->loc, obj->func);
+		else pdebug ("Cannot move %d at %d toward objective; func=%d\n", obj->type, obj->loc, obj->func,0,0,0,0,0);
 	}
 	else move_obj (obj, new_loc);
 	
@@ -1155,8 +1150,9 @@ check_endgame () { /* see if game is over */
 		
 	if (ncomp_city < nuser_city/3 && ncomp_army < nuser_army/3) {
 		clear_screen ();
-		prompt ("The computer acknowledges defeat. Do");
-		error ("you wish to smash the rest of the enemy? ");
+		prompt ("The computer acknowledges defeat. Do",0,0,0,0,0,0,0,0);
+		ksend ("The computer acknowledges defeat.",0,0,0,0,0,0,0,0);
+		error ("you wish to smash the rest of the enemy? ",0,0,0,0,0,0,0,0);
 
 		if (get_chx() !=  'Y') empend ();
 		(void) addstr ("\nThe enemy inadvertantly revealed its code used for");

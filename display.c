@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.5 1992/08/18 22:39:00 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.6 1994/12/01 15:54:31 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -35,8 +35,8 @@ static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
-static void show_loc();
-static disp_square();
+static void show_loc(view_map_t vmap[],long loc);
+static disp_square(view_map_t *vp);
 
 #ifdef A_COLOR
 void init_colors()
@@ -223,13 +223,13 @@ int sector; /* sector to display */
 	/* print x-coordinates along bottom of screen */
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 	if (c % 10 == 0) {
-		pos_str (lines-1, c-ref_col, "%d", c);
+		pos_str (lines-1, c-ref_col, "%d", c,0,0,0,0,0,0,0);
 	}
 	/* print y-coordinates along right of screen */
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++) {
 		if (r % 2 == 0)
-			pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "%2d", r);
-		else pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ");
+			pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "%2d", r,0,0,0,0,0,0,0);
+		else pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ",0,0,0,0,0,0,0,0);
 	}
 	/* print round number */
 	(void) sprintf (jnkbuf, "Sector %d Round %d", sector, date);
@@ -365,7 +365,7 @@ view_map_t *vmap;
 {
 	print_zoom (vmap);
 #if 0
-	prompt ("Hit a key: ");
+	prompt ("Hit a key: ",0,0,0,0,0,0,0,0);
 	(void) get_chx (); /* wait for user */
 #endif
 }
@@ -394,7 +394,7 @@ view_map_t *vmap;
 	for (c = 0; c < MAP_WIDTH; c += col_inc)
 	print_zoom_cell (vmap, r, c, row_inc, col_inc);
 
-	pos_str (0, 0, "Round #%d", date);
+	pos_str (0, 0, "Round #%d", date,0,0,0,0,0,0,0);
 	
 	(void) refresh ();
 }
@@ -447,7 +447,7 @@ view_map_t *vmap;
 	for (c = 0; c < MAP_WIDTH; c += col_inc)
 	print_pzoom_cell (pmap, vmap, r, c, row_inc, col_inc);
 
-	prompt (s);
+	prompt (s,0,0,0,0,0,0,0,0);
 	(void) get_chx (); /* wait for user */
 	
 	(void) refresh ();
@@ -509,6 +509,6 @@ Display the score off in the corner of the screen.
 void
 display_score ()
 {
-	pos_str (0, cols-12, " User  Comp");
-	pos_str (1, cols-12, "%5d %5d", user_score, comp_score);
+	pos_str (1, cols-12, " User  Comp",0,0,0,0,0,0,0,0);
+	pos_str (2, cols-12, "%5d %5d", user_score, comp_score,0,0,0,0,0,0);
 }

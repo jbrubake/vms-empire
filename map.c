@@ -1,4 +1,4 @@
-/* $Id: map.c,v 1.2 1990/03/30 11:23:26 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: map.c,v 1.3 1994/12/01 15:54:39 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -35,14 +35,13 @@ real_maps, path_maps, and cont_maps.
 	x = a; a = b; b = x; \
 }
 
-STATIC void expand_perimeter();
-STATIC void expand_prune();
-STATIC void expand_dest_perimeter();
-STATIC int objective_cost();
-STATIC int terrain_type();
-STATIC void start_perimeter();
-STATIC void add_cell();
-STATIC int vmap_count_path ();
+STATIC void expand_perimeter(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,perimeter_t *curp,int type,int cur_cost,int inc_wcost,int inc_lcost,perimeter_t *waterp,perimeter_t *landp);
+STATIC void expand_prune(view_map_t *vmap,path_map_t *pmap,long loc,int type,perimeter_t *to,int *explored);
+STATIC int objective_cost(view_map_t *vmap,move_info_t *move_info,long loc,int base_cost);
+STATIC int terrain_type(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,long from_loc,long to_loc);
+STATIC void start_perimeter(path_map_t *pmap,perimeter_t *perim,long loc,int terrain);
+STATIC void add_cell(path_map_t *pmap,long new_loc,perimeter_t *perim,int terrain,int cur_cost,int inc_cost);
+STATIC int vmap_count_path (path_map_t *pmap,long loc);
 
 static perimeter_t p1; /* perimeter list for use as needed */
 static perimeter_t p2;
@@ -1140,7 +1139,7 @@ char *adj_char;
 Count the number of adjacent cells that are on the path.
 */
 
-static int
+int
 vmap_count_path (pmap, loc)
 path_map_t *pmap;
 long loc;

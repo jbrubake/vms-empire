@@ -16,9 +16,9 @@ usermove.c -- Let the user move her troops.
 #include "empire.h"
 #include "extern.h"
 
-void fatal();
-void move_to_dest();
-void move_army_to_city();
+void fatal(piece_info_t *obj,long loc,char *message,char *response);
+void move_to_dest(piece_info_t *obj,long dest);
+void move_army_to_city(piece_info_t *obj,long city_loc);
 
 void
 user_move () {
@@ -51,8 +51,10 @@ user_move () {
 			set_prod (&(city[i])); /* ask user what to produce */
 		}
 		else if (city[i].work++ >= (long)piece_attr[prod].build_time) {
-			comment ("City at %d has completed %s.",
-				city[i].loc, piece_attr[prod].article);
+				/* kermyt begin */
+			ksend1("%s has been completed at city %d.\n", piece_attr[prod].article,city[i].loc,0,0,0,0,0,0);
+				/* kermyt end */
+			comment1 ("%s has been completed at city %d.\n", piece_attr[prod].article,city[i].loc,0,0,0,0,0,0);
 
 			produce (&city[i]);
 			/* produce should set object.moved to 0 */
@@ -176,11 +178,10 @@ piece_info_t *obj;
 				obj->range = piece_attr[FIGHTER].range;
 				obj->moved = speed;
 				obj->func = NOFUNC;
-				comment ("Landing confirmed.");
+				comment ("Landing confirmed.",0,0,0,0,0,0,0,0);
 			}
 			else if (obj->range == 0) {
-				comment ("Fighter at %d crashed and burned.",
-					obj->loc);
+				comment ("Fighter at %d crashed and burned.",obj->loc,0,0,0,0,0,0,0);
 				kill_obj (obj, obj->loc);
 			}
 		}
@@ -628,7 +629,7 @@ user_help () {
 	char c;
 
 	help (help_user, user_lines);
-	prompt ("Press any key to continue: ");
+	prompt ("Press any key to continue: ",0,0,0,0,0,0,0,0);
 	c = get_chx ();
 	c = c; /* keep lint happy */
 }
@@ -847,7 +848,7 @@ int dir;
 		return;
 	}
 	if (!map[loc].on_board) {
-		error ("You cannot move to the edge of the world.");
+		error ("You cannot move to the edge of the world.",0,0,0,0,0,0,0,0);
 		delay ();
 		return;
 	}
@@ -887,17 +888,24 @@ long loc;
 		return;
 
 		if (user_map[obj->loc].contents == 'T')
-			comment ("Your army jumped into the briny and drowned.");
-
+		{
+			comment ("Your army jumped into the briny and drowned.",0,0,0,0,0,0,0,0);
+			ksend ("Your army jumped into the briny and drowned.\n",0,0,0,0,0,0,0,0);
+		}
 		else if (user_map[loc].contents == '.')
-			comment ("Your army marched dutifully into the sea and drowned.");
-
+		{
+			comment ("Your army marched dutifully into the sea and drowned.",0,0,0,0,0,0,0,0);
+			ksend ("Your army marched dutifully into the sea and drowned.\n",0,0,0,0,0,0,0,0);
+		}
 		else { /* attack something at sea */
 			enemy_killed = islower (user_map[loc].contents);
 			attack (obj, loc);
 	
 			if (obj->hits > 0) /* ship won? */
-			comment ("Your army regretfully drowns after its successful assault.");
+			{
+				comment ("Your army regretfully drowns after its successful assault.",0,0,0,0,0,0,0,0);
+				ksend ("Your army regretfully drowns after it's successful assault.",0,0,0,0,0,0,0,0);
+			}
 		}
 		if (obj->hits > 0) {
 			kill_obj (obj, loc);
@@ -968,21 +976,22 @@ long loc;
 	}
 
 	else if (map[loc].contents == '+') { /* moving ashore? */
-		if (!getyn (
-	"Ships need sea to float, sir.  Do you really want to go ashore? "))
-		return;
+		if (!getyn ("Ships need sea to float, sir.  Do you really want to go ashore? ")) return;
 
 		if (user_map[loc].contents == '+')
-			comment ("Your %s broke up on shore.",
-				 piece_attr[obj->type].name);
-
+		{
+			comment1 ("Your %s broke up on shore.", piece_attr[obj->type].name,0,0,0,0,0,0,0);
+			ksend1 ("Your %s broke up on shore.", piece_attr[obj->type].name,0,0,0,0,0,0,0);
+		}
 		else { /* attack something on shore */
 			enemy_killed = islower (user_map[loc].contents);
 			attack (obj, loc);
 
 			if (obj->hits > 0) /* ship won? */
-				comment ("Your %s breaks up after its successful assault.",
-					 piece_attr[obj->type].name);
+			{
+				comment1 ("Your %s breaks up after its successful assault.", piece_attr[obj->type].name,0,0,0,0,0,0,0);
+				ksend1 ("Your %s breaks up after its successful assault.", piece_attr[obj->type].name,0,0,0,0,0,0,0);
+			}
 		}
 		if (obj->hits > 0) {
 			kill_obj (obj, loc);
@@ -1030,10 +1039,10 @@ Cancel automove mode.
 void
 user_cancel_auto () {
 	if (!automove)
-		comment ("Not in auto mode!");
+		comment ("Not in auto mode!",0,0,0,0,0,0,0,0);
 	else {
 		automove = FALSE;
-		comment ("Auto mode cancelled.");
+		comment ("Auto mode cancelled.",0,0,0,0,0,0,0,0);
 	}
 }
 
@@ -1100,7 +1109,7 @@ char *message;
 char *response;
 {
 	if (getyn (message)) {
-		comment (response);
+		comment (response,0,0,0,0,0,0,0,0);
 		kill_obj (obj, loc);
 	}
 }

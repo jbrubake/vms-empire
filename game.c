@@ -22,7 +22,7 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "empire.h"
 #include "extern.h"
 
-long remove_land();
+long remove_land(long loc, long num_land);
 
 /*
 Initialize a new game.  Here we generate a new random map, put cities
@@ -323,7 +323,7 @@ int select_cities () {
 		userp = cont_tab[user_cont].cityp[useri];
 	} while (userp == compp);
 
-	addprintf ("Your city is at %d.", userp->loc);
+	addprintf ("Your city is at %d.", userp->loc,0,0,0,0,0,0,0);
 	delay (); /* let user see output before we set_prod */
 
 	/* update city and map */
@@ -525,7 +525,7 @@ void save_game () {
 	wval (comp_score);
 
 	(void) fclose (f);
-	topmsg (3, "Game saved.");
+	topmsg (3, "Game saved.",0,0,0,0,0,0,0,0);
 }
 
 /*
@@ -613,7 +613,7 @@ int restore_game () {
 	
 	(void) fclose (f);
 	kill_display (); /* what we had is no longer good */
-	topmsg (3, "Game restored from empsave.dat.");
+	topmsg (3, "Game restored from empsave.dat.",0,0,0,0,0,0,0,0);
 	return (TRUE);
 }
 	
@@ -818,13 +818,13 @@ int round;
 		comp_cost += counts[i] * piece_attr[i-NUM_OBJECTS-2].build_time;
 		
 	for (i = 0; i < NUM_OBJECTS+1; i++) {
-		pos_str (1, (int) i * 6, "%2d %c  ", counts[i], pieces[i]);
-		pos_str (2,(int) i * 6, "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1]);
+		pos_str (1, (int) i * 6, "%2d %c  ", counts[i], pieces[i],0,0,0,0,0,0);
+		pos_str (2,(int) i * 6, "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1],0,0,0,0,0,0);
 	}
 
-	pos_str (1, (int) i * 6, "%5d", user_cost);
-	pos_str (2, (int) i * 6, "%5d", comp_cost);
-	pos_str (0, 0, "Round %3d", (round + 1) / 2);
+	pos_str (1, (int) i * 6, "%5d", user_cost,0,0,0,0,0,0,0);
+	pos_str (2, (int) i * 6, "%5d", comp_cost,0,0,0,0,0,0,0);
+	pos_str (0, 0, "Round %3d", (round + 1) / 2,0,0,0,0,0,0,0);
 }
 
 /*

@@ -1,4 +1,4 @@
-/* $Id$  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: util.c,v 1.2 1990/03/29 23:21:50 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -133,7 +133,15 @@ Position the cursor and output a string.
 */
 
 void
-/* VARARGS3 */
+pos_str1 (row, col, str, a, b, c, d, e, f, g, h)
+int row, col;
+char *str, *a;
+int b, c, d, e, f, g, h;
+{
+	(void) move (row, col);
+	addprintf1 (str, a, b, c, d, e, f, g, h);
+}
+void
 pos_str (row, col, str, a, b, c, d, e, f, g, h)
 int row, col;
 char *str;
@@ -148,6 +156,30 @@ void
 addprintf (str, a, b, c, d, e, f, g, h)
 char *str;
 int a, b, c, d, e, f, g, h;
+{
+	char junkbuf[STRSIZE];
+	
+	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
+	(void) addstr (junkbuf);
+}
+void
+/* VARARGS1 */
+addprintf1 (str, a, b, c, d, e, f, g, h)
+char *str;
+char *a;
+int b, c, d, e, f, g, h;
+{
+	char junkbuf[STRSIZE];
+	
+	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
+	(void) addstr (junkbuf);
+}
+void
+/* VARARGS1 */
+addprintf2 (str, a, b, c, d, e, f, g, h)
+char *str;
+char *a, *e, *f;
+int b, c, d, g, h;
 {
 	char junkbuf[STRSIZE];
 	

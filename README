@@ -9,10 +9,20 @@
 
 C Empire Sources
 
-Eric S. Raymond colorized and speed-tuned this and added a
-save-interval option.  Also, the victory-odds table in previous
-versions was seriously buggy. The rest of this history is Chuck Simmons's
-original notes.
+Here's my change-log. 
+
+1.2: Fri Jul 28 01:10:00 EDT 2000
+	The victory-odds table in previous versions was seriously buggy.
+	I folded in corrections from Michael Self.  I also took changes
+	from James T. Jordan <kermyt@earthling.net>, who wrote some
+	speedups, added ANSI prototypes, and cleaned 
+1.1: 
+	I colorized and speed-tuned this and added a
+	save-interval option. 
+
+The rest of this history is Chuck Simmons's original notes.
+
+					-- Eric S. Raymond
 
 History
 

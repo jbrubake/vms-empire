@@ -57,6 +57,7 @@ the max of the absolute differnce between the x and y coordinates.
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 
+int
 dist (a, b)
 long a, b;
 {
