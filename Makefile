@@ -7,9 +7,8 @@
 # and warranty information.
 
 # Note: When the version changes, you also have to change
-#  * the name of the containing directory
-#  * the RPM spec file
-V=1.1
+# the RPM spec file and the LSM.
+VERS=1.2
 
 # Change the line below for your system.  If you are on a Sun or Vax,
 # you may want BSD.
@@ -88,10 +87,23 @@ clobber: clean
 
 SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST empire.lsm empire.spec
 
-empire.tar: $(SOURCES)
-	(cd ..; tar -cvf empire-$(V)/empire.tar `echo $(SOURCES) | sed "/\(^\| \)/s// empire-$(V)\//g"`)
-empire.tar.gz: empire.tar
-	gzip -f empire.tar
+empire-$(VERS).tar.gz: $(SOURCES)
+	@ls $(SOURCES) | sed s:^:empire-$(VERS)/: >MANIFEST
+	@(cd ..; ln -s empire empire-$(VERS))
+	(cd ..; tar -czvf empire/empire-$(VERS).tar.gz `cat empire/MANIFEST`)
+	@(cd ..; rm empire-$(VERS))
 
-empire.shar: $(SOURCES)
-	shar $(SOURCES) >empire.shar
+empire-$(VERS).shar:
+	shar $(SOURCES) >empire-$(VERS).shar
+
+dist: empire-$(VERS).tar.gz
+
+RPMROOT=/usr/src/redhat
+RPM = rpm
+RPMFLAGS = -ba
+rpm: dist
+	cp empire-$(VERS).tar.gz $(RPMROOT)/SOURCES;
+	cp empire.spec $(RPMROOT)/SPECS
+	cd $(RPMROOT)/SPECS; $(RPM) $(RPMFLAGS) empire.spec	
+	cp $(RPMROOT)/RPMS/`arch|sed 's/i[4-9]86/i386/'`/empire-$(VERS)*.rpm .
+	cp $(RPMROOT)/SRPMS/empire-$(VERS)*.src.rpm .

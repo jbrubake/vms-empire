@@ -1,4 +1,4 @@
-/* %W% %G% %U% - (c) Copyright 1987, 1988 Chuck Simmons */
+/* (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -8,6 +8,10 @@
  */
 
 C Empire Sources
+
+Eric S. Raymond colorized and speed-tuned this and added a
+save-interval option.  The rest of this history is Chuck Simmons's
+original notes.
 
 History
 

@@ -1,10 +1,13 @@
-Description: Solitaire Empire (sometimes called `VMS Empire')
 Name: empire
-Version: 1.1
+Version: 1.2
 Release: 1
-Source: locke.ccil.org:/pub/esr/empire-1.1.tar.gz
+Source: locke.ccil.org:/pub/esr/empire-1.2.tar.gz
 Copyright: BSD-like
 Group: Games
+Summary: Solitaire Empire (sometimes called `VMS Empire')
+
+%description
+Solitaire Empire (sometimes called `VMS Empire')
 
 %prep
 %setup
