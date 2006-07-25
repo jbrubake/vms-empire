@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.11 2006/07/25 16:51:22 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.12 2006/07/25 16:58:26 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -35,7 +35,7 @@ static void disp_square(view_map_t *vp);
 int on_screen(long loc);
 
 #ifdef A_COLOR
-void init_colors()
+void init_colors(void)
 {
     start_color();
 
@@ -62,7 +62,7 @@ This routine is called when the current display has been
 trashed and no sector is shown on the screen.
 */
 
-void kill_display () {
+void kill_display (void) {
 	whose_map = UNOWNED;
 }
 
@@ -71,7 +71,7 @@ This routine is called when a new sector may be displayed on the
 screen even if the location to be displayed is already on the screen.
 */
 
-void sector_change () {
+void sector_change (void) {
 	change_ok = TRUE;
 }
 
@@ -80,7 +80,7 @@ Return the currently displayed user sector, if any.  If a user
 sector is not displayed, return -1.
 */
 
-int cur_sector () {
+int cur_sector (void) {
 	if (whose_map != USER) return (-1);
 	return (save_sector);
 }
@@ -90,7 +90,7 @@ Return the current position of the cursor.  If the user's map
 is not on the screen, we return -1.
 */
 
-long cur_cursor () {
+long cur_cursor (void) {
 	if (whose_map != USER) return (-1);
 	return (save_cursor);
 }
@@ -110,8 +110,6 @@ int whose; /* whose map to display */
 view_map_t vmap[];
 long loc; /* location to display */
 {
-	void print_sector();
-	
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
 		
@@ -383,7 +381,7 @@ void
 print_zoom (vmap)
 view_map_t *vmap;
 {
-	void print_zoom_cell();
+	void print_zoom_cell ();
 
 	int row_inc, col_inc;
 	int r, c;
@@ -510,7 +508,7 @@ Display the score off in the corner of the screen.
 */
 
 void
-display_score ()
+display_score (void)
 {
 	pos_str (1, cols-12, " User  Comp",0,0,0,0,0,0,0,0);
 	pos_str (2, cols-12, "%5d %5d", user_score, comp_score,0,0,0,0,0,0);
@@ -533,7 +531,7 @@ Initialize the terminal.
 */
 
 void
-ttinit()
+ttinit(void)
 {
 	(void) initscr();
 	(void) noecho();
@@ -556,7 +554,7 @@ display.
 */
 
 void
-clear_screen () {
+clear_screen (void) {
 	(void) clear ();
 	(void) refresh ();
 	kill_display ();
@@ -567,12 +565,12 @@ Redraw the screen.
 */
 
 void 
-redisplay () {
+redisplay (void) {
 	(void) refresh ();
 }
 
 void
-redraw () {
+redraw (void) {
 	(void) clearok (curscr, TRUE);
 	(void) refresh ();
 }
@@ -583,7 +581,7 @@ the screen and pause for a few milliseconds.
 */
 
 void
-delay () {
+delay (void) {
         int t = delay_time;
         int i = 500;
 	(void) refresh ();
@@ -604,7 +602,7 @@ Clean up the display.  This routine gets called as we leave the game.
 */
 
 void
-close_disp()
+close_disp(void)
 {
 	(void) move (LINES - 1, 0);
 	(void) clrtoeol ();

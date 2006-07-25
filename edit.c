@@ -19,7 +19,7 @@ edit.c -- Routines to handle edit mode commands.
 #include "extern.h"
 
 void e_move(long *path_start, long loc);
-extern int get_piece_name();
+extern int get_piece_name(void);
 
 void
 edit(edit_cursor)
@@ -149,7 +149,7 @@ Leave edit mode.
 */
 
 void
-e_leave () {
+e_leave (void) {
 }
 
 /*
@@ -634,7 +634,7 @@ get help
 */
 
 void
-e_help () {
+e_help (void) {
 	help (help_edit, edit_lines);
 	prompt ("Press any key to continue: ",0,0,0,0,0,0,0,0);
 	(void) get_chx ();

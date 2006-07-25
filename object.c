@@ -17,7 +17,7 @@ object.c -- routines for manipulating objects.
 #include "empire.h"
 #include "extern.h"
 
-extern int get_piece_name();
+extern int get_piece_name(void);
 
 /*
 Find the nearest city to a location.  Return the location
@@ -544,7 +544,7 @@ scan (vmap, loc)
 view_map_t vmap[];
 long loc;
 {
-	void update(), check();
+	void update(), check(void);
 
 	int i;
 	long xloc;
@@ -652,7 +652,7 @@ city_info_t *cityp;
 /* Get the name of a type of object. */
 
 int
-get_piece_name ()
+get_piece_name (void)
 {
 	char c;
 	int i;

@@ -1,4 +1,4 @@
-/* $Id: empire.c,v 1.5 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: empire.c,v 1.6 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -16,7 +16,7 @@ parser, and the simple commands.
 #include "empire.h"
 #include "extern.h"
 
-void c_examine(), c_movie();
+void c_examine(void), c_movie(void);
 
 /*
  * 03a 01Apr88 aml .Hacked movement algorithms for computer.
@@ -27,7 +27,7 @@ void c_examine(), c_movie();
  */
 
 void
-empire () {
+empire (void) {
 	void do_command();
 	void print_zoom();
 
@@ -72,8 +72,8 @@ void
 do_command (orders)
 char orders;
 {
-	void c_debug(), c_quit(), c_sector(), c_map();
-	void c_give();
+	void c_debug(), c_quit(void), c_sector(void), c_map(void);
+	void c_give(void);
 
 	char e;
 	int ncycle;
@@ -255,7 +255,7 @@ The quit command.  Make sure the user really wants to quit.
 */
 
 void
-c_quit () {
+c_quit (void) {
 	if (getyn ("QUIT - Are you sure? ")) {
 	    empend ();
 	}
@@ -267,7 +267,7 @@ and print it.
 */
 
 void
-c_sector () {
+c_sector (void) {
 	int num;
 
 	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
@@ -282,7 +282,7 @@ out the map.
 */
 
 void
-c_map () {
+c_map (void) {
 	FILE *f;
 	int i, j;
 	char line[MAP_HEIGHT+2];
@@ -315,7 +315,7 @@ Allow user to examine the computer's map.
 */
 
 void
-c_examine () {
+c_examine (void) {
 	int num;
 
 	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
@@ -328,7 +328,7 @@ Print a "zoomed" version of the computer's map.
 */
 
 void
-c_movie () {
+c_movie (void) {
 	(void) clear ();
 	for (;;) {
 		comp_move (1);

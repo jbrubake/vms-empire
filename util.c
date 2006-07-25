@@ -1,4 +1,4 @@
-/* $Id: util.c,v 1.5 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: util.c,v 1.6 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -12,6 +12,7 @@ util.c -- various utility routines.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <signal.h>
 #include "empire.h"

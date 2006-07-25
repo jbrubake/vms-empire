@@ -12,13 +12,14 @@ game.c -- Routines to initialize, save, and restore a game.
 */
 
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
 #include "empire.h"
 #include "extern.h"
 
 long remove_land(long loc, long num_land);
-int select_cities();
+int select_cities(void);
 int find_next(long *mapi);
 int good_cont(long mapi);
 int xread(FILE *f, char *buf, int size);
@@ -31,8 +32,8 @@ on the map, select cities for each opponent, and zero out the lists of
 pieces on the board.
 */
 
-void init_game () {
-	void make_map(), place_cities();
+void init_game (void) {
+	void make_map(void), place_cities(void);
 
 	long i;
 
@@ -96,7 +97,7 @@ at program start up.
 static int height[2][MAP_SIZE];
 static int height_count[MAX_HEIGHT+1];
 
-void make_map () {
+void make_map (void) {
 	int from, to, k;
 	long i, j, sum, loc;
 
@@ -167,7 +168,7 @@ for a city, we remove land cells which are too close to the city.
 /* avoid compiler problems with large automatic arrays */
 static long land[MAP_SIZE];
 
-void place_cities () {
+void place_cities (void) {
 	long regen_land();
 
 	long placed, i, loc;
@@ -295,8 +296,8 @@ static cont_t cont_tab[MAX_CONT]; /* list of good continenets */
 static int rank_tab[MAX_CONT]; /* indices to cont_tab in order of rank */
 static pair_t pair_tab[MAX_CONT*MAX_CONT]; /* ranked pairs of continents */
 
-int select_cities () {
-	void find_cont(), make_pair();
+int select_cities (void) {
+	void find_cont(void), make_pair(void);
 
 	long compi, useri;
 	city_info_t *compp, *userp;
@@ -345,7 +346,7 @@ Find all continents with 2 cities or more, one of which must be a shore
 city.  We rank the continents.
 */
 
-void find_cont () {
+void find_cont (void) {
 	long i;
 	long mapi;
 
@@ -398,7 +399,7 @@ continent and return true.  Otherwise we return false.
 */
 
 static long ncity, nland, nshore;
-static void mark_cont();
+static void mark_cont(long);
 
 int good_cont (mapi)
 long mapi;
@@ -464,7 +465,7 @@ win with.  Our ranking is simply based on the difference in value
 between the user's continent and the computer's continent.
 */
 
-void make_pair () {
+void make_pair (void) {
 	int i, j, k, npair;
 	long val;
 
@@ -499,7 +500,7 @@ tell the user why.
 #define wbuf(buf) if (!xwrite (f, (char *)buf, sizeof (buf))) return
 #define wval(val) if (!xwrite (f, (char *)&val, sizeof (val))) return
 
-void save_game () {
+void save_game (void) {
 	FILE *f; /* file to save game in */
 
 	f = fopen (savefile, "w"); /* open for output */
@@ -536,7 +537,7 @@ We return TRUE if we succeed, otherwise FALSE.
 #define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (FALSE);
 #define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (FALSE);
 
-int restore_game () {
+int restore_game (void) {
 	void read_embark();
 	
 	FILE *f; /* file to save game in */
@@ -627,7 +628,7 @@ void read_embark (list, piece_type)
 piece_info_t *list;
 int piece_type;
 {
-	void inconsistent();
+	void inconsistent(void);
 
 	piece_info_t *ship;
 	piece_info_t *obj;
@@ -648,7 +649,7 @@ int piece_type;
 	}
 }
 
-void inconsistent () {
+void inconsistent (void) {
 	(void) printf ("saved game is inconsistent.  Please remove it.\n");
 	exit (1);
 }
@@ -711,7 +712,7 @@ extern char city_char[];
 static char mapbuf[MAP_SIZE];
 
 void
-save_movie_screen ()
+save_movie_screen (void)
 {
 	FILE *f; /* file to save game in */
 	long i;
@@ -744,7 +745,7 @@ print it using a zoomed display.
 */
 
 void
-replay_movie ()
+replay_movie (void)
 {
 	void print_movie_cell();
 

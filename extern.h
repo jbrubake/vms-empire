@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.9 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.10 2006/07/25 16:58:26 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -108,11 +108,11 @@ char *savefile;
 		
 /* global routines */
 
-void empire();
+void empire(void);
 
 void attack(piece_info_t *att_obj, long loc);
 void comp_move(int nmoves);
-void user_move();
+void user_move(void);
 void edit(long edit_cursor);
 
 /* map routines */
@@ -141,11 +141,11 @@ int rmap_at_sea (long loc);
 
 /* display routines */
 void announce (char *);
-void redisplay();
-void kill_display ();
-void sector_change ();
-int cur_sector ();
-long cur_cursor ();
+void redisplay (void);
+void kill_display (void);
+void sector_change (void);
+int cur_sector (void);
+long cur_cursor (void);
 void display_loc (int whose, view_map_t vmap[], long loc);
 void display_locx (int whose, view_map_t vmap[], long loc);
 void print_sector (int whose, view_map_t vmap[], int sector);
@@ -153,36 +153,36 @@ int move_cursor (long *cursor, int offset);
 void print_zoom (view_map_t *vmap);
 void print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap);
 void print_xzoom (view_map_t *vmap);
-void display_score ();
+void display_score (void);
 #ifdef A_COLOR
-void init_colors ();
+void init_colors (void);
 #endif /* A_COLOR */
-void redraw ();
-void clear_screen ();
-void delay ();
-void close_disp ();
+void redraw (void);
+void clear_screen (void);
+void delay (void);
+void close_disp (void);
 void pos_str (int row, int col, char *str, int a, int b, int c, int d, int e, int f, int g, int h);
 void pos_str1 (int row, int col, char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
 void addprintf (char *str, int a, int b, int c, int d, int e, int f, int g, int h);
 void addprintf1 (char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
 void addprintf2 (char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h);
 
-void init_game (); /* game routines */
-void save_game ();
-int restore_game ();
-void save_movie_screen ();
-void replay_movie ();
+void init_game (void); /* game routines */
+void save_game (void);
+int restore_game (void);
+void save_movie_screen (void);
+void replay_movie (void);
 
 void get_str (char *buf, int sizep); /* input routines */
 void get_strq (char *buf, int sizep);
-char get_chx ();
+char get_chx (void);
 int getint (char *message);
-char get_c ();
-char get_cq ();
+char get_c (void);
+char get_cq (void);
 int getyn (char *message);
 int get_range (char *message, int low, int high);
 
-void rndini (); /* math routines */
+void rndini (void); /* math routines */
 long irand (long high);
 int dist (long a, long b);
 int isqrt (int n);
@@ -210,7 +210,7 @@ void set_prod (city_info_t *cityp);
 
 /* terminal routines */
 void pdebug (char *s, int a, int b, int c, int d, int e, int f, int g, int h);
-void topini ();
+void topini (void);
 void clreol (int linep, int colp);
 void topmsg (int linep, char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
 void topmsg1 (int linep, char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
@@ -223,26 +223,17 @@ void info (char *a, char *b, char *c);
 void comment (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
 void comment1 (char *buf,char *a, int b, int c, int d, int e, int f, int g, int h);
 void extra (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
-void huh ();
+void huh (void);
 void help (char **text, int nlines);
-void set_need_delay ();
+void set_need_delay (void);
 void ksend (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
 void ksend1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
 
 /* utility routines */
-void ttinit ();
+void ttinit (void);
 void assert (char *expression, char *file, int line);
-void empend ();
+void empend (void);
 char upper (char c);
 void tupper (char *str);
-void check ();
+void check (void);
 int loc_disp (int loc);
-
-/* randon routines we use */
-long time();
-void exit();
-void perror();
-void srand();
-#ifndef LINUX
-char *strcpy();
-#endif

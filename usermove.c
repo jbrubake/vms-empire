@@ -21,10 +21,10 @@ void fatal(piece_info_t *obj,long loc,char *message,char *response);
 void move_to_dest(piece_info_t *obj,long dest);
 void move_army_to_city(piece_info_t *obj,long city_loc);
 int awake(piece_info_t *obj);
-extern int get_piece_name();
+extern int get_piece_name(void);
 
 void
-user_move () {
+user_move (void) {
 	void piece_move();
 
 	int i, j, sec, sec_start;
@@ -628,7 +628,7 @@ Print out help information.
 */
 
 void
-user_help () {
+user_help (void) {
 	char c;
 
 	help (help_user, user_lines);
@@ -1040,7 +1040,7 @@ Cancel automove mode.
 */
 
 void
-user_cancel_auto () {
+user_cancel_auto (void) {
 	if (!automove)
 		comment ("Not in auto mode!",0,0,0,0,0,0,0,0);
 	else {
@@ -1054,7 +1054,7 @@ Redraw the screen.
 */
 
 void
-user_redraw () {
+user_redraw (void) {
 	redraw ();
 }
 
