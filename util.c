@@ -1,4 +1,4 @@
-/* $Id: util.c,v 1.4 2006/07/25 15:20:30 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: util.c,v 1.5 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -80,19 +80,6 @@ empend ()
 	exit (0);
 }
 
-/*
- * 03a 01Apr88 aml .Hacked movement algorithms for computer.
- * 02b 01Jun87 aml .First round of bug fixes.
- * 02a 01Jan87 aml .Translated to C.
- * 01b 27May85 cal .Fixed round number update bug. Made truename simple.
- * 01a 01Sep83 cal .Taken from a Decus tape
- */
-
-void
-version ()
-{
-        (void) addstr ("EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
-}
 
 /*
 Here is a little routine to perform consistency checking on the

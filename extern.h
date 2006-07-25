@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.7 2006/07/25 15:19:49 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.8 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -139,7 +139,9 @@ int rmap_shore (long loc);
 int vmap_at_sea (view_map_t *vmap, long loc);
 int rmap_at_sea (long loc);
 
-void kill_display (); /* display routines */
+/* display routines */
+void redisplay();
+void kill_display ();
 void sector_change ();
 int cur_sector ();
 long cur_cursor ();
@@ -230,7 +232,6 @@ void ksend1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h
 void ttinit ();
 void assert (char *expression, char *file, int line);
 void empend ();
-void version ();
 char upper (char c);
 void tupper (char *str);
 void check ();

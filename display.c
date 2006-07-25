@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.8 2002/04/19 09:17:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.9 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -563,6 +563,11 @@ clear_screen () {
 /*
 Redraw the screen.
 */
+
+void 
+redisplay () {
+	(void) refresh ();
+}
 
 void
 redraw () {

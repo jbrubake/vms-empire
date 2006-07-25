@@ -1,4 +1,4 @@
-/* $Id: empire.c,v 1.4 2000/07/28 05:12:51 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: empire.c,v 1.5 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -13,11 +13,18 @@ parser, and the simple commands.
 */
 
 #include <stdio.h>
-#include <curses.h>
 #include "empire.h"
 #include "extern.h"
 
 void c_examine(), c_movie();
+
+/*
+ * 03a 01Apr88 aml .Hacked movement algorithms for computer.
+ * 02b 01Jun87 aml .First round of bug fixes.
+ * 02a 01Jan87 aml .Translated to C.
+ * 01b 27May85 cal .Fixed round number update bug. Made truename simple.
+ * 01a 01Sep83 cal .Taken from a Decus tape
+ */
 
 void
 empire () {
@@ -31,8 +38,7 @@ empire () {
 	rndini (); /* init random number generator */
 
 	clear_screen (); /* nothing on screen */
-	(void) move (7, 0);
-	version ();
+	pos_str (7, 0, "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988",0,0,0,0,0,0,0,0);
 	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n",0,0,0,0,0,0,0,0);
 	(void) refresh ();
 
@@ -50,7 +56,7 @@ empire () {
 	    }
 	    else {
 		prompt (0,0,0,0,0,0,0,0,0); /* blank top line */
-		(void) refresh ();
+		void redisplay();
 	        prompt ("Your orders? ",0,0,0,0,0,0,0,0);
 	        order = get_chx (); /* get a command */
 		do_command (order);
@@ -152,11 +158,9 @@ char orders;
 		if (resigned || debug) replay_movie ();
 		else error ("You cannot watch movie until computer resigns.",0,0,0,0,0,0,0,0);
 		break;
-	
+
 	case 'Z': /* print compressed map */
-		(void) clear ();
 		print_zoom (user_map);
-		(void) refresh ();
 		break;
 
 	case '\014': /* redraw the screen */
