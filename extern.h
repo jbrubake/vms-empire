@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.10 2006/07/25 16:58:26 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.11 2006/07/25 17:21:51 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -166,6 +166,7 @@ void pos_str1 (int row, int col, char *str, char *a, int b, int c, int d, int e,
 void addprintf (char *str, int a, int b, int c, int d, int e, int f, int g, int h);
 void addprintf1 (char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
 void addprintf2 (char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h);
+int direction();
 
 void init_game (void); /* game routines */
 void save_game (void);

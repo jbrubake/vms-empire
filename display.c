@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.13 2006/07/25 17:21:51 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.14 2006/07/25 17:59:36 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -48,6 +48,7 @@ void init_colors(void)
     init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
     init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
     attron(A_BOLD);	/* otherwise we get gray for white */
+    keypad(stdscr, TRUE);
 }
 #endif /* A_COLOR */
 
@@ -56,6 +57,65 @@ Used for win announcements
  */
 void announce (char *msg) {
     (void) addstr (msg);
+}
+
+
+/*
+ * Map input character to direction offset.
+ * Attempts to enable arrow and keypad keys.
+ */
+int direction(c)
+chtype c;
+{
+    switch (c)
+    {
+    case 'w':
+    case 'W':
+    case KEY_UP:
+	return 0;
+
+    case 'e':
+    case 'E':
+    case KEY_A3:
+    case KEY_PPAGE:
+	return 1;
+
+    case 'd':
+    case 'D':
+    case KEY_RIGHT:
+	return 2;
+
+    case 'c':
+    case 'C':
+    case KEY_C3:
+    case KEY_NPAGE:
+	return 3;
+
+    case 'x':
+    case 'X':
+    case KEY_DOWN:
+	return 4;
+
+    case 'z':
+    case 'Z':
+    case KEY_C1:
+    case KEY_END:
+	return 5;
+
+    case 'a':
+    case 'A':
+    case KEY_LEFT:
+	return 6;
+
+    case 'q':
+    case 'Q':
+    case KEY_A1:
+    case KEY_HOME:
+	return 7;
+
+    default:
+	return -1;
+    }
 }
 
 /*

@@ -114,14 +114,12 @@ This routine is an attempt to make cursor movement reasonably
 fast.
 */
 
-static char dirchars[] = "WwEeDdCcXxZzAaQq";
-
 char
 e_cursor (edit_cursor)
 long *edit_cursor;
 {
-	char e;
-	char *p;
+	chtype e;
+	int p;
 	
 	/* set up terminal */
 	(void) crmode ();
@@ -130,10 +128,10 @@ long *edit_cursor;
 	topini (); /* clear any error messages */
 
 	for (;;) {
-		p = strchr (dirchars, e);
-		if (!p) break;
+		p = direction (e);
+		if (p == -1) break;
 
-		if (!move_cursor (edit_cursor, dir_offset[(p-dirchars) / 2]))
+		if (!move_cursor (edit_cursor, dir_offset[p]))
 			(void) beep ();
 		
 		(void) refresh ();

@@ -1,4 +1,4 @@
-.\" $Id: vms-empire.6,v 1.4 2002/08/01 18:58:22 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+.\" $Id: vms-empire.6,v 1.5 2006/07/25 15:21:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 .\"
 .\"   Copyright (C) 1987, 1988 Chuck Simmons
 .\"
@@ -459,6 +459,8 @@ following keys:
 .fi
 .ft 1
 .P
+The arrow and keypad keys on your terminal, if any, should also work.
+.P
 These keys move in the direction of the key from S.  The
 characters are not echoed and only 1 character is
 accepted, so there is no need for a <Return>.  Hit the <Space>
@@ -651,6 +653,8 @@ reverse engineered the program and wrote a
 version completely written in C.  In doing so, he completely
 modified the computer strategy, the commands, the piece types,
 many of the piece attributes, and the algorithm for creating maps.
+.P
+In 1994 Eric Raymond colorized the game.
 .SH FILES
 .TP 10
 \f2empsave.dat\f1
