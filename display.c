@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.12 2006/07/25 16:58:26 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.13 2006/07/25 17:21:51 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -47,6 +47,7 @@ void init_colors(void)
     init_pair(COLOR_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
     init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+    attron(A_BOLD);	/* otherwise we get gray for white */
 }
 #endif /* A_COLOR */
 
@@ -254,13 +255,15 @@ static void disp_square(vp)
 view_map_t *vp;
 {
 #ifdef A_COLOR
+	chtype attr;
+
 	switch(vp->contents)
 	{
 	case '+':
-		attron(COLOR_PAIR(COLOR_GREEN));
+	    attr = COLOR_PAIR(COLOR_GREEN);
 		break;
 	case '.':
-		attron(COLOR_PAIR(COLOR_CYAN));
+		attr = COLOR_PAIR(COLOR_CYAN);
 		break;
 	case 'a':
 	case 'f':
@@ -272,16 +275,17 @@ view_map_t *vp;
 	case 's':
 	case 'z':
 	case 'X':
-		attron(COLOR_PAIR(COLOR_RED));
+		attr = COLOR_PAIR(COLOR_RED);
 		break;
 	default:
-		attron(COLOR_PAIR(COLOR_WHITE));
+		attr = COLOR_PAIR(COLOR_WHITE);
 		break;
 	}
+	attron(attr);
 #endif /* A_COLOR */
 	(void) addch ((chtype)vp->contents);
 #ifdef A_COLOR
-	attrset(0);
+	attroff(attr);
 	attron(COLOR_PAIR(COLOR_WHITE));
 #endif /* A_COLOR */
 }
