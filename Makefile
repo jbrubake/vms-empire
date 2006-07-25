@@ -85,4 +85,4 @@ vms-empire-$(VERS).tar.gz: $(SOURCES) vms-empire.6
 dist: vms-empire-$(VERS).tar.gz
 
 release: vms-empire-$(VERS).tar.gz
-	shipper -f; rm -f CHANGES ANNOUNCE* *.6 *.html *.rpm *.lsm MANIFEST
+	shipper; rm -f CHANGES ANNOUNCE* *.6 *.html *.rpm *.lsm MANIFEST
