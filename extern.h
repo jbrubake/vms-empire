@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.8 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.9 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -140,6 +140,7 @@ int vmap_at_sea (view_map_t *vmap, long loc);
 int rmap_at_sea (long loc);
 
 /* display routines */
+void announce (char *);
 void redisplay();
 void kill_display ();
 void sector_change ();

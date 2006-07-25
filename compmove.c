@@ -1153,28 +1153,28 @@ check_endgame () { /* see if game is over */
 		error ("you wish to smash the rest of the enemy? ",0,0,0,0,0,0,0,0);
 
 		if (get_chx() !=  'Y') empend ();
-		(void) addstr ("\nThe enemy inadvertantly revealed its code used for");
-		(void) addstr ("\nreceiving battle information. You can display what");
-		(void) addstr ("\nthey've learned with the ''E'' command.");
+		announce ("\nThe enemy inadvertantly revealed its code used for");
+		announce ("\nreceiving battle information. You can display what");
+		announce ("\nthey've learned with the ''E'' command.");
 		resigned = TRUE;
 		win = 2;
 		automove = FALSE;
 	}
 	else if (ncomp_city == 0 && ncomp_army == 0) {
 		clear_screen ();
-		(void) addstr ("The enemy is incapable of defeating you.\n");
-		(void) addstr ("You are free to rape the empire as you wish.\n");
-	    	(void) addstr ("There may be, however, remnants of the enemy fleet\n");
-	    	(void) addstr ("to be routed out and destroyed.\n");
+		announce ("The enemy is incapable of defeating you.\n");
+		announce ("You are free to rape the empire as you wish.\n");
+	    	announce ("There may be, however, remnants of the enemy fleet\n");
+	    	announce ("to be routed out and destroyed.\n");
 		win = 1;
 		automove = FALSE;
 	}
 	else if (nuser_city == 0 && nuser_army == 0) {
 	    	clear_screen ();
-	    	(void) addstr ("You have been rendered incapable of\n");
-	    	(void) addstr ("defeating the rampaging enemy fascists! The\n");
-	    	(void) addstr ("empire is lost. If you have any ships left, you\n");
-	    	(void) addstr ("may attempt to harass enemy shipping.");
+	    	announce ("You have been rendered incapable of\n");
+	    	announce ("defeating the rampaging enemy fascists! The\n");
+	    	announce ("empire is lost. If you have any ships left, you\n");
+	    	announce ("may attempt to harass enemy shipping.");
 		win = 1;
 		automove = FALSE;
 	}

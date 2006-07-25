@@ -468,13 +468,5 @@ loc_disp (int loc)
   for (i = COL_DIGITS; i > 0; i--) {
     nrow *= 10; }
   move (LINES - 1, 0);
-  /*
-  {
-    char junkbuf[STRSIZE];
-    (void) snprintf (junkbuf, STRSIZE, "loc: %d, row: %d, col: %d, nrow: %d, nrow+col: %d", loc, row, col, nrow, nrow + col);
-    (void) addstr (junkbuf);
-    napms(500);
-  }
-  */
   return nrow + col;
 }

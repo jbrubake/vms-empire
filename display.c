@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.10 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.11 2006/07/25 16:51:22 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -49,6 +49,13 @@ void init_colors()
     init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 }
 #endif /* A_COLOR */
+
+/*
+Used for win announcements 
+ */
+void announce (char *msg) {
+    (void) addstr (msg);
+}
 
 /*
 This routine is called when the current display has been
