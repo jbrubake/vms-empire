@@ -8,13 +8,6 @@
 
 VERS=$(shell sed <vms-empire.spec -n -e '/Version: \(.*\)/s//\1/p')
 
-# Change the line below for your system.  If you are on a Sun or Vax,
-# you may want BSD.
-
-SYS = LINUX
-#SYS = BSD
-#SYS = SYSV
-
 # Use -g to compile the program for debugging.
 
 #DEBUG = -g -DDEBUG -Wall
@@ -28,7 +21,7 @@ LIBS = -lncurses
 
 # You shouldn't have to modify anything below this line.
 
-CFLAGS = $(DEBUG) $(PROFILE) -D$(SYS)
+CFLAGS = $(DEBUG) $(PROFILE)
 
 FILES = \
 	attack.c \

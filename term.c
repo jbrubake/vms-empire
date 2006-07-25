@@ -30,6 +30,7 @@ to read the lines.  The new information is then displayed, and the
 */
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <curses.h>
 #include <ctype.h>

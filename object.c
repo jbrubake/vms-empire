@@ -11,12 +11,7 @@
 object.c -- routines for manipulating objects.
 */
 
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <stdio.h>
 #include <ctype.h>
 #include "empire.h"

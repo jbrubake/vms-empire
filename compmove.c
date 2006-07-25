@@ -17,12 +17,7 @@ For each move the user wants us to make, we do the following:
     3)  Check to see if the game is over.
 */
 
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include "empire.h"
 #include "extern.h"
 

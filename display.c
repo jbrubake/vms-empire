@@ -1,4 +1,4 @@
-/* $Id: display.c,v 1.9 2006/07/25 15:59:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: display.c,v 1.10 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -18,12 +18,7 @@ information:
 	point of view;
 */
 
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <curses.h>
 #include "empire.h"
 #include "extern.h"

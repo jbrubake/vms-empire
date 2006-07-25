@@ -20,24 +20,6 @@ empire.h -- type and constant declarations
 #define NULL 0
 #endif
 
-/* Redefine some functions for portability. */
-#ifdef LINUX
-#include <string.h>
-#elif SYSV
-char *memset();
-char *memcpy();
-#define bzero(dst,len) memset(dst,0,len)
-#else
-#define memcpy(dst,src,len) bcopy((src),(dst),(len))
-#define strchr(s,c) index(s,c)
-typedef char chtype;
-#define beep() (putchar('\7'))
-#define napms(d) (usleep((d)*1000))
-#endif
-
-
-
-
 typedef unsigned char uchar;
 
 #define ASSERT(x) if (!(x)) assert ("x", __FILE__, __LINE__);

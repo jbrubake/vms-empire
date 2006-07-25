@@ -12,12 +12,7 @@ edit.c -- Routines to handle edit mode commands.
 */
 
 #include <stdio.h>
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <curses.h>
 #include <ctype.h>
 #include "empire.h"

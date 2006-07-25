@@ -1,4 +1,4 @@
-/* $Id: map.c,v 1.5 2002/04/19 09:17:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: map.c,v 1.6 2006/07/25 15:19:49 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -14,12 +14,7 @@ This file contains routines for playing around with view_maps,
 real_maps, path_maps, and cont_maps.
 */
 
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include "empire.h"
 #include "extern.h"
 

@@ -11,12 +11,7 @@
 game.c -- Routines to initialize, save, and restore a game.
 */
 
-#ifdef SYSV
 #include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <stdio.h>
 #include <ctype.h>
 #include "empire.h"
