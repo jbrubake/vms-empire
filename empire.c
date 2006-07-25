@@ -1,4 +1,4 @@
-/* $Id: empire.c,v 1.3 1994/12/01 15:54:33 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: empire.c,v 1.4 2000/07/28 05:12:51 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -32,7 +32,7 @@ empire () {
 
 	clear_screen (); /* nothing on screen */
 	(void) move (7, 0);
-	ver ();
+	version ();
 	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n",0,0,0,0,0,0,0,0);
 	(void) refresh ();
 

@@ -11,6 +11,7 @@
 edit.c -- Routines to handle edit mode commands.
 */
 
+#include <stdio.h>
 #ifdef SYSV
 #include <string.h>
 #else

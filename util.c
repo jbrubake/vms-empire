@@ -1,4 +1,4 @@
-/* $Id: util.c,v 1.3 2000/07/28 05:12:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: util.c,v 1.4 2006/07/25 15:20:30 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -11,7 +11,7 @@
 util.c -- various utility routines.
 */
 
-#include <curses.h>
+#include <stdio.h>
 #include <ctype.h>
 #include <signal.h>
 #include "empire.h"
@@ -46,156 +46,6 @@ char c;
 	if (islower (c))
 		return toupper (c);
 	else return c;
-}
-
-/*
-Clear the end of a specified line starting at the specified column.
-*/
-
-void
-clreol(linep, colp)
-int linep, colp;
-{
-	(void) move (linep, colp);
-	(void) clrtoeol();
-}
-
-/*
-Initialize the terminal.
-*/
-
-void
-ttinit()
-{
-	(void) initscr();
-	(void) noecho();
-	(void) crmode();
-#ifdef A_COLOR
-	init_colors();
-#endif /* A_COLOR */
-	lines = LINES;
-	cols = COLS;
-	if (lines > MAP_HEIGHT + NUMTOPS + 1)
-		lines = MAP_HEIGHT + NUMTOPS + 1;
-	if (cols > MAP_WIDTH + NUMSIDES)
-		cols = MAP_WIDTH + NUMSIDES;
-}
-
-
-/*
-Clear the screen.  We must also kill information maintained about the
-display.
-*/
-
-void
-clear_screen () {
-	(void) clear ();
-	(void) refresh ();
-	kill_display ();
-}
-
-/*
-Redraw the screen.
-*/
-
-void
-redraw () {
-	(void) clearok (curscr, TRUE);
-	(void) refresh ();
-}
-
-/*
-Wait a little bit to give user a chance to see a message.  We refresh
-the screen and pause for a few milliseconds.
-*/
-
-void
-delay () {
-        int t = delay_time;
-        int i = 500;
-	(void) refresh ();
-        if (t > i) {
-          (void) move (LINES - 1, 0);
-        }
-        for (; t > 0; t -= i) {
-          (void) napms ((t > i) ? i : t); /* pause a bit */
-          if (t > i) {
-            addstr ("*");
-            refresh (); 
-          }
-        }
-}
-
-/*
-Clean up the display.  This routine gets called as we leave the game.
-*/
-
-void
-close_disp()
-{
-	(void) move (LINES - 1, 0);
-	(void) clrtoeol ();
-	(void) refresh ();
-	(void) endwin ();
-}
-
-/*
-Position the cursor and output a string.
-*/
-
-void
-pos_str1 (row, col, str, a, b, c, d, e, f, g, h)
-int row, col;
-char *str, *a;
-int b, c, d, e, f, g, h;
-{
-	(void) move (row, col);
-	addprintf1 (str, a, b, c, d, e, f, g, h);
-}
-void
-pos_str (row, col, str, a, b, c, d, e, f, g, h)
-int row, col;
-char *str;
-int a, b, c, d, e, f, g, h;
-{
-	(void) move (row, col);
-	addprintf (str, a, b, c, d, e, f, g, h);
-}
-
-void
-/* VARARGS1 */
-addprintf (str, a, b, c, d, e, f, g, h)
-char *str;
-int a, b, c, d, e, f, g, h;
-{
-	char junkbuf[STRSIZE];
-	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
-	(void) addstr (junkbuf);
-}
-void
-/* VARARGS1 */
-addprintf1 (str, a, b, c, d, e, f, g, h)
-char *str;
-char *a;
-int b, c, d, e, f, g, h;
-{
-	char junkbuf[STRSIZE];
-	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
-	(void) addstr (junkbuf);
-}
-void
-/* VARARGS1 */
-addprintf2 (str, a, b, c, d, e, f, g, h)
-char *str;
-char *a, *e, *f;
-int b, c, d, g, h;
-{
-	char junkbuf[STRSIZE];
-	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
-	(void) addstr (junkbuf);
 }
 
 /*
@@ -239,7 +89,7 @@ empend ()
  */
 
 void
-ver ()
+version ()
 {
         (void) addstr ("EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
 }

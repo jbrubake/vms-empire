@@ -17,8 +17,8 @@ game.c -- Routines to initialize, save, and restore a game.
 #include <strings.h>
 #endif
 
+#include <stdio.h>
 #include <ctype.h>
-#include <curses.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -832,28 +832,3 @@ int round;
 	pos_str (0, 0, "Round %3d", (round + 1) / 2,0,0,0,0,0,0,0);
 }
 
-/*
-Print a single cell in condensed format.
-*/
-
-extern char zoom_list[];
-
-void
-print_movie_cell (mbuf, row, col, row_inc, col_inc)
-char *mbuf;
-int row, col;
-int row_inc, col_inc;
-{
-	int r, c;
-	char cell;
-
-	cell = ' ';
-	for (r = row; r < row + row_inc; r++)
-	for (c = col; c < col + col_inc; c++)
-	if (strchr (zoom_list, mbuf[row_col_loc(r,c)])
-		< strchr (zoom_list, cell))
-	cell = mbuf[row_col_loc(r,c)];
-	
-	(void) move (row/row_inc + NUMTOPS, col/col_inc);
-	(void) addch ((chtype)cell);
-}

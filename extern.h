@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.6 2002/08/01 18:58:21 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.7 2006/07/25 15:19:49 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -154,6 +154,15 @@ void display_score ();
 #ifdef A_COLOR
 void init_colors ();
 #endif /* A_COLOR */
+void redraw ();
+void clear_screen ();
+void delay ();
+void close_disp ();
+void pos_str (int row, int col, char *str, int a, int b, int c, int d, int e, int f, int g, int h);
+void pos_str1 (int row, int col, char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
+void addprintf (char *str, int a, int b, int c, int d, int e, int f, int g, int h);
+void addprintf1 (char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
+void addprintf2 (char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h);
 
 void init_game (); /* game routines */
 void save_game ();
@@ -219,18 +228,9 @@ void ksend1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h
 
 /* utility routines */
 void ttinit ();
-void redraw ();
-void clear_screen ();
-void delay ();
-void close_disp ();
-void pos_str (int row, int col, char *str, int a, int b, int c, int d, int e, int f, int g, int h);
-void pos_str1 (int row, int col, char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
-void addprintf (char *str, int a, int b, int c, int d, int e, int f, int g, int h);
-void addprintf1 (char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
-void addprintf2 (char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h);
 void assert (char *expression, char *file, int line);
 void empend ();
-void ver ();
+void version ();
 char upper (char c);
 void tupper (char *str);
 void check ();

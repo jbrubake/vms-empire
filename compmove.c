@@ -23,7 +23,6 @@ For each move the user wants us to make, we do the following:
 #include <strings.h>
 #endif
 
-#include <curses.h>
 #include "empire.h"
 #include "extern.h"
 
