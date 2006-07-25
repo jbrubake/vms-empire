@@ -1,5 +1,5 @@
 Name: vms-empire
-Version: 1.7
+Version: 1.8
 Release: 1
 URL: http://www.catb.org/~esr/vms-empire/
 Source: %{name}-%{version}.tar.gz
@@ -39,6 +39,10 @@ cp vms-empire.6 "$RPM_BUILD_ROOT"%{_mandir}/man6/
 %{_bindir}/vms-empire
 
 %changelog
+* Tue Jul 25 2006 Eric S. Raymond <esr@snark.thyrsus.com> - 1.8-1
+- Joe Wells's patch to enable different-sized worlds.  Minor fixes to 
+  map functions by Andrew Morrow. More on the history of the game.
+
 * Mon Sep 27 2004 Eric S. Raymond <esr@snark.thyrsus.com> 1.7-1
 - Documentation fixes.  The old empire.doc file has been replaced
   by the man page.
