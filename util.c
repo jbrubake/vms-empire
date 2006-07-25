@@ -1,4 +1,4 @@
-/* $Id: util.c,v 1.2 1990/03/29 23:21:50 eric Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: util.c,v 1.3 2000/07/28 05:12:54 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -13,6 +13,7 @@ util.c -- various utility routines.
 
 #include <curses.h>
 #include <ctype.h>
+#include <signal.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -110,10 +111,20 @@ the screen and pause for a few milliseconds.
 
 void
 delay () {
+        int t = delay_time;
+        int i = 500;
 	(void) refresh ();
-	(void) napms (delay_time); /* pause a bit */
+        if (t > i) {
+          (void) move (LINES - 1, 0);
+        }
+        for (; t > 0; t -= i) {
+          (void) napms ((t > i) ? i : t); /* pause a bit */
+          if (t > i) {
+            addstr ("*");
+            refresh (); 
+          }
+        }
 }
-
 
 /*
 Clean up the display.  This routine gets called as we leave the game.
@@ -198,7 +209,6 @@ char *file;
 int line;
 {
 	char buf[STRSIZE];
-	int a;
 
 	(void) move (lines, 0);
 	close_disp ();
@@ -206,9 +216,7 @@ int line;
 	(void) sprintf (buf, "assert failed: file %s line %d: %s",
 			file, line, expression);
 
-	a = 1; /* keep lint quiet */
-	a /= 0; /* force a core dump */
-	a = a; /* keep lint quiet */
+	kill(getpid(), SIGSEGV);	/* core dump */
 }
 
 /*
