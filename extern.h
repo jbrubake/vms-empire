@@ -1,4 +1,4 @@
-/* $Id: extern.h,v 1.5 2002/04/19 09:17:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: extern.h,v 1.6 2002/08/01 18:58:21 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -234,6 +234,7 @@ void ver ();
 char upper (char c);
 void tupper (char *str);
 void check ();
+int loc_disp (int loc);
 
 /* randon routines we use */
 long time();

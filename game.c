@@ -329,7 +329,7 @@ int select_cities () {
 		userp = cont_tab[user_cont].cityp[useri];
 	} while (userp == compp);
 
-	addprintf ("Your city is at %d.", userp->loc,0,0,0,0,0,0,0);
+	addprintf ("Your city is at %d.", loc_disp(userp->loc),0,0,0,0,0,0,0);
 	delay (); /* let user see output before we set_prod */
 
 	/* update city and map */
@@ -403,12 +403,11 @@ continent and return true.  Otherwise we return false.
 */
 
 static long ncity, nland, nshore;
+static void mark_cont();
 
 int good_cont (mapi)
 long mapi;
 {
-	static void mark_cont();
-
 	long val;
 
 	ncity = 0; /* nothing seen yet */

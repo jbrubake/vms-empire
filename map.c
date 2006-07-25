@@ -1,4 +1,4 @@
-/* $Id: map.c,v 1.4 2000/07/28 05:12:53 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
+/* $Id: map.c,v 1.5 2002/04/19 09:17:01 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
 
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
@@ -1205,6 +1205,7 @@ long loc;
 {
 	long i, j;
 
+	if (map[loc].contents != '.') return (FALSE);
 	FOR_ADJ_ON (loc, j, i)
 	if (vmap[j].contents == ' ' || vmap[j].contents == '+' || map[j].contents != '.')
 			return (FALSE);
@@ -1218,6 +1219,7 @@ long loc;
 {
 	long i, j;
 
+	if (map[loc].contents != '.') return (FALSE);
 	FOR_ADJ_ON (loc, j, i) {
 		if (map[j].contents != '.') return (FALSE);
 	}

@@ -454,5 +454,26 @@ int nlines;
 	(void) refresh ();
 }
 
+#define COL_DIGITS ((MAP_WIDTH <= 100) ? 2 : ((MAP_WIDTH <= 1000 ? 3 : (1 / 0))))
 
-
+int
+loc_disp (int loc)
+{
+  int row = loc / MAP_WIDTH;
+  int nrow = row;
+  int col = loc % MAP_WIDTH;
+  ASSERT (loc == (row * MAP_WIDTH) + col);
+  int i;
+  for (i = COL_DIGITS; i > 0; i--) {
+    nrow *= 10; }
+  move (LINES - 1, 0);
+  /*
+  {
+    char junkbuf[STRSIZE];
+    (void) snprintf (junkbuf, STRSIZE, "loc: %d, row: %d, col: %d, nrow: %d, nrow+col: %d", loc, row, col, nrow, nrow + col);
+    (void) addstr (junkbuf);
+    napms(500);
+  }
+  */
+  return nrow + col;
+}

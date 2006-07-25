@@ -54,9 +54,9 @@ user_move () {
 		}
 		else if (city[i].work++ >= (long)piece_attr[prod].build_time) {
 				/* kermyt begin */
-			ksend1("%s has been completed at city %d.\n", piece_attr[prod].article,city[i].loc,0,0,0,0,0,0);
+			ksend1("%s has been completed at city %d.\n", piece_attr[prod].article,loc_disp(city[i].loc),0,0,0,0,0,0);
 				/* kermyt end */
-			comment1 ("%s has been completed at city %d.\n", piece_attr[prod].article,city[i].loc,0,0,0,0,0,0);
+			comment1 ("%s has been completed at city %d.\n", piece_attr[prod].article,loc_disp(city[i].loc),0,0,0,0,0,0);
 
 			produce (&city[i]);
 			/* produce should set object.moved to 0 */
@@ -183,7 +183,7 @@ piece_info_t *obj;
 				comment ("Landing confirmed.",0,0,0,0,0,0,0,0);
 			}
 			else if (obj->range == 0) {
-				comment ("Fighter at %d crashed and burned.",obj->loc,0,0,0,0,0,0,0);
+				comment ("Fighter at %d crashed and burned.",loc_disp(obj->loc),0,0,0,0,0,0,0);
 				kill_obj (obj, obj->loc);
 			}
 		}

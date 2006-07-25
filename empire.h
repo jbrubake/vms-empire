@@ -59,7 +59,6 @@ typedef unsigned char uchar;
 
 /* Information we maintain about cities. */
 
-#define NUM_CITY 70
 #define UNOWNED 0
 #define USER 1
 #define COMP 2
@@ -205,11 +204,18 @@ it tells whether or not a square is on the board.
 
 'user_map' describes the user's view of the world.  'comp_map' describes
 the computer's view of the world.
+
+As of the 1.7 version, MAP_WIDTH and MAP_HEIGHT are now free paramaters.
+You can change them and the code will adjust properly.
 */
 
 #define MAP_WIDTH 100
 #define MAP_HEIGHT 60
 #define MAP_SIZE (MAP_WIDTH * MAP_HEIGHT)
+
+/* #define NUM_CITY 70 */
+/* #define NUM_CITY (MAP_SIZE / 85) */
+#define NUM_CITY ((100 * (MAP_WIDTH + MAP_HEIGHT)) / 228)
 
 typedef struct real_map { /* a cell of the actual map */
 	char contents; /* '+', '.', or '*' */

@@ -603,14 +603,14 @@ long edit_cursor;
 				func_name[FUNCI(cityp->func[s])]);
 		else (void) sprintf (temp_buf, "%c: %ld;",
 				piece_attr[s].sname,
-				cityp->func[s]);
+				loc_disp(cityp->func[s]));
 		
 		(void) strcat (func_buf, temp_buf);
 	}
 
 	(void) sprintf (junk_buf2,
 		"City at location %ld will complete %s on round %ld",
-		cityp->loc,
+		loc_disp(cityp->loc),
 		piece_attr[(int)cityp->prod].article,
 		date + piece_attr[(int)cityp->prod].build_time - cityp->work);
 
