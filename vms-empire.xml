@@ -1044,12 +1044,10 @@ let you.  Enemy satellites should not cause your pieces to awaken.</para>
 </refsect1>
 
 <refsect1 id='authors'><title>AUTHORS</title>
-Original game by Walter Bright.
-Support for different terminal types added by Craig Leres.
-Curses support added by Ed James.
-C/Unix version written by Chuck Simmons
-Colorization by Eric S. Raymond.
-Probability table corrected by Michael Self.
+<para>Original game by Walter Bright.  Support for different terminal
+types added by Craig Leres.  Curses support added by Ed James.  C/Unix
+version written by Chuck Simmons Colorization by Eric S. Raymond.
+Probability table corrected by Michael Self.</para>
 </refsect1>
 
 <refsect1 id='copyleft'><title>COPYLEFT</title>
