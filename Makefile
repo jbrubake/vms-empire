@@ -91,5 +91,5 @@ vms-empire-$(VERS).tar.gz: $(SOURCES)
 
 dist: vms-empire-$(VERS).tar.gz
 
-release: vms-empire-$(VERS).tar.gz
+release: vms-empire-$(VERS).tar.gz vms-empire.html
 	shipper -u -m -t; make clean
