@@ -76,6 +76,7 @@ lint: $(FILES)
 
 clean:
 	rm -f *.o TAGS vms-empire
+	rm -f *.6 *.html SHIPPER.*
 
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
@@ -91,4 +92,4 @@ vms-empire-$(VERS).tar.gz: $(SOURCES) empire.6
 dist: vms-empire-$(VERS).tar.gz
 
 release: vms-empire-$(VERS).tar.gz
-	shipper; rm -f CHANGES ANNOUNCE* *.6 *.html *.rpm *.lsm MANIFEST
+	shipper -u -m -t; make clean
