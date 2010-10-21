@@ -62,6 +62,12 @@ all: vms-empire
 vms-empire: $(OFILES)
 	$(CC) $(PROFILE) -o vms-empire $(OFILES) $(LIBS)
 
+empire.6: vms-empire.xml
+	xmlto man vms-empire.xml
+
+vms-empire.html: vms-empire.xml
+	xmlto html-nochunks vms-empire.xml
+
 TAGS: $(HEADERS) $(FILES)
 	etags $(HEADERS) $(FILES)
 
@@ -76,7 +82,7 @@ clobber: clean
 
 SOURCES = README NEWS vms-empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) MANIFEST vms-empire.spec
 
-vms-empire-$(VERS).tar.gz: $(SOURCES) vms-empire.6
+vms-empire-$(VERS).tar.gz: $(SOURCES) empire.6
 	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
 	@(cd ..; ln -s vms-empire vms-empire-$(VERS))
 	(cd ..; tar -czvf vms-empire/vms-empire-$(VERS).tar.gz `cat vms-empire/MANIFEST`)
