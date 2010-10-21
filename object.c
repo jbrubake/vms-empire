@@ -502,7 +502,7 @@ piece_info_t *obj;
 	char func[STRSIZE];
 	char other[STRSIZE];
 
-	if (obj->func >= 0) (void) sprintf (func, "%ld", loc_disp(obj->func));
+	if (obj->func >= 0) (void) sprintf (func, "%d", loc_disp(obj->func));
 	else (void) sprintf (func, func_name[FUNCI(obj->func)]);
 	
 	other[0] = 0;
