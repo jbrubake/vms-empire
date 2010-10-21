@@ -401,9 +401,7 @@ side effects.</para>
 <para>Normally, when a movement
 function has been specified, the piece will continue moving according to
 that function until one of the following happen:</para>
-<variablelist>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
+<itemizedlist>
   <listitem>
 <para>An enemy piece or unowned city appears next to the piece.  In this case
 the piece will be completely awoken, unless its movement function has
@@ -412,23 +410,14 @@ Armies on ships and pieces inside
 cities will not be awoken if the enemy piece is gone by the time it is
 their turn to move.</para>
   </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
   <listitem>
 <para>You explicitly awaken the piece.</para>
   </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
   <listitem>
 <para>The piece can no longer move in accordance with its programmed function.
 In this case, the piece will awaken <emphasis remap='I'>temporarily</emphasis>.  You will be asked
 to move the piece at which time you may awaken it.</para>
   </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
   <listitem>
 <para>The piece is a fighter which has just enough fuel (plus a small reserve)
 to get to the nearest city.
@@ -437,8 +426,7 @@ the piece will awaken completely, unless its movement function has
 been set to a specific destination, or its movement function has been
 set to <emphasis remap='I'>land</emphasis>.</para>
   </listitem>
-  </varlistentry>
-</variablelist>
+</itemizedlist>
 <para>The rationale behind this complexity is that fighters must be awoken
 completely before they are out of range of a city
 to prevent one from accidentally forgetting to waken the
@@ -956,36 +944,29 @@ the editor.</para>
 <para>After you have played this game for a while, you will probably
 find that the computer is immensely easy to beat.  Here are some
 ideas you can try that may make the game more interesting.</para>
-<variablelist>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
+
+<itemizedlist>
   <listitem>
-<para>Give the computer one or more extra cities before starting the game.</para>
+    <para>Give the computer one or more extra cities before starting
+    the game.</para>
   </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
   <listitem>
-<para>Try playing the game with a low smoothness value (try using the
--s2 or even -s0 option).</para>
+    <para>Try playing the game with a low smoothness value (try using the
+    -s2 or even -s0 option).</para>
   </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><emphasis remap='B'>*</emphasis></term>
   <listitem>
-<para>When starting the game, the program will ask you what difficulty
-level you want.  Here "difficulty level" is a misnomer.  To compute
-a difficulty level, the program looks at each continent and counts
-the number of cities on the continents.  A high "difficulty level"
-gives the computer a large continent with many cities, while the
-user gets a small continent with few cities.  A low "difficulty level"
-has the opposite effect.  It may be the case that the computer will
-play better when the "difficulty level" is low.  The reason for this
-is that the computer is forced to move armies to multiple continents
-early in the game.</para>
+    <para>When starting the game, the program will ask you what difficulty
+    level you want.  Here "difficulty level" is a misnomer.  To compute
+    a difficulty level, the program looks at each continent and counts
+    the number of cities on the continents.  A high "difficulty level"
+    gives the computer a large continent with many cities, while the
+    user gets a small continent with few cities.  A low "difficulty level"
+    has the opposite effect.  It may be the case that the computer will
+    play better when the "difficulty level" is low.  The reason for this
+    is that the computer is forced to move armies to multiple continents
+    early in the game.</para>
   </listitem>
-  </varlistentry>
-</variablelist>
+</itemizedlist>
 </refsect1>
 
 <refsect1 id='history'><title>HISTORY</title>
