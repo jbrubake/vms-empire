@@ -81,12 +81,12 @@ clean:
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = README NEWS vms-empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) MANIFEST vms-empire.spec
+SOURCES = README NEWS empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) vms-empire.spec
 
-vms-empire-$(VERS).tar.gz: $(SOURCES) empire.6
+vms-empire-$(VERS).tar.gz: $(SOURCES)
 	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
 	@(cd ..; ln -s vms-empire vms-empire-$(VERS))
-	(cd ..; tar -czvf vms-empire/vms-empire-$(VERS).tar.gz `cat vms-empire/MANIFEST`)
+	(cd ..; tar -czf vms-empire/vms-empire-$(VERS).tar.gz `cat vms-empire/MANIFEST`)
 	@(cd ..; rm vms-empire-$(VERS))
 
 dist: vms-empire-$(VERS).tar.gz

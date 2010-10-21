@@ -9,13 +9,12 @@ Summary: Solitaire Empire (sometimes called `VMS Empire')
 BuildRoot: %{_tmppath}/%{name}-root
 
 %description
-Empire is a simulation of a full-scale war between two
-emperors, the computer and you.  Naturally, there is only
-room for one, so the object of the game is to destroy
-the other.  The computer plays by the same rules that you
-do.  This game is the ancestor of all the multiplayer Empire
-simulations out there.
-
+Empire is a simulation of a full-scale war between two emperors, the
+computer and you.  Naturally, there is only room for one, so the
+object of the game is to destroy the other.  The computer plays by the
+same rules that you do.  This game was ancestral to later
+expand/explore/exploit/exterminate games, including Civilization and
+Master of Orion.
 %prep
 %setup -q
 
@@ -39,7 +38,7 @@ cp vms-empire.6 "$RPM_BUILD_ROOT"%{_mandir}/man6/
 %{_bindir}/vms-empire
 
 %changelog
-* Tue Jul 25 2006 Eric S. Raymond <esr@snark.thyrsus.com> - 1.8-1
+* Thu Oct 21 2010 Eric S. Raymond <esr@snark.thyrsus.com> - 1.8-1
 - Joe Wells's patch to enable different-sized worlds.  Minor fixes to 
   map functions by Andrew Morrow. More on the history of the game.
   Enable arrow keys in edit mode.
