@@ -1,3 +1,6 @@
 vms-empire
 *.o
 empsave.dat
+empire.6
+*.html
+MANIFEST

@@ -7,6 +7,7 @@ License: GPL
 Group: Games
 Summary: Solitaire Empire (sometimes called `VMS Empire')
 BuildRoot: %{_tmppath}/%{name}-root
+#Logo: empire-logo.png
 
 %description
 Empire is a simulation of a full-scale war between two emperors, the
