@@ -7,6 +7,7 @@ License: GPL
 Group: Games
 Summary: Solitaire Empire (sometimes called `VMS Empire')
 BuildRoot: %{_tmppath}/%{name}-root
+#Destinations: freshmeat
 #Logo: empire-logo.png
 
 %description
