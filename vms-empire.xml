@@ -972,13 +972,11 @@ ideas you can try that may make the game more interesting.</para>
 <refsect1 id='history'><title>HISTORY</title>
 <para>According to 
 <ulink url='http://www.classicempire.com/history.html'>
-A Brief History of Empire
-</ulink>
-The amcestral game was written by Walter Bright sometime in the early 1970s
-while he was a student at Caltech.  A copy leaked out of Caltech and
-was ported to DEC's VAX/VMS from the TOPS-10/20 FORTRAN sources
-available around fall 1979.  Support for different terminal types 
-was added by Craig Leres.</para>
+A Brief History of Empire </ulink>, the ancestral game was written by
+Walter Bright sometime in the early 1970s while he was a student at
+Caltech.  A copy leaked out of Caltech and was ported to DEC's VAX/VMS
+from the TOPS-10/20 FORTRAN sources available sometime around fall 1979.
+Support for different terminal types was added by Craig Leres.</para>
 
 <para>Ed James got hold of the sources at Berkeley and converted
 portions of the code to C, mostly to use curses for the screen
