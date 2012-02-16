@@ -1,5 +1,3 @@
-/* $Id: map.c,v 1.6 2006/07/25 15:19:49 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
-
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  * 

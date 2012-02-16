@@ -1,5 +1,3 @@
-/* $Id: extern.h,v 1.11 2006/07/25 17:21:51 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
-
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  * 

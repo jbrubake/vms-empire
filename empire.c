@@ -1,5 +1,3 @@
-/* $Id: empire.c,v 1.6 2006/07/25 16:43:14 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
-
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  * 

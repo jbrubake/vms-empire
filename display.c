@@ -1,5 +1,3 @@
-/* $Id: display.c,v 1.14 2006/07/25 17:59:36 esr Exp esr $  - (c) Copyright 1987, 1988 Chuck Simmons */
-
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  * 
