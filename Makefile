@@ -19,7 +19,8 @@ LIBS = -lncurses
 
 # You shouldn't have to modify anything below this line.
 
-CFLAGS = $(DEBUG) $(PROFILE)
+# There's a dynamic format in the object-display routines; suppress the warning
+CFLAGS = $(DEBUG) $(PROFILE) -Wno-format-security
 
 FILES = \
 	attack.c \
