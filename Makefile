@@ -1,12 +1,10 @@
-# %W% %G% %U% - (c) Copyright 1987, 1988 Chuck Simmons
-
 #
 #    Copyright (C) 1987, 1988 Chuck Simmons
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-VERS=$(shell sed <vms-empire.spec -n -e '/Version: \(.*\)/s//\1/p')
+VERS=1.9
 
 # Use -g to compile the program for debugging.
 
@@ -81,7 +79,7 @@ clean:
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = README NEWS empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) vms-empire.spec empire-logo.png
+SOURCES = README NEWS control empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) empire-logo.png
 
 vms-empire-$(VERS).tar.gz: $(SOURCES)
 	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST

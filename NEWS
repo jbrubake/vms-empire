@@ -1,5 +1,8 @@
 			vms-empire news
 
+1.9: 2012-02-16T02:49:47
+	Drop RPM packaging. Documentation cleanups.
+
 1.8: 2010-10-21T12:47:33Z
 	Joe Wells's patch to enable different-sized worlds.  Minor fixes to
 	map functions by Andrew Morrow. More on the history of the game.

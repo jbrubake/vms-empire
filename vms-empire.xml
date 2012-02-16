@@ -85,16 +85,17 @@ which are fairly useless.</para>
   <varlistentry>
   <term><option>-S</option><replaceable>interval</replaceable></term>
   <listitem>
-<para>sets the <emphasis remap='I'>save interval</emphasis> for the game (default is 10). Once per
-<emphasis remap='I'>interval</emphasis> turns the game state will be automatically saved after
-your move. It will be saved in any case when you change modes or
-do various special things from command mode, such as `M' or `N'.</para>
+    <para>sets the <emphasis remap='I'>save interval</emphasis> for the
+    game (default is 10). Once per <emphasis remap='I'>interval</emphasis>
+    turns the game state will be automatically saved after your move. It
+    will be saved in any case when you change modes or do various special
+    things from command mode, such as `M' or `N'.</para>
   </listitem>
   </varlistentry>
   <varlistentry>
   <term><option>-f</option><replaceable>savefile</replaceable></term>
   <listitem>
-<para>Set the save file name (normally empsave.dat).</para>
+    <para>Set the save file name (normally empsave.dat).</para>
   </listitem>
   </varlistentry>
 </variablelist>
@@ -1025,7 +1026,7 @@ let you.  Enemy satellites should not cause your pieces to awaken.</para>
 <refsect1 id='authors'><title>AUTHORS</title>
 <para>Original game by Walter Bright.  Support for different terminal
 types added by Craig Leres.  Curses support added by Ed James.  C/Unix
-version written by Chuck Simmons Colorization by Eric S. Raymond.
+version written by Chuck Simmons. Colorization by Eric S. Raymond.
 Probability table corrected by Michael Self.</para>
 </refsect1>
 
