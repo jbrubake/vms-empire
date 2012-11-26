@@ -73,6 +73,10 @@ TAGS: $(HEADERS) $(FILES)
 lint: $(FILES)
 	lint -u -D$(SYS) $(FILES) -lcurses
 
+# cppcheck should run clean
+cppcheck:
+	cppcheck --inline-suppr --template gcc --enable=all --force *.[ch]
+
 clean:
 	rm -f *.o TAGS vms-empire
 	rm -f *.6 *.html SHIPPER.*
