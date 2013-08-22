@@ -16,6 +16,7 @@ For each move the user wants us to make, we do the following:
 */
 
 #include <string.h>
+#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include "empire.h"
 #include "extern.h"
 

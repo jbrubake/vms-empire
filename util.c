@@ -11,6 +11,7 @@ util.c -- various utility routines.
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include <ctype.h>
 #include <signal.h>
 #include "empire.h"
@@ -22,6 +23,8 @@ Convert a string to uppercase.
 Shirley this is defined elsewhere?
 */
 
+#include <sys/types.h>
+#include <unistd.h>
 #include <ctype.h>
 
 void

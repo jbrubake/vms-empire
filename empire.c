@@ -11,6 +11,7 @@ parser, and the simple commands.
 */
 
 #include <stdio.h>
+#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include "empire.h"
 #include "extern.h"
 
@@ -327,7 +328,6 @@ Print a "zoomed" version of the computer's map.
 
 void
 c_movie (void) {
-	(void) clear ();
 	for (;;) {
 		comp_move (1);
 		print_zoom (comp_map);

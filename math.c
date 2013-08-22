@@ -21,6 +21,7 @@ Other routines include:
 */
 
 #include <stdlib.h>
+#include <time.h>
 #include "empire.h"
 #include "extern.h"
 

@@ -12,6 +12,7 @@ usermove.c -- Let the user move her troops.
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include "empire.h"
 #include "extern.h"
 
