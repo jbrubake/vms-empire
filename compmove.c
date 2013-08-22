@@ -30,7 +30,7 @@ int nearby_count( loc_t loc );
 void move_objective(piece_info_t *obj,path_map_t pathmap[],loc_t new_loc,char *adj_list);
 
 void
-comp_move (nmoves) 
+comp_move(nmoves) 
 int nmoves;
 {
 	void do_cities(), do_pieces(), check_endgame();
@@ -77,7 +77,7 @@ build carriers, as we don't have a good strategy for moving these.
 */
 
 void
-do_cities () {
+do_cities(void) {
 	void comp_prod();
 	
 	int i;
@@ -131,9 +131,7 @@ The algorithm below contains three parts:
 */
 
 void
-comp_prod (cityp, is_lake)
-city_info_t *cityp;
-int is_lake;
+comp_prod(city_info_t *cityp, int is_lake)
 {
 	void comp_set_prod(), comp_set_needed();
 	
@@ -262,9 +260,7 @@ reset production if it is already correct.
 */
 
 void
-comp_set_prod (cityp, type)
-city_info_t *cityp;
-int type;
+comp_set_prod(city_info_t *cityp, int type)
 {
 	if (cityp->prod == type) return;
 	
@@ -278,9 +274,7 @@ See if a city is producing an object which is being overproduced.
 */
 
 int
-overproduced (cityp, city_count)
-city_info_t *cityp;
-int *city_count;
+overproduced(city_info_t *cityp, int *city_count)
 {
 	int i;
 
@@ -300,9 +294,7 @@ Return the most-needed type of production.
 */
 
 int
-need_more (city_count, prod1, prod2)
-int *city_count;
-int prod1, prod2;
+need_more(int *city_count, int prod1, int prod2)
 {
 	if (city_count[prod1] * ratio[prod2]
 		 <= city_count[prod2] * ratio[prod1])
@@ -317,11 +309,7 @@ a flag telling us if armies are ok to produce.
 */
 
 void
-comp_set_needed (cityp, city_count, army_ok, is_lake)
-city_info_t *cityp;
-int *city_count;
-int army_ok;
-int is_lake;
+comp_set_needed(city_info_t *cityp, int *city_count, int army_ok, int is_lake)
 {
 	int best_prod;
 	int prod;
@@ -355,8 +343,7 @@ have unexplored territory on the edges.
 */
 
 int
-lake (loc)
-loc_t loc;
+lake(loc_t loc)
 {
 	int cont_map[MAP_SIZE];
 	scan_counts_t counts;
@@ -375,7 +362,7 @@ static view_map_t amap[MAP_SIZE]; /* temp view map */
 static path_map_t path_map[MAP_SIZE];
 
 void
-do_pieces () { /* move pieces */
+do_pieces(void) { /* move pieces */
 	void cpiece_move();
 
 	int i;
@@ -397,8 +384,7 @@ objective.
 */
 
 void
-cpiece_move (obj)
-piece_info_t *obj;
+cpiece_move(piece_info_t *obj)
 {
 	void move1();
 
@@ -450,8 +436,7 @@ Move a piece one square.
 */
 
 void
-move1 (obj)
-piece_info_t *obj;
+move1(piece_info_t *obj)
 {
 	void army_move(), transport_move(), fighter_move(), ship_move();
 
@@ -493,8 +478,7 @@ destination.  (If there is no destination, sit around and wait.)
 */
 
 void
-army_move (obj)
-piece_info_t *obj;
+army_move(piece_info_t *obj)
 {
 	loc_t move_away();
 	loc_t find_attack();
@@ -577,8 +561,7 @@ Remove pruned explore locs from a view map.
 */
 
 void
-unmark_explore_locs (xmap)
-view_map_t *xmap;
+unmark_explore_locs(view_map_t *xmap)
 {
 	count_t i;
 
@@ -593,10 +576,7 @@ transport and tt producing city with a '$'.
 */
 
 void
-make_army_load_map (obj, xmap, vmap)
-piece_info_t *obj;
-view_map_t *xmap;
-view_map_t *vmap;
+make_army_load_map(piece_info_t *obj, view_map_t *xmap, view_map_t *vmap)
 {
 	piece_info_t *p;
 	int i;
@@ -622,9 +602,7 @@ view_map_t *vmap;
 /* Return true if an army is considered near a location for loading. */
 
 int
-nearby_load (obj, loc)
-piece_info_t *obj;
-loc_t loc;
+nearby_load(piece_info_t *obj, loc_t loc)
 {
 	return obj->func == 1 && dist (obj->loc, loc) <= 2;
 }
@@ -632,8 +610,7 @@ loc_t loc;
 /* Return number of nearby armies. */
 
 int
-nearby_count (loc)
-loc_t loc;
+nearby_count(loc_t loc)
 {
 	piece_info_t *obj;
 	int count;
@@ -648,9 +625,7 @@ loc_t loc;
 /* Make load map for a ship. */
 
 void
-make_tt_load_map (xmap, vmap)
-view_map_t *xmap;
-view_map_t *vmap;
+make_tt_load_map(view_map_t *xmap, view_map_t *vmap)
 {
 	piece_info_t *p;
 	
@@ -695,9 +670,7 @@ static int owncont_map[MAP_SIZE];
 static int tcont_map[MAP_SIZE];
 
 void
-make_unload_map (xmap, vmap)
-view_map_t *xmap;
-view_map_t *vmap;
+make_unload_map(view_map_t *xmap, view_map_t *vmap)
 {
 	count_t i;
 	scan_counts_t counts;
@@ -747,10 +720,7 @@ close to the ocean.
 */
 
 void
-board_ship (obj, pmap, dest)
-piece_info_t *obj;
-path_map_t *pmap;
-loc_t dest;
+board_ship(piece_info_t *obj, path_map_t *pmap, loc_t dest)
 {
 	if (!load_army (obj)) {
 		obj->func = 1; /* loading */
@@ -765,9 +735,7 @@ one of the ships to become more full.
 */
 
 piece_info_t *
-find_best_tt (best, loc)
-piece_info_t *best;
-loc_t loc;
+find_best_tt(piece_info_t *best, loc_t loc)
 {
 	piece_info_t *p;
 
@@ -784,8 +752,7 @@ Load an army onto the most full non-full ship.
 */
 
 int
-load_army (obj)
-piece_info_t *obj;
+load_army(piece_info_t *obj)
 {
 	piece_info_t *p;
 	int i;
@@ -819,10 +786,7 @@ the correct terrain.
 */
 
 loc_t
-move_away (vmap, loc, terrain)
-view_map_t *vmap;
-loc_t loc;
-char *terrain;
+move_away(view_map_t *vmap, loc_t loc, char *terrain)
 {
 	loc_t new_loc;
 	int i;
@@ -845,10 +809,7 @@ best of these.
 */
 
 loc_t
-find_attack (loc, obj_list, terrain)
-loc_t loc;
-char *obj_list;
-char *terrain;
+find_attack(loc_t loc, char *obj_list, char *terrain)
 {
 	loc_t new_loc, best_loc;
 	int i, best_val;
@@ -884,8 +845,7 @@ Transports become 'loading' when empty, and 'unloading' when full.
 */
 
 void
-transport_move (obj)
-piece_info_t *obj;
+transport_move(piece_info_t *obj)
 {
 	void tt_do_move();
 
@@ -937,8 +897,7 @@ if there is one in range.
 */
 
 void
-fighter_move (obj)
-piece_info_t *obj;
+fighter_move(piece_info_t *obj)
 {
 	loc_t new_loc;
 
@@ -970,8 +929,7 @@ something to attack.
 */
 
 void
-ship_move (obj)
-piece_info_t *obj;
+ship_move(piece_info_t *obj)
 {
 	loc_t new_loc;
 	char *adj_list;
@@ -1008,11 +966,8 @@ Move to an objective.
 */
 
 void
-move_objective (obj, pathmap, new_loc, adj_list)
-piece_info_t *obj;
-path_map_t pathmap[];
-loc_t new_loc;
-char *adj_list;
+move_objective(piece_info_t *obj, path_map_t pathmap[], 
+		loc_t new_loc, char *adj_list)
 {
 	char *terrain;
 	char *attack_list;
@@ -1119,7 +1074,7 @@ and armies as the user, then the computer will give up.
 */
 
 void
-check_endgame () { /* see if game is over */
+check_endgame(void) { /* see if game is over */
 
 	int nuser_city, ncomp_city;
 	int nuser_army, ncomp_army;

@@ -62,8 +62,7 @@ void announce (char *msg) {
  * Map input character to direction offset.
  * Attempts to enable arrow and keypad keys.
  */
-int direction(c)
-chtype c;
+int direction(chtype c)
 {
     switch (c)
     {
@@ -164,10 +163,8 @@ redisplay the sector, or if the location is not on the screen.
 */
 
 void
-display_loc (whose, vmap, loc)
-int whose; /* whose map to display */
-view_map_t vmap[];
-loc_t loc; /* location to display */
+display_loc (int whose, view_map_t vmap[], loc_t loc)
+/* whose is whose map to display; loc is location to display */
 {
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
@@ -180,10 +177,8 @@ Display a location iff the location is on the screen.
 */
 
 void
-display_locx (whose, vmap, loc)
-int whose; /* whose map to display */
-view_map_t vmap[];
-loc_t loc; /* location to display */
+display_locx (int whose, view_map_t vmap[], loc_t loc)
+/* whose is whose map to display; loc is location to display */
 {
 	if (whose == whose_map && on_screen (loc))
 		show_loc (vmap, loc);
@@ -194,9 +189,7 @@ Display a location which exists on the screen.
 */
 
 void
-show_loc (vmap, loc)
-view_map_t vmap[];
-loc_t loc;
+show_loc (view_map_t vmap[], loc_t loc)
 {
 	int r, c;
 	
@@ -228,10 +221,8 @@ screen.
 */
  
 void
-print_sector (whose, vmap, sector)
-char whose; /* USER or COMP */
-view_map_t vmap[]; /* map to display */
-int sector; /* sector to display */
+print_sector(int whose, view_map_t vmap[], int sector)
+/* whose is USER or COMP, vmap is map to display, sector is sector to display */
 {
 	void display_screen();
 
@@ -309,8 +300,7 @@ pretty.
 */
 
 
-static void disp_square(vp)
-view_map_t *vp;
+static void disp_square(view_map_t *vp)
 {
 #ifdef A_COLOR
 	chtype attr;
@@ -353,8 +343,7 @@ view_map_t *vp;
 Display the portion of the map that appears on the screen.
 */
 
-void display_screen (vmap)
-view_map_t vmap[];
+void display_screen(view_map_t vmap[])
 {
 	int display_rows, display_cols;
 	int r, c;
@@ -378,9 +367,8 @@ We display the cursor on the screen, if possible.
 */
 
 int
-move_cursor (cursor, offset)
-loc_t *cursor; /* current cursor position */
-int offset; /* offset to add to cursor */
+move_cursor(loc_t *cursor, int offset)
+/* cursor is current cursor position, offset is offset to add to cursor */
 {
 	loc_t t;
 	int r, c;
@@ -403,8 +391,7 @@ int offset; /* offset to add to cursor */
 See if a location is displayed on the screen.
 */
 
-int on_screen (loc)
-loc_t loc;
+int on_screen (loc_t loc)
 {
 	int new_r, new_c;
 	
@@ -423,8 +410,7 @@ loc_t loc;
 /* Print a view map for debugging. */
 
 void
-print_xzoom (vmap)
-view_map_t *vmap;
+print_xzoom(view_map_t *vmap)
 {
 	print_zoom (vmap);
 #if 0
@@ -440,8 +426,7 @@ Print a condensed version of the map.
 char zoom_list[] = "XO*tcbsdpfaTCBSDPFAzZ+. ";
 
 void
-print_zoom (vmap)
-view_map_t *vmap;
+print_zoom(view_map_t *vmap)
 {
 	void print_zoom_cell ();
 
@@ -467,10 +452,8 @@ Print a single cell in condensed format.
 */
 
 void
-print_zoom_cell (vmap, row, col, row_inc, col_inc)
-view_map_t *vmap;
-int row, col;
-int row_inc, col_inc;
+print_zoom_cell(view_map_t *vmap, 
+		 int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	char cell;
@@ -491,10 +474,7 @@ Print a condensed version of a pathmap.
 */
 
 void
-print_pzoom (s, pmap, vmap)
-char *s;
-path_map_t *pmap;
-view_map_t *vmap;
+print_pzoom(char *s, path_map_t *pmap, view_map_t *vmap)
 {
 	void print_pzoom_cell();
 
@@ -526,11 +506,8 @@ between P and Z are printed as U.
 */
 
 void
-print_pzoom_cell (pmap, vmap, row, col, row_inc, col_inc)
-path_map_t *pmap;
-view_map_t *vmap;
-int row, col;
-int row_inc, col_inc;
+print_pzoom_cell(path_map_t *pmap, view_map_t *vmap, 
+		  int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	int sum, d;
@@ -570,7 +547,7 @@ Display the score off in the corner of the screen.
 */
 
 void
-display_score (void)
+display_score(void)
 {
 	pos_str (1, cols-12, " User  Comp",0,0,0,0,0,0,0,0);
 	pos_str (2, cols-12, "%5d %5d", user_score, comp_score,0,0,0,0,0,0);
@@ -581,8 +558,7 @@ Clear the end of a specified line starting at the specified column.
 */
 
 void
-clreol(linep, colp)
-int linep, colp;
+clreol(int linep, int colp)
 {
 	(void) move (linep, colp);
 	(void) clrtoeol();
@@ -616,7 +592,8 @@ display.
 */
 
 void
-clear_screen (void) {
+clear_screen(void)
+{
 	(void) clear ();
 	(void) refresh ();
 	kill_display ();
@@ -627,12 +604,14 @@ Redraw the screen.
 */
 
 void 
-redisplay (void) {
+redisplay(void)
+{
 	(void) refresh ();
 }
 
 void
-redraw (void) {
+redraw(void)
+{
 	(void) clearok (curscr, TRUE);
 	(void) refresh ();
 }
@@ -643,7 +622,8 @@ the screen and pause for a few milliseconds.
 */
 
 void
-delay (void) {
+delay(void)
+{
         int t = delay_time;
         int i = 500;
 	(void) refresh ();
@@ -677,19 +657,16 @@ Position the cursor and output a string.
 */
 
 void
-pos_str1 (row, col, str, a, b, c, d, e, f, g, h)
-int row, col;
-char *str, *a;
-int b, c, d, e, f, g, h;
+pos_str1(int row, int col, char *str, char *a, 
+	  int b, int c, int d, int e, int f, int g, int h)
 {
 	(void) move (row, col);
 	addprintf1 (str, a, b, c, d, e, f, g, h);
 }
+
 void
-pos_str (row, col, str, a, b, c, d, e, f, g, h)
-int row, col;
-char *str;
-int a, b, c, d, e, f, g, h;
+pos_str(int row, int col, char *str, 
+	int a, int b, int c, int d, int e, int f, int g, int h)
 {
 	(void) move (row, col);
 	addprintf (str, a, b, c, d, e, f, g, h);
@@ -697,9 +674,7 @@ int a, b, c, d, e, f, g, h;
 
 void
 /* VARARGS1 */
-addprintf (str, a, b, c, d, e, f, g, h)
-char *str;
-int a, b, c, d, e, f, g, h;
+addprintf(char *str, int a, int b, int c, int d, int e, int f, int g, int h)
 {
 	char junkbuf[STRSIZE];
 	
@@ -708,22 +683,17 @@ int a, b, c, d, e, f, g, h;
 }
 void
 /* VARARGS1 */
-addprintf1 (str, a, b, c, d, e, f, g, h)
-char *str;
-char *a;
-int b, c, d, e, f, g, h;
+addprintf1(char *str, char *a, int b, int c, int d, int e, int f, int g, int h)
 {
 	char junkbuf[STRSIZE];
 	
 	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
 	(void) addstr (junkbuf);
 }
+
 void
 /* VARARGS1 */
-addprintf2 (str, a, b, c, d, e, f, g, h)
-char *str;
-char *a, *e, *f;
-int b, c, d, g, h;
+addprintf2(char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h)
 {
 	char junkbuf[STRSIZE];
 	
@@ -738,10 +708,7 @@ Print a single cell in condensed format.
 extern char zoom_list[];
 
 void
-print_movie_cell (mbuf, row, col, row_inc, col_inc)
-char *mbuf;
-int row, col;
-int row_inc, col_inc;
+print_movie_cell(char *mbuf, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	char cell;

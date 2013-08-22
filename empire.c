@@ -26,8 +26,8 @@ void c_examine(void), c_movie(void);
  */
 
 void
-empire (void) {
-	void do_command();
+empire(void) {
+	void do_command(char);
 	void print_zoom();
 
 	char order;
@@ -68,10 +68,9 @@ Execute a command.
 */
 
 void
-do_command (orders)
-char orders;
+do_command(char orders)
 {
-	void c_debug(), c_quit(void), c_sector(void), c_map(void);
+	void c_debug(char order), c_quit(void), c_sector(void), c_map(void);
 	void c_give(void);
 
 	char e;
@@ -188,7 +187,7 @@ it as the computers.
 */
 
 void
-c_give () {
+c_give(void) {
 	int unowned[NUM_CITY];
 	count_t i, count;
 
@@ -218,8 +217,7 @@ The order cannot be any legal command.
 */
 
 void
-c_debug (order)
-char order;
+c_debug(char order)
 {
 	char e;
 
@@ -254,7 +252,7 @@ The quit command.  Make sure the user really wants to quit.
 */
 
 void
-c_quit (void) {
+c_quit(void) {
 	if (getyn ("QUIT - Are you sure? ")) {
 	    empend ();
 	}
@@ -266,7 +264,7 @@ and print it.
 */
 
 void
-c_sector (void) {
+c_sector(void) {
 	int num;
 
 	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
@@ -281,7 +279,7 @@ out the map.
 */
 
 void
-c_map (void) {
+c_map(void) {
 	FILE *f;
 	int i, j;
 	char line[MAP_HEIGHT+2];
@@ -314,7 +312,7 @@ Allow user to examine the computer's map.
 */
 
 void
-c_examine (void) {
+c_examine(void) {
 	int num;
 
 	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
@@ -327,7 +325,7 @@ Print a "zoomed" version of the computer's map.
 */
 
 void
-c_movie (void) {
+c_movie(void) {
 	for (;;) {
 		comp_move (1);
 		print_zoom (comp_map);

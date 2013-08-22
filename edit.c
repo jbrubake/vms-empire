@@ -20,8 +20,7 @@ void e_move(loc_t *path_start, loc_t loc);
 extern int get_piece_name(void);
 
 void
-edit(edit_cursor)
-loc_t edit_cursor;
+edit(loc_t edit_cursor)
 {
 	char e_cursor();
 	void e_leave(), e_print(), e_random();
@@ -113,8 +112,7 @@ fast.
 */
 
 char
-e_cursor (edit_cursor)
-loc_t *edit_cursor;
+e_cursor(loc_t *edit_cursor)
 {
 	chtype e;
 	int p;
@@ -145,7 +143,7 @@ Leave edit mode.
 */
 
 void
-e_leave (void) {
+e_leave(void) {
 }
 
 /*
@@ -153,8 +151,7 @@ Print new sector.
 */
 
 void
-e_print (edit_cursor)
-loc_t *edit_cursor;
+e_print(loc_t *edit_cursor)
 {
         int sector;
 	
@@ -170,9 +167,7 @@ Set the function of a piece.
 */
 
 void
-e_set_func (loc, func)
-loc_t loc;
-long func;
+e_set_func(loc_t loc, long func)
 {
 	piece_info_t *obj;
 	obj = find_obj_at_loc (loc);
@@ -186,10 +181,7 @@ long func;
 /* Set the function of a city for some piece. */
 
 void
-e_set_city_func (cityp, type, func)
-city_info_t *cityp;
-int type;
-long func;
+e_set_city_func(city_info_t *cityp, int type, long func)
 {
 	cityp->func[type] = func;
 }
@@ -199,16 +191,13 @@ Set a piece to move randomly.
 */
 
 void
-e_random (loc)
-loc_t loc;
+e_random(loc_t loc)
 {
 	e_set_func (loc, RANDOM);
 }
 
 void
-e_city_random (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_random(city_info_t *cityp, int type)
 {
 	e_set_city_func (cityp, type, RANDOM);
 }
@@ -218,8 +207,7 @@ Put a ship in fill mode.
 */
 
 void
-e_fill (loc)
-loc_t loc;
+e_fill(loc_t loc)
 {
 	if (user_map[loc].contents == 'T' || user_map[loc].contents == 'C')
 		e_set_func (loc, FILL);
@@ -227,9 +215,7 @@ loc_t loc;
 }
 
 void
-e_city_fill (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_fill(city_info_t *cityp, int type)
 {
 	if (type == TRANSPORT || type == CARRIER)
 		e_set_city_func (cityp, type, FILL);
@@ -241,16 +227,13 @@ Set a piece to explore.
 */
 
 void
-e_explore (loc)
-loc_t loc;
+e_explore(loc_t loc)
 {
 	e_set_func (loc, EXPLORE);
 }
 
 void
-e_city_explore (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_explore(city_info_t *cityp, loc_t type)
 {
 	e_set_city_func (cityp, type, EXPLORE);
 }
@@ -260,20 +243,19 @@ Set a fighter to land.
 */
 
 void
-e_land (loc)
-loc_t loc;
+e_land(loc_t loc)
 {
 	if (user_map[loc].contents == 'F')
 		e_set_func (loc, LAND);
 	else huh ();
 }
+
 /*
 Set an army's function to TRANSPORT.
 */
 
 void
-e_transport (loc)
-loc_t loc;
+e_transport(loc_t loc)
 {
 	if (user_map[loc].contents == 'A')
 		e_set_func (loc, WFTRANSPORT);
@@ -285,8 +267,7 @@ Set an army's function to ATTACK.
 */
 
 void
-e_attack (loc)
-loc_t loc;
+e_attack(loc_t loc)
 {
 	if (user_map[loc].contents == 'A')
 		e_set_func (loc, ARMYATTACK);
@@ -294,9 +275,7 @@ loc_t loc;
 }
 
 void
-e_city_attack (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_attack(city_info_t *cityp, int type)
 {
 	if (type == ARMY)
 		e_set_city_func (cityp, type, ARMYATTACK);
@@ -308,8 +287,7 @@ Set a ship's function to REPAIR.
 */
 
 void
-e_repair (loc)
-loc_t loc;
+e_repair(loc_t loc)
 {
 	if (strchr ("PDSTBC", user_map[loc].contents))
 		e_set_func (loc, REPAIR);
@@ -317,9 +295,7 @@ loc_t loc;
 }
 
 void
-e_city_repair (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_repair(city_info_t *cityp, int type)
 {
 	if (type == ARMY || type == FIGHTER || type == SATELLITE)
 		huh ();
@@ -333,8 +309,7 @@ Set object to move in a direction.
 static char dirs[] = "WEDCXZAQ";
  
 void
-e_stasis (loc)
-loc_t loc;
+e_stasis(loc_t loc)
 {
 	char e;
 	char *p;
@@ -351,9 +326,7 @@ loc_t loc;
 }
 
 void
-e_city_stasis (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_stasis(city_info_t *cityp, int type)
 {
 	char e;
 	char *p;
@@ -370,8 +343,7 @@ Wake up anything and everything.
 */
 
 void
-e_wake (loc)
-loc_t loc;
+e_wake(loc_t loc)
 {
 	city_info_t *cityp;
 	piece_info_t *obj;
@@ -387,9 +359,7 @@ loc_t loc;
 }
 
 void
-e_city_wake (cityp, type)
-city_info_t *cityp;
-int type;
+e_city_wake(city_info_t *cityp, int type)
 {
 	e_set_city_func (cityp, type, NOFUNC);
 }
@@ -400,10 +370,7 @@ the function itself.
 */
 
 void
-e_city_func (path_start, loc, path_type)
-loc_t *path_start;
-loc_t loc;
-int *path_type;
+e_city_func(loc_t *path_start, loc_t loc, int *path_type)
 {
 	int type;
 	char e;
@@ -460,9 +427,7 @@ Beginning of move to location.
 */
 
 void
-e_move (path_start, loc)
-loc_t *path_start;
-loc_t loc;
+e_move(loc_t *path_start, loc_t loc)
 {
 	if (!isupper(user_map[loc].contents)) huh (); /* nothing there? */
 	else if (user_map[loc].contents == 'X') huh (); /* enemy city? */
@@ -474,10 +439,7 @@ End of move to location.
 */
 
 void
-e_end (path_start, loc, path_type)
-loc_t *path_start;
-loc_t loc;
-int path_type;
+e_end(loc_t *path_start, loc_t loc, int path_type)
 {
 	city_info_t *cityp;
 	
@@ -497,8 +459,7 @@ Put a piece to sleep.
 */
 
 void
-e_sleep (loc)
-loc_t loc;
+e_sleep(loc_t loc)
 {
 	if (user_map[loc].contents == 'O') huh (); /* can't sleep a city */
 	else e_set_func (loc, SENTRY);
@@ -509,10 +470,9 @@ Print out information about a piece.
 */
 
 void
-e_info (edit_cursor)
-loc_t edit_cursor;
+e_info(loc_t edit_cursor)
 {
-	void e_city_info(), e_piece_info();
+	void e_city_info(loc_t), e_piece_info(loc_t edit_cursor, char ab);
 
 	char ab;
 
@@ -532,9 +492,7 @@ Print info about a piece.
 */
 
 void
-e_piece_info (edit_cursor, ab)
-loc_t edit_cursor;
-char ab;
+e_piece_info(loc_t edit_cursor, char ab)
 {
 	piece_info_t *obj;
 	int type;
@@ -554,8 +512,7 @@ Display info on a city.
 */
 
 void
-e_city_info (edit_cursor)
-loc_t edit_cursor;
+e_city_info(loc_t edit_cursor)
 {
 	piece_info_t *obj;
 	city_info_t *cityp;
@@ -614,8 +571,7 @@ Change city production.
 */
 
 void
-e_prod (loc)
-loc_t loc;
+e_prod(loc_t loc)
 {
 	city_info_t *cityp;
 	
@@ -630,7 +586,7 @@ get help
 */
 
 void
-e_help (void) {
+e_help(void) {
 	help (help_edit, edit_lines);
 	prompt ("Press any key to continue: ",0,0,0,0,0,0,0,0);
 	(void) get_chx ();

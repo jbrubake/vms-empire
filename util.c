@@ -28,8 +28,7 @@ Shirley this is defined elsewhere?
 #include <ctype.h>
 
 void
-tupper (str)
-char	*str;
+tupper(char *str)
 {
 	while (*str) {
 		if (islower (*str)) *str = upper (*str);
@@ -42,8 +41,7 @@ Convert a character to uppercase (if it is lowercase)
 */
 
 char
-upper (c)
-char c;
+upper(char c)
 {
 	if (islower (c))
 		return toupper (c);
@@ -55,10 +53,7 @@ Report a bug.
 */
 
 void
-assert (expression, file, line)
-char *expression;
-char *file;
-int line;
+assert(char *expression, char *file, int line)
 {
 	char buf[STRSIZE];
 
@@ -76,7 +71,7 @@ End the game by cleaning up the display.
 */
 
 void
-empend ()
+empend(void)
 {
 	close_disp ();
 	exit (0);
@@ -113,7 +108,7 @@ static int in_loc[LIST_SIZE]; /* TRUE if object in a loc list */
 static int in_cargo[LIST_SIZE]; /* TRUE if object in a cargo list */
 
 void
-check () {
+check(void) {
 	void check_cargo(), check_obj(), check_obj_cargo();
 	
 	long i, j;
@@ -202,9 +197,7 @@ Check object lists.  We look for:
 */
 
 void
-check_obj (list, owner)
-piece_info_t **list;
-int owner;
+check_obj(piece_info_t **list, int owner)
 {
 	long i, j;
 	piece_info_t *p;
@@ -245,9 +238,7 @@ Check for:
 */
 
 void
-check_cargo (list, cargo_type)
-piece_info_t *list;
-int cargo_type;
+check_cargo(piece_info_t *list, int cargo_type)
 {
 	piece_info_t *p, *q;
 	long j, count;
@@ -280,8 +271,7 @@ lists are valid.
 */
 
 void
-check_obj_cargo (list)
-piece_info_t **list;
+check_obj_cargo(piece_info_t **list)
 {
 	piece_info_t *p;
 	long i;

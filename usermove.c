@@ -23,7 +23,7 @@ int awake(piece_info_t *obj);
 extern int get_piece_name(void);
 
 void
-user_move (void) {
+user_move(void) {
 	void piece_move();
 
 	int i, j, sec, sec_start;
@@ -102,8 +102,7 @@ the piece has not moved after this, we ask the user what to do.
 */
 
 void
-piece_move (obj)
-piece_info_t *obj;
+piece_move(piece_info_t *obj)
 {
 	void move_random(), move_fill(), move_land(), move_explore();
 	void move_path(), move_dir(), move_armyload(), ask_user();
@@ -205,8 +204,7 @@ the piece can move.  If there are none, we do nothing, otherwise we
 move the piece to a random adjacent square.
 */
 
-void move_random (obj)
-piece_info_t *obj;
+void move_random(piece_info_t *obj)
 {
 	loc_t loc_list[8];
 	int i, nloc;
@@ -232,8 +230,7 @@ which the piece can reach and have to piece move toward the
 territory.
 */
 
-void move_explore (obj)
-piece_info_t *obj;
+void move_explore(piece_info_t *obj)
 {
 	path_map_t path_map[MAP_SIZE];
 	loc_t loc;
@@ -271,8 +268,7 @@ army to the transport and waken the army.
 */
 
 void
-move_transport (obj)
-piece_info_t *obj;
+move_transport(piece_info_t *obj)
 {
 	loc_t loc;
 
@@ -295,8 +291,7 @@ the transport, and awaken the army.
 static view_map_t amap[MAP_SIZE];
 
 void
-move_armyload (obj)
-piece_info_t *obj;
+move_armyload(piece_info_t *obj)
 {
 	loc_t loc;
 	piece_info_t *p;
@@ -330,8 +325,7 @@ Move an army toward an attackable city or enemy army.
 */
 
 void
-move_armyattack (obj)
-piece_info_t *obj;
+move_armyattack(piece_info_t *obj)
 {
 	path_map_t path_map[MAP_SIZE];
 	loc_t loc;
@@ -349,8 +343,7 @@ piece_info_t *obj;
 }
 
 void
-move_ttload (obj)
-piece_info_t *obj;
+move_ttload(piece_info_t *obj)
 {
 	ABORT;
 	obj = obj;
@@ -361,8 +354,7 @@ Move a ship toward port.  If the ship is healthy, wake it up.
 */
 
 void
-move_repair (obj)
-piece_info_t *obj;
+move_repair(piece_info_t *obj)
 {
 	path_map_t path_map[MAP_SIZE];
 	loc_t loc;
@@ -396,8 +388,7 @@ object is not full, we set the move count to its maximum value.
 Otherwise we awaken the object.
 */
 
-void move_fill (obj)
-piece_info_t *obj;
+void move_fill(piece_info_t *obj)
 {
 	if (obj->count == obj_capacity (obj)) /* full? */
 		obj->func = NOFUNC; /* awaken full boat */
@@ -412,8 +403,7 @@ The nearest landing field must be within the object's range.
 */
 
 void
-move_land (obj)
-piece_info_t *obj;
+move_land(piece_info_t *obj)
 {
 	long best_dist;
  	loc_t best_loc;
@@ -443,8 +433,7 @@ If the object is a fighter which has travelled for half its range,
 we wake it up.
 */
 
-void move_dir (obj)
-piece_info_t *obj;
+void move_dir(piece_info_t *obj)
 {
 	loc_t loc;
 	int dir;
@@ -463,8 +452,7 @@ to our destination, and if there is nothing in the way.  If so, we
 move in the first direction we find.
 */
 
-void move_path (obj)
-piece_info_t *obj;
+void move_path(piece_info_t *obj)
 {
 	if (obj->loc == obj->func)
 		obj->func = NOFUNC;
@@ -478,9 +466,7 @@ Then we mark the paths to the destination.  Then we choose a
 move.
 */
 
-void move_to_dest (obj, dest)
-piece_info_t *obj;
-loc_t dest;
+void move_to_dest(piece_info_t *obj, loc_t dest)
 {
 	path_map_t path_map[MAP_SIZE];
 	int fterrain;
@@ -517,8 +503,7 @@ loc_t dest;
 Ask the user to move her piece.
 */
 
-void ask_user (obj)
-piece_info_t *obj;
+void ask_user(piece_info_t *obj)
 {
 	void user_skip(), user_fill(), user_dir(), user_set_dir();
 	void user_wake(), user_set_city_func(), user_cancel_auto();
@@ -581,8 +566,7 @@ function, and did not tell us what to do with the object.
 */
 
 void
-reset_func (obj)
-piece_info_t *obj;
+reset_func(piece_info_t *obj)
 {
 	city_info_t *cityp;
 	
@@ -602,8 +586,7 @@ the city.
 */
 
 void
-user_skip (obj)
-piece_info_t *obj;
+user_skip(piece_info_t *obj)
 {
 	if (obj->type == ARMY && user_map[obj->loc].contents == 'O')
 		move_army_to_city (obj, obj->loc);
@@ -616,8 +599,7 @@ or carrier.  If not, we beep at the user.
 */
 
 void
-user_fill (obj)
-piece_info_t *obj;
+user_fill(piece_info_t *obj)
 {
 	if (obj->type != TRANSPORT && obj->type != CARRIER) (void) beep ();
 	else obj->func = FILL;
@@ -628,7 +610,7 @@ Print out help information.
 */
 
 void
-user_help (void) {
+user_help(void) {
 	char c;
 
 	help (help_user, user_lines);
@@ -642,8 +624,7 @@ Set an object's function to move in a certain direction.
 */
 
 void
-user_set_dir (obj)
-piece_info_t *obj;
+user_set_dir(piece_info_t *obj)
 {
 	char c;
 
@@ -666,8 +647,7 @@ Wake up the current piece.
 */
 
 void
-user_wake (obj)
-piece_info_t *obj;
+user_wake(piece_info_t *obj)
 {
 	obj->func = NOFUNC;
 }
@@ -677,8 +657,7 @@ Set the piece's func to random.
 */
 
 void
-user_random (obj)
-piece_info_t *obj;
+user_random(piece_info_t *obj)
 {
 	obj->func = RANDOM;
 }
@@ -688,8 +667,7 @@ Set a piece's function to sentry.
 */
 
 void
-user_sentry (obj)
-piece_info_t *obj;
+user_sentry(piece_info_t *obj)
 {
 	obj->func = SENTRY;
 }
@@ -699,8 +677,7 @@ Set a fighter's function to land at the nearest city.
 */
 
 void
-user_land (obj)
-piece_info_t *obj;
+user_land(piece_info_t *obj)
 {
 	if (obj->type != FIGHTER) (void) beep ();
 	else obj->func = LAND;
@@ -711,8 +688,7 @@ Set the piece's func to explore.
 */
 
 void
-user_explore (obj)
-piece_info_t *obj;
+user_explore(piece_info_t *obj)
 {
 	obj->func = EXPLORE;
 }
@@ -722,8 +698,7 @@ Set an army's function to WFTRANSPORT.
 */
 
 void
-user_transport (obj)
-piece_info_t *obj;
+user_transport(piece_info_t *obj)
 {
 	if (obj->type != ARMY) (void) beep ();
 	else obj->func = WFTRANSPORT;
@@ -734,8 +709,7 @@ Set an army's function to ARMYATTACK.
 */
 
 void
-user_armyattack (obj)
-piece_info_t *obj;
+user_armyattack(piece_info_t *obj)
 {
 	if (obj->type != ARMY) (void) beep ();
 	else obj->func = ARMYATTACK;
@@ -746,8 +720,7 @@ Set a ship's function to REPAIR.
 */
 
 void
-user_repair (obj)
-piece_info_t *obj;
+user_repair(piece_info_t *obj)
 {
 	if (obj->type == ARMY || obj->type == FIGHTER) (void) beep ();
 	else obj->func = REPAIR;
@@ -758,8 +731,7 @@ Set a city's function.
 */
 
 void
-user_set_city_func (obj)
-piece_info_t *obj;
+user_set_city_func(piece_info_t *obj)
 {
 	void e_city_fill(), e_city_explore(), e_city_stasis();
 	void e_city_wake(), e_city_random(), e_city_repair();
@@ -816,8 +788,7 @@ Change a city's production.
 */
 
 void
-user_build (obj)
-piece_info_t *obj;
+user_build(piece_info_t *obj)
 {
 	city_info_t *cityp;
 
@@ -836,9 +807,7 @@ This routine handles attacking objects.
 */
 
 void
-user_dir (obj, dir)
-piece_info_t *obj;
-int dir;
+user_dir(piece_info_t *obj, int dir)
 {
 	void user_dir_army(), user_dir_fighter(), user_dir_ship();
 
@@ -869,9 +838,7 @@ necessary, and attack if necessary.
 */
 
 void
-user_dir_army (obj, loc)
-piece_info_t *obj;
-loc_t loc;
+user_dir_army(piece_info_t *obj, loc_t loc)
 {
 	int enemy_killed;
 	
@@ -934,9 +901,7 @@ three cases:  attacking a city, attacking ourself, attacking the enemy.
 */
 
 void
-user_dir_fighter (obj, loc)
-piece_info_t *obj;
-loc_t loc;
+user_dir_fighter(piece_info_t *obj, loc_t loc)
 {
 	if (map[loc].contents == '*')
 		fatal (obj, loc,
@@ -961,9 +926,7 @@ a city, attacking self, attacking enemy.
 */
 	
 void
-user_dir_ship (obj, loc)
-piece_info_t *obj;
-loc_t loc;
+user_dir_ship(piece_info_t *obj, loc_t loc)
 {
 	int enemy_killed;
 
@@ -1020,9 +983,7 @@ if she really wants to attack the city.
 */
 
 void
-move_army_to_city (obj, city_loc)
-piece_info_t *obj;
-loc_t city_loc;
+move_army_to_city(piece_info_t *obj, loc_t city_loc)
 {
 	piece_info_t *tt;
 
@@ -1040,7 +1001,8 @@ Cancel automove mode.
 */
 
 void
-user_cancel_auto (void) {
+user_cancel_auto(void)
+{
 	if (!automove)
 		comment ("Not in auto mode!",0,0,0,0,0,0,0,0);
 	else {
@@ -1054,7 +1016,8 @@ Redraw the screen.
 */
 
 void
-user_redraw (void) {
+user_redraw (void)
+{
 	redraw ();
 }
 
@@ -1068,8 +1031,7 @@ will return TRUE if we want the user to have control.
 */
 
 int
-awake (obj)
-piece_info_t *obj;
+awake(piece_info_t *obj)
 {
 	int i;
 	char c;
@@ -1105,11 +1067,7 @@ print out the response and kill the object.
 */
 
 void
-fatal (obj, loc, message, response)
-piece_info_t *obj;
-loc_t loc;
-char *message;
-char *response;
+fatal(piece_info_t *obj, loc_t loc, char *message, char *response)
 {
 	if (getyn (message)) {
 		comment (response,0,0,0,0,0,0,0,0);

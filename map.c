@@ -53,11 +53,7 @@ or lakes.
 */
 
 void
-vmap_cont (cont_map, vmap, loc, bad_terrain)
-int *cont_map;
-view_map_t *vmap;
-loc_t loc;
-char bad_terrain;
+vmap_cont (int *cont_map, view_map_t *vmap, loc_t loc, char bad_terrain)
 {
 	(void) bzero ((char *)cont_map, MAP_SIZE * sizeof (int));
 	vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain);
@@ -70,11 +66,7 @@ known to be either on the continent or adjacent to the continent.
 */
 
 void
-vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain)
-int *cont_map;
-view_map_t *vmap;
-loc_t loc;
-char bad_terrain;
+vmap_mark_up_cont (int *cont_map, view_map_t *vmap, loc_t loc, char bad_terrain)
 {
 	int i, j;
 	loc_t new_loc;
@@ -121,13 +113,10 @@ By adjusting the value of
 or lakes.
 */
 
-static void rmap_mark_up_cont();
+static void rmap_mark_up_cont(int *cont_map, loc_t loc, char bad_terrain);
 
 void
-rmap_cont (cont_map, loc, bad_terrain)
-int *cont_map;
-loc_t loc;
-char bad_terrain;
+rmap_cont (int *cont_map, loc_t loc, char bad_terrain)
 {
 	(void) bzero ((char *)cont_map, MAP_SIZE * sizeof (int));
 	rmap_mark_up_cont (cont_map, loc, bad_terrain);
@@ -142,10 +131,7 @@ Someday this should be tweaked to use perimeter lists.
 */
 
 static void
-rmap_mark_up_cont (cont_map, loc, bad_terrain)
-int *cont_map;
-loc_t loc;
-char bad_terrain;
+rmap_mark_up_cont (int *cont_map, loc_t loc, char bad_terrain)
 {
 	int i;
 	loc_t new_loc;
@@ -169,9 +155,7 @@ This could be done as we mark up the continent.
 #define COUNT(c,item) case c: item += 1; break
 
 scan_counts_t
-vmap_cont_scan (cont_map, vmap)
-int *cont_map;
-view_map_t *vmap;
+vmap_cont_scan (int *cont_map, view_map_t *vmap)
 {
 	scan_counts_t counts;
 	count_t i;
@@ -225,8 +209,7 @@ fields are valid.
 */
 
 scan_counts_t
-rmap_cont_scan (cont_map)
-int *cont_map;
+rmap_cont_scan (int *cont_map)
 {
 	scan_counts_t counts;
 	count_t i;
@@ -248,9 +231,7 @@ Return TRUE if a location is on the edge of a continent.
 */
 
 int
-map_cont_edge (cont_map, loc)
-int *cont_map;
-loc_t loc;
+map_cont_edge (int *cont_map, loc_t loc)
 {
 	loc_t i, j;
 
@@ -295,13 +276,8 @@ the information must be consistent with the needs of 'vmap_mark_path'.
 /* Find an objective over a single type of terrain. */
 
 loc_t
-vmap_find_xobj (path_map, vmap, loc, move_info, start, expand)
-path_map_t path_map[];
-view_map_t *vmap;
-loc_t loc;
-move_info_t *move_info;
-int start;
-int expand;
+vmap_find_xobj (path_map_t path_map[], view_map_t *vmap, 
+		loc_t loc, move_info_t *move_info, int start, int expand)
 {
 	perimeter_t *from;
 	perimeter_t *to;
@@ -332,11 +308,8 @@ int expand;
 /* Find an objective for a piece that crosses land and water. */
 
 loc_t
-vmap_find_aobj (path_map, vmap, loc, move_info)
-path_map_t path_map[];
-view_map_t *vmap;
-loc_t loc;
-move_info_t *move_info;
+vmap_find_aobj (path_map_t path_map[], view_map_t *vmap, 
+		loc_t loc, move_info_t *move_info)
 {
 	return vmap_find_xobj (path_map, vmap, loc, move_info, T_LAND, T_AIR);
 }
@@ -344,11 +317,8 @@ move_info_t *move_info;
 /* Find an objective for a piece that crosses only water. */
 
 loc_t
-vmap_find_wobj (path_map, vmap, loc, move_info)
-path_map_t path_map[];
-view_map_t *vmap;
-loc_t loc;
-move_info_t *move_info;
+vmap_find_wobj (path_map_t path_map[], view_map_t *vmap, 
+		loc_t loc, move_info_t *move_info)
 {
 	return vmap_find_xobj (path_map, vmap, loc, move_info, T_WATER, T_WATER);
 }
@@ -356,11 +326,8 @@ move_info_t *move_info;
 /* Find an objective for a piece that crosses only land. */
 
 loc_t
-vmap_find_lobj (path_map, vmap, loc, move_info)
-path_map_t path_map[];
-view_map_t *vmap;
-loc_t loc;
-move_info_t *move_info;
+vmap_find_lobj (path_map_t path_map[], view_map_t *vmap, 
+		loc_t loc, move_info_t *move_info)
 {
 	return vmap_find_xobj (path_map, vmap, loc, move_info, T_LAND, T_LAND);
 }
@@ -378,12 +345,8 @@ is being approached from the land or the water.
 */
 
 loc_t
-vmap_find_lwobj (path_map, vmap, loc, move_info, beat_cost)
-path_map_t path_map[];
-view_map_t *vmap;
-loc_t loc;
-move_info_t *move_info;
-int beat_cost;
+vmap_find_lwobj (path_map_t path_map[], view_map_t *vmap, 
+		 loc_t loc, move_info_t *move_info, int beat_cost)
 {
 	perimeter_t *cur_land;
 	perimeter_t *cur_water;
@@ -436,10 +399,7 @@ with the lowest cost.
 */
 
 STATIC int
-best_adj (pmap, loc, type)
-path_map_t *pmap;
-loc_t loc;
-int type;
+best_adj (path_map_t *pmap, loc_t loc, int type)
 {
 	int i;
 	loc_t new_loc;
@@ -467,11 +427,8 @@ but the second time, we only expand water (tt taking its second move).
 */
 
 loc_t
-vmap_find_wlobj (path_map, vmap, loc, move_info)
-path_map_t path_map[];
-view_map_t *vmap;
-loc_t loc;
-move_info_t *move_info;
+vmap_find_wlobj (path_map_t path_map[], view_map_t *vmap, 
+		 loc_t loc, move_info_t *move_info)
 {
 	perimeter_t *cur_land;
 	perimeter_t *cur_water;
@@ -527,11 +484,7 @@ static path_map_t pmap_init[MAP_SIZE];
 static int init_done = 0;
 
 STATIC void
-start_perimeter (pmap, perim, loc, terrain)
-path_map_t *pmap;
-perimeter_t *perim;
-loc_t loc;
-int terrain;
+start_perimeter (path_map_t *pmap, perimeter_t *perim, loc_t loc, int terrain)
 {
 	int i;
 	
@@ -573,17 +526,19 @@ We set the cost to reach the current perimeter.
 */
 
 STATIC void
-expand_perimeter (pmap, vmap, move_info, curp, type, cur_cost, inc_wcost, inc_lcost, waterp, landp)
-path_map_t *pmap; /* path map to update */
-view_map_t *vmap;
-move_info_t *move_info; /* objectives and weights */
-perimeter_t *curp; /* perimeter to expand */
-int type; /* type of terrain to expand */
-int cur_cost; /* cost to reach cells on perimeter */
-int inc_wcost; /* cost to enter new water cells */
-int inc_lcost; /* cost to enter new land cells */
-perimeter_t *waterp; /* pointer to new water perimeter */
-perimeter_t *landp; /* pointer to new land perimeter */
+expand_perimeter (path_map_t *pmap, view_map_t *vmap, move_info_t *move_info, 
+		  perimeter_t *curp, 
+		  int type, int cur_cost, int inc_wcost, int inc_lcost, 
+		  perimeter_t *waterp, perimeter_t *landp)
+/* pmap = path map to update */
+/* move_info = objectives and weights */
+/* curp = perimeter to expand */
+/* type = type of terrain to expand */
+/* cur_cost = cost to reach cells on perimeter */
+/* inc_wcost = cost to enter new water cells */
+/* inc_lcost = cost to enter new land cells */
+/* waterp = pointer to new water perimeter */
+/* landp = pointer to new land perimeter */
 {
 	register long i;
 	register int j;
@@ -625,13 +580,8 @@ perimeter_t *landp; /* pointer to new land perimeter */
 /* Add a cell to a perimeter list. */
 	
 STATIC void
-add_cell (pmap, new_loc, perim, terrain, cur_cost, inc_cost)
-path_map_t *pmap;
-loc_t new_loc;
-perimeter_t *perim;
-int terrain;
-int cur_cost;
-int inc_cost;
+add_cell (path_map_t *pmap, loc_t new_loc, 
+	  perimeter_t *perim, int terrain, int cur_cost, int inc_cost)
 {
 	register	path_map_t	*pm = &pmap[new_loc];
 
@@ -646,11 +596,8 @@ int inc_cost;
 /* Compute the cost to move to an objective. */
 
 STATIC int
-objective_cost (vmap, move_info, loc, base_cost)
-view_map_t *vmap;
-move_info_t *move_info;
-loc_t loc;
-int base_cost;
+objective_cost (view_map_t *vmap, move_info_t *move_info, 
+		loc_t loc, int base_cost)
 {
 	char *p;
 	int w;
@@ -687,12 +634,8 @@ Return the type of terrain at a vmap location.
 */
 
 STATIC int
-terrain_type (pmap, vmap, move_info, from_loc, to_loc)
-path_map_t *pmap;
-view_map_t *vmap;
-move_info_t *move_info;
-loc_t from_loc;
-loc_t to_loc;
+terrain_type (path_map_t *pmap, view_map_t *vmap, move_info_t *move_info,
+	      loc_t from_loc, loc_t to_loc)
 {
 	if (vmap[to_loc].contents == '+') return T_LAND;
 	if (vmap[to_loc].contents == '.') return T_WATER;
@@ -743,8 +686,7 @@ So be careful.
 */
 
 void
-vmap_prune_explore_locs (vmap)
-view_map_t *vmap;
+vmap_prune_explore_locs (view_map_t *vmap)
 {
 	path_map_t pmap[MAP_SIZE];
 	perimeter_t *from, *to;
@@ -871,13 +813,8 @@ Careful:  'loc' may be "off board".
 */
 
 STATIC void
-expand_prune (vmap, pmap, loc, type, to, explored)
-view_map_t *vmap;
-path_map_t *pmap;
-loc_t loc;
-int type;
-perimeter_t *to;
-int *explored;
+expand_prune (view_map_t *vmap, path_map_t *pmap,
+	      loc_t loc, int type, perimeter_t *to, int *explored)
 {
 	int i;
 	loc_t new_loc;
@@ -909,13 +846,12 @@ This is similar to 'find_objective' except that we know our destination.
 */
 
 loc_t
-vmap_find_dest (path_map, vmap, cur_loc, dest_loc, owner, terrain)
-path_map_t path_map[];
-view_map_t vmap[];
-loc_t cur_loc; /* current location of piece */
-loc_t dest_loc; /* destination of piece */
-int owner; /* owner of piece being moved */
-int terrain; /* terrain we can cross */
+vmap_find_dest (path_map_t path_map[], view_map_t vmap[], 
+		loc_t cur_loc, loc_t dest_loc, int owner, int terrain)
+/* cur_loc = current location of piece */
+/* dest_loc = destination of piece */
+/* owner = owner of piece being moved */
+/* terrain = terrain we can cross */
 {
 	perimeter_t *from;
 	perimeter_t *to;
@@ -968,10 +904,7 @@ Someday, this routine should probably use perimeter lists as well.
 */
 
 void
-vmap_mark_path (path_map, vmap, dest)
-path_map_t *path_map;
-view_map_t *vmap;
-loc_t dest;
+vmap_mark_path (path_map_t *path_map, view_map_t *vmap, loc_t dest)
 {
 	int n;
 	loc_t new_dest;
@@ -995,9 +928,7 @@ invoked to decide which squares are actually valid.
 */
 
 void
-vmap_mark_adjacent (path_map, loc)
-path_map_t path_map[];
-loc_t loc;
+vmap_mark_adjacent (path_map_t path_map[], loc_t loc)
 {
 	int i;
 	loc_t new_loc;
@@ -1013,9 +944,7 @@ to a location on the existing shortest path.
 */
 
 void
-vmap_mark_near_path (path_map, loc)
-path_map_t path_map[];
-loc_t loc;
+vmap_mark_near_path (path_map_t path_map[], loc_t loc)
 {
 	int i, j;
 	loc_t new_loc, xloc;

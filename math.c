@@ -25,13 +25,12 @@ Other routines include:
 #include "empire.h"
 #include "extern.h"
 
-void rndini()
+void rndini(void)
 {
 	srand((unsigned)(time(0) & 0xFFFF));
 }
 
-long irand(high)
-long high;
+long irand(long high)
 {
 	if (high < 2) {
 		return (0);
@@ -39,8 +38,7 @@ long high;
 	return (rand() % high);
 }
 
-int rndint(minp, maxp)
-int minp, maxp;
+int rndint(int minp, int maxp)
 {
 	int size;
 
@@ -58,8 +56,7 @@ the max of the absolute differnce between the x and y coordinates.
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 
 int
-dist (a, b)
-loc_t a, b;
+dist(loc_t a, loc_t b)
 {
 	int ax, ay, bx, by;
 
@@ -76,8 +73,7 @@ Find the square root of an integer.  We actually return the floor
 of the square root using Newton's method.
 */
 
-int isqrt (n)
-int n;
+int isqrt(int n)
 {
 	int guess;
 	

@@ -38,11 +38,11 @@ to read the lines.  The new information is then displayed, and the
 
 static int need_delay;
 static FILE *my_stream;
+
 void
 /* VARARGS1 */
-pdebug (s, a, b, c, d, e, f, g, h)
-char *s;
-int a, b, c, d, e, f, g, h;
+pdebug(char *s, 
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
 	if (!print_debug) return;
 	comment (s, a, b, c, d, e, f, g, h);
@@ -55,7 +55,7 @@ we finish printing information to the screen.
 */
 
 void
-topini()
+topini(void)
 {
 	info (0, 0, 0);
 }
@@ -65,10 +65,8 @@ Write a message to one of the top lines.
 
 void
 /* VARARGS2 */
-topmsg(linep, buf, a, b, c, d, e, f, g, h)
-int linep;
-char *buf;
-int a, b, c, d, e, f, g, h;
+topmsg(int linep, char *buf,
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
 	if (linep < 1 || linep > NUMTOPS)
 		linep = 1;
@@ -81,11 +79,8 @@ int a, b, c, d, e, f, g, h;
 }
 
 void
-topmsg1 (linep, buf, a, b, c, d, e, f, g, h)
-int linep;
-char *buf;
-char *a;
-int b, c, d, e, f, g, h;
+topmsg1(int linep, char *buf, char *a,
+	int b, int c, int d, int e, int f, int g, int h)
 {
 	if (linep < 1 || linep > NUMTOPS)
 		linep = 1;
@@ -96,12 +91,10 @@ int b, c, d, e, f, g, h;
 	
 	(void) clrtoeol ();
 }
+
 void
-topmsg2 (linep, buf, a, b, c, d, e, f, g, h)
-int linep;
-char *buf;
-char *a, *e, *f;
-int b, c, d, g, h;
+topmsg2(int linep, char *buf, 
+	char *a, int b, int c, int d, char *e, char *f, int g, int h)
 {
 	if (linep < 1 || linep > NUMTOPS)
 		linep = 1;
@@ -112,31 +105,30 @@ int b, c, d, g, h;
 	
 	(void) clrtoeol ();
 }
+
 /*
 Print a prompt on the first message line.
 */
 
 void
 /* VARARGS1 */
-prompt (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a,b,c,d,e,f,g,h;
+prompt(char *buf,
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
-	topmsg (1, buf, a, b, c, d, e, f, g, h);
+	topmsg(1, buf, a, b, c, d, e, f, g, h);
 }
+
 void
-prompt1 (buf, a, b, c, d, e, f, g, h)
-char *buf, *a;
-int b,c,d,e,f,g,h;
+prompt1(char *buf, char *a, 
+	int b, int c, int d, int e, int f, int g, int h)
 {
-	topmsg1 (1, buf, a, b, c, d, e, f, g, h);
+	topmsg1(1, buf, a, b, c, d, e, f, g, h);
 }
+
 void
-prompt2 (buf, a, b, c, d, e, f, g, h)
-char *buf, *a, *e, *f;
-int b,c,d,g,h;
-{
-	topmsg2 (1, buf, a, b, c, d, e, f, g, h);
+prompt2 (char *buf, 
+	char *a, int b, int c, int d, char *e, char *f, int g, int h){
+	topmsg2(1, buf, a, b, c, d, e, f, g, h);
 }
 
 /*
@@ -145,11 +137,10 @@ Print an error message on the second message line.
 
 void
 /* VARARGS1 */
-error (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+error(char *buf,
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
-	topmsg (2, buf, a, b, c, d, e, f, g, h);
+	topmsg(2, buf, a, b, c, d, e, f, g, h);
 }
 
 /*
@@ -158,11 +149,10 @@ Print out extra information.
 
 void
 /* VARARGS1 */
-extra (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+extra(char *buf,
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
-	topmsg (3, buf, a, b, c, d, e, f, g, h);
+	topmsg(3, buf, a, b, c, d, e, f, g, h);
 }
 
 /*
@@ -170,7 +160,7 @@ Print out a generic error message.
 */
 
 void
-huh ()
+huh(void)
 {
 	error ("Type H for Help.",0,0,0,0,0,0,0,0);
 }
@@ -182,8 +172,7 @@ information, we set the need_delay flag.
 */
 
 void
-info (a, b, c)
-char *a, *b, *c;
+info(char *a, char *b, char *c)
 {
 	if (need_delay) delay ();
 	topmsg (1, a,0,0,0,0,0,0,0,0);
@@ -193,14 +182,13 @@ char *a, *b, *c;
 }
 
 void
-set_need_delay () {
+set_need_delay(void) {
 	need_delay = 1;
 }
 
 void
-comment (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+comment (char *buf,
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
 	if (need_delay) delay ();
 	topmsg (1, 0,0,0,0,0,0,0,0,0);
@@ -210,9 +198,8 @@ int a, b, c, d, e, f, g, h;
 }
 	
 void
-comment1 (buf, a, b, c, d, e, f, g, h)
-char *buf, *a;
-int b, c, d, e, f, g, h;
+comment1(char *buf, char *a,
+	 int b, int c, int d, int e, int f, int g, int h)
 {
 	if (need_delay) delay ();
 	topmsg1 (1, 0,0,0,0,0,0,0,0,0);
@@ -223,9 +210,8 @@ int b, c, d, e, f, g, h;
 	
 /* kermyt begin */
 void
-ksend (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a,b,c,d,e,f,g,h;
+ksend(char *buf,
+       int a, int b, int c, int d, int e, int f, int g, int h)
 {
 	if(!(my_stream=fopen("info_list.txt","a")))
 	{
@@ -236,10 +222,10 @@ int a,b,c,d,e,f,g,h;
 	fclose(my_stream);
 	return;
 }
+
 void
-ksend1 (buf, a, b, c, d, e, f, g, h)
-char *buf, *a;
-int b,c,d,e,f,g,h;
+ksend1(char *buf, char *a, 
+	int b, int c, int d, int e, int f, int g, int h)
 {
 	if(!(my_stream=fopen("info_list.txt","a")))
 	{
@@ -256,9 +242,7 @@ Get a string from the user, echoing characters all the while.
 */
 
 void
-get_str (buf, sizep)
-char *buf;
-int sizep;
+get_str(char *buf, int sizep)
 {
 	(void) echo();
 	get_strq(buf, sizep);
@@ -270,9 +254,7 @@ Get a string from the user, ignoring the current echo mode.
 */
 
 void
-get_strq (buf, sizep)
-char *buf;
-int sizep;
+get_strq(char *buf, int sizep)
 {
 	sizep = sizep; /* size of buf, currently unused */
 
@@ -289,7 +271,7 @@ Get a character from the user and convert it to uppercase.
 */
 
 char
-get_chx()
+get_chx(void)
 {
 	char c;
 
@@ -306,8 +288,7 @@ Input an integer from the user.
 */
 
 int
-getint (message)
-char *message;
+getint(char *message)
 {
 	char buf[STRSIZE];
 	char *p;
@@ -335,7 +316,7 @@ Input a character from the user with echoing.
 */
 
 char
-get_c ()
+get_c(void)
 {
 	char c; /* one char and a null */
 
@@ -350,7 +331,7 @@ Input a character quietly.
 */
 
 char
-get_cq ()
+get_cq(void)
 {
 	char c;
 
@@ -368,8 +349,7 @@ a valid response.  We return TRUE iff the user replies 'y'.
 */
 
 int
-getyn (message)
-char *message;
+getyn(char *message)
 {
 	char c;
 
@@ -389,9 +369,7 @@ Input an integer in a range.
 */
 
 int
-get_range (message, low, high)
-char *message;
-int low, high;
+get_range(char *message, int low, int high)
 {
 	int result;
 
@@ -409,9 +387,7 @@ Print a screen of help information.
 */
 
 void
-help (text, nlines)
-char **text;
-int nlines;
+help(char **text, int nlines)
 {
 	int i, r, c;
 	int text_lines;
@@ -456,7 +432,7 @@ int nlines;
 #define COL_DIGITS ((MAP_WIDTH <= 100) ? 2 : ((MAP_WIDTH <= 1000 ? 3 : (1 / 0))))
 
 int
-loc_disp (int loc)
+loc_disp(int loc)
 {
   int row = loc / MAP_WIDTH;
   int nrow = row;

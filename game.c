@@ -31,7 +31,7 @@ on the map, select cities for each opponent, and zero out the lists of
 pieces on the board.
 */
 
-void init_game (void) {
+void init_game(void) {
 	void make_map(void), place_cities(void);
 
 	count_t i;
@@ -96,7 +96,7 @@ at program start up.
 static int height[2][MAP_SIZE];
 static int height_count[MAX_HEIGHT+1];
 
-void make_map (void) {
+void make_map(void) {
 	int from, to, k;
 	count_t i, j, sum;
 	loc_t loc;
@@ -168,7 +168,7 @@ for a city, we remove land cells which are too close to the city.
 /* avoid compiler problems with large automatic arrays */
 static loc_t land[MAP_SIZE];
 
-void place_cities (void) {
+void place_cities(void) {
 	count_t regen_land();
 
 	count_t placed, i;
@@ -205,8 +205,7 @@ put all land in the list, decrement the min_city_dist, and then
 remove any land which is too close to a city.
 */
 
-count_t regen_land (placed)
-count_t placed;
+count_t regen_land(count_t placed)
 {
 	count_t num_land;
 	count_t i;
@@ -232,9 +231,7 @@ count_t placed;
 Remove land that is too close to a city.
 */
 
-count_t remove_land (loc, num_land)
-loc_t loc;
-count_t num_land;
+count_t remove_land(loc_t loc, count_t num_land)
 {
 	count_t new, i;
 
@@ -298,7 +295,7 @@ static cont_t cont_tab[MAX_CONT]; /* list of good continenets */
 static int rank_tab[MAX_CONT]; /* indices to cont_tab in order of rank */
 static pair_t pair_tab[MAX_CONT*MAX_CONT]; /* ranked pairs of continents */
 
-int select_cities (void) {
+int select_cities(void) {
 	void find_cont(void), make_pair(void);
 
 	loc_t compi, useri;
@@ -348,7 +345,7 @@ Find all continents with 2 cities or more, one of which must be a shore
 city.  We rank the continents.
 */
 
-void find_cont (void) {
+void find_cont(void) {
 	loc_t i;
 	loc_t mapi;
 
@@ -366,8 +363,7 @@ Find the next continent and insert it in the rank table.
 If there are no more continents, we return false.
 */
 
-int find_next (mapi)
-loc_t *mapi;
+int find_next(loc_t *mapi)
 {
 	count_t i;
 	long val;
@@ -404,8 +400,7 @@ continent and return true.  Otherwise we return false.
 static count_t ncity, nland, nshore;
 static void mark_cont(loc_t);
 
-int good_cont (mapi)
-loc_t mapi;
+int good_cont(loc_t mapi)
 {
 	long val;
 
@@ -440,8 +435,7 @@ cities for the continent.  We then examine each surrounding cell.
 */
 
 static void
-mark_cont (mapi)
-loc_t mapi;
+mark_cont(loc_t mapi)
 {
 	int i;
 
@@ -468,7 +462,7 @@ win with.  Our ranking is simply based on the difference in value
 between the user's continent and the computer's continent.
 */
 
-void make_pair (void) {
+void make_pair(void) {
 	int i, j, k, npair;
 	long val;
 
@@ -503,7 +497,7 @@ tell the user why.
 #define wbuf(buf) if (!xwrite (f, (char *)buf, sizeof (buf))) return
 #define wval(val) if (!xwrite (f, (char *)&val, sizeof (val))) return
 
-void save_game (void) {
+void save_game(void) {
 	FILE *f; /* file to save game in */
 
 	f = fopen (savefile, "w"); /* open for output */
@@ -540,7 +534,7 @@ We return TRUE if we succeed, otherwise FALSE.
 #define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (FALSE);
 #define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (FALSE);
 
-int restore_game (void) {
+int restore_game(void) {
 	void read_embark();
 	
 	FILE *f; /* file to save game in */
@@ -627,9 +621,7 @@ We then loop through the pieces at the ship's location until
 the ship has the same amount of cargo it previously had.
 */
 
-void read_embark (list, piece_type)
-piece_info_t *list;
-int piece_type;
+void read_embark(piece_info_t *list, int piece_type)
 {
 	void inconsistent(void);
 
@@ -652,7 +644,7 @@ int piece_type;
 	}
 }
 
-void inconsistent (void) {
+void inconsistent(void) {
 	(void) printf ("saved game is inconsistent.  Please remove it.\n");
 	exit (1);
 }
@@ -662,10 +654,7 @@ Write a buffer to a file.  If we cannot write everything, return FALSE.
 Also, tell the user why the write did not work if it didn't.
 */
 
-int xwrite (f, buf, size)
-FILE *f;
-char *buf;
-int size;
+int xwrite(FILE *f, char *buf, int size)
 {
 	int bytes;
  
@@ -686,10 +675,7 @@ Read a buffer from a file.  If the read fails, we tell the user why
 and return FALSE.
 */
 
-int xread (f, buf, size)
-FILE *f;
-char *buf;
-int size;
+int xread(FILE *f, char *buf, int size)
 {
 	int bytes;
 
@@ -715,7 +701,7 @@ extern char city_char[];
 static char mapbuf[MAP_SIZE];
 
 void
-save_movie_screen (void)
+save_movie_screen(void)
 {
 	FILE *f; /* file to save game in */
 	count_t i;
@@ -748,7 +734,7 @@ print it using a zoomed display.
 */
 
 void
-replay_movie (void)
+replay_movie(void)
 {
 	void print_movie_cell();
 
@@ -798,9 +784,7 @@ The "xxxxx" field is the cumulative cost of building the hardware.
 /* in declared order, with city first */
 static char *pieces = "OAFPDSTCBZXafpdstcbz";
 
-void stat_display (mbuf, round)
-char *mbuf;
-int round;
+void stat_display(char *mbuf, int round)
 {
 	count_t i;
 	int counts[2*NUM_OBJECTS+2];
