@@ -16,9 +16,9 @@ usermove.c -- Let the user move her troops.
 #include "empire.h"
 #include "extern.h"
 
-void fatal(piece_info_t *obj,long loc,char *message,char *response);
-void move_to_dest(piece_info_t *obj,long dest);
-void move_army_to_city(piece_info_t *obj,long city_loc);
+void fatal(piece_info_t *obj,loc_t loc,char *message,char *response);
+void move_to_dest(piece_info_t *obj,loc_t dest);
+void move_army_to_city(piece_info_t *obj,loc_t city_loc);
 int awake(piece_info_t *obj);
 extern int get_piece_name(void);
 
@@ -114,7 +114,7 @@ piece_info_t *obj;
 	int speed, max_hits;
 	int saved_moves;
 	int need_input;
-	long saved_loc;
+	loc_t saved_loc;
 	city_info_t *cityp;
 
 	/* set func for piece if on city */
@@ -208,9 +208,9 @@ move the piece to a random adjacent square.
 void move_random (obj)
 piece_info_t *obj;
 {
-	long loc_list[8];
+	loc_t loc_list[8];
 	int i, nloc;
-	long loc;
+	loc_t loc;
 
 	nloc = 0;
 
@@ -236,7 +236,7 @@ void move_explore (obj)
 piece_info_t *obj;
 {
 	path_map_t path_map[MAP_SIZE];
-	long loc;
+	loc_t loc;
 	char *terrain;
 
 	switch (obj->type) {
@@ -274,7 +274,7 @@ void
 move_transport (obj)
 piece_info_t *obj;
 {
-	long loc;
+	loc_t loc;
 
 	/* look for an adjacent transport */
 	loc = find_transport (USER, obj->loc);
@@ -298,7 +298,7 @@ void
 move_armyload (obj)
 piece_info_t *obj;
 {
-	long loc;
+	loc_t loc;
 	piece_info_t *p;
 	int i;
 
@@ -334,7 +334,7 @@ move_armyattack (obj)
 piece_info_t *obj;
 {
 	path_map_t path_map[MAP_SIZE];
-	long loc;
+	loc_t loc;
 
 	ASSERT (obj->type == ARMY);
 
@@ -365,7 +365,7 @@ move_repair (obj)
 piece_info_t *obj;
 {
 	path_map_t path_map[MAP_SIZE];
-	long loc;
+	loc_t loc;
 
 	ASSERT (obj->type > FIGHTER);
 	
@@ -415,7 +415,8 @@ void
 move_land (obj)
 piece_info_t *obj;
 {
-	long best_dist, best_loc;
+	long best_dist;
+ 	loc_t best_loc;
 	long new_dist;
 	piece_info_t *p;
 
@@ -445,7 +446,7 @@ we wake it up.
 void move_dir (obj)
 piece_info_t *obj;
 {
-	long loc;
+	loc_t loc;
 	int dir;
 
 	dir = MOVE_DIR (obj->func);
@@ -479,12 +480,12 @@ move.
 
 void move_to_dest (obj, dest)
 piece_info_t *obj;
-long dest;
+loc_t dest;
 {
 	path_map_t path_map[MAP_SIZE];
 	int fterrain;
 	char *mterrain;
-	long new_loc;
+	loc_t new_loc;
 	
 	switch (obj->type) {
 	case ARMY:
@@ -841,7 +842,7 @@ int dir;
 {
 	void user_dir_army(), user_dir_fighter(), user_dir_ship();
 
-	long loc;
+	loc_t loc;
 
 	loc = obj->loc + dir_offset[dir];
 
@@ -870,7 +871,7 @@ necessary, and attack if necessary.
 void
 user_dir_army (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	int enemy_killed;
 	
@@ -935,7 +936,7 @@ three cases:  attacking a city, attacking ourself, attacking the enemy.
 void
 user_dir_fighter (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	if (map[loc].contents == '*')
 		fatal (obj, loc,
@@ -962,7 +963,7 @@ a city, attacking self, attacking enemy.
 void
 user_dir_ship (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	int enemy_killed;
 
@@ -1021,7 +1022,7 @@ if she really wants to attack the city.
 void
 move_army_to_city (obj, city_loc)
 piece_info_t *obj;
-long city_loc;
+loc_t city_loc;
 {
 	piece_info_t *tt;
 
@@ -1106,7 +1107,7 @@ print out the response and kill the object.
 void
 fatal (obj, loc, message, response)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 char *message;
 char *response;
 {

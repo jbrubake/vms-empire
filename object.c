@@ -25,11 +25,12 @@ Distances are computed as straight-line distances.
 
 int
 find_nearest_city (loc, owner, city_loc)
-long loc;
+loc_t loc;
 int owner;
-long *city_loc;
+loc_t *city_loc;
 {
-	long best_dist, best_loc;
+	loc_t best_loc;
+	long best_dist;
 	long new_dist, i;
 	
 	best_dist = INFINITY;
@@ -52,7 +53,7 @@ Given the location of a city, return the index of that city.
 */
 
 city_info_t *find_city (loc)
-long loc;
+loc_t loc;
 {
 	return (map[loc].cityp);
 }
@@ -93,7 +94,7 @@ list of objects at the given location for one of the given type.
 
 piece_info_t *find_obj (type, loc)
 int type;
-long loc;
+loc_t loc;
 {
 	piece_info_t *p;
 
@@ -109,7 +110,7 @@ Find a non-full item of the appropriate type at the given location.
 
 piece_info_t *find_nfull (type, loc)
 int type;
-long loc;
+loc_t loc;
 {
 	piece_info_t *p;
 
@@ -125,13 +126,13 @@ Look around a location for an unfull transport.  Return the location
 of the transport if there is one.
 */
 
-long
+loc_t
 find_transport (owner, loc)
 int owner;
-long loc;
+loc_t loc;
 {
 	int i;
-	long new_loc;
+	loc_t new_loc;
 	piece_info_t *t;
 
 	for (i = 0; i < 8; i++) { /* look around */
@@ -149,7 +150,7 @@ We prefer transports and carriers to other objects.
 
 piece_info_t *
 find_obj_at_loc (loc)
-long loc;
+loc_t loc;
 {
 	piece_info_t *p, *best;
 	
@@ -196,7 +197,7 @@ anything in the object, it is killed as well.
 
 void kill_obj (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	void kill_one();
 
@@ -328,10 +329,10 @@ etc.
 
 void move_obj (obj, new_loc)
 piece_info_t *obj;
-long new_loc;
+loc_t new_loc;
 {
 	view_map_t *vmap;
-	long old_loc;
+	loc_t old_loc;
 	piece_info_t *p;
 
 	ASSERT (obj->hits);
@@ -382,9 +383,9 @@ We start off with some preliminary routines.
 
 /* Return next direction for a sattellite to travel. */
 
-static long
+static loc_t
 bounce (loc, dir1, dir2, dir3)
-long loc, dir1, dir2, dir3;
+loc_t loc, dir1, dir2, dir3;
 {
 	int new_loc;
 
@@ -404,7 +405,7 @@ move_sat1 (obj)
 piece_info_t *obj;
 {
 	int dir;
-	long new_loc;
+	loc_t new_loc;
 
 	dir = MOVE_DIR(obj->func);
 	new_loc = obj->loc + dir_offset[dir];
@@ -463,7 +464,7 @@ move onto transports, and fighters may move onto cities or carriers.
 
 int good_loc (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	view_map_t *vmap;
 	piece_info_t *p;
@@ -540,12 +541,12 @@ on top.
 void
 scan (vmap, loc)
 view_map_t vmap[];
-long loc;
+loc_t loc;
 {
 	void update(), check(void);
 
 	int i;
-	long xloc;
+	loc_t xloc;
 
 #ifdef DEBUG
 	check (); /* perform a consistency check */
@@ -566,10 +567,10 @@ Scan a portion of the board for a satellite.
 void
 scan_sat (vmap, loc)
 view_map_t *vmap;
-long loc;
+loc_t loc;
 {
 	int i;
-	long xloc;
+	loc_t xloc;
 	
 	ASSERT (map[loc].on_board);
 
@@ -592,7 +593,7 @@ char city_char[] = {'*', 'O', 'X'};
 void
 update (vmap, loc)
 view_map_t vmap[];
-long loc;
+loc_t loc;
 {
 	piece_info_t *p;
 

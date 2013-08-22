@@ -17,10 +17,10 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "empire.h"
 #include "extern.h"
 
-long remove_land(long loc, long num_land);
+count_t remove_land(loc_t loc, count_t num_land);
 int select_cities(void);
-int find_next(long *mapi);
-int good_cont(long mapi);
+int find_next(loc_t *mapi);
+int good_cont(loc_t mapi);
 int xread(FILE *f, char *buf, int size);
 int xwrite(FILE *f, char *buf, int size);
 void stat_display( char *mbuf, int round);
@@ -34,7 +34,7 @@ pieces on the board.
 void init_game (void) {
 	void make_map(void), place_cities(void);
 
-	long i;
+	count_t i;
 
 	kill_display (); /* nothing on screen */
 	automove = FALSE;
@@ -98,7 +98,8 @@ static int height_count[MAX_HEIGHT+1];
 
 void make_map (void) {
 	int from, to, k;
-	long i, j, sum, loc;
+	count_t i, j, sum;
+	loc_t loc;
 
 	for (i = 0; i < MAP_SIZE; i++) /* fill map with random sand */
 		height[0][i] = irand (MAX_HEIGHT);
@@ -165,13 +166,14 @@ for a city, we remove land cells which are too close to the city.
 */
 
 /* avoid compiler problems with large automatic arrays */
-static long land[MAP_SIZE];
+static loc_t land[MAP_SIZE];
 
 void place_cities (void) {
-	long regen_land();
+	count_t regen_land();
 
-	long placed, i, loc;
-	long num_land;
+	count_t placed, i;
+	loc_t loc;
+	count_t num_land;
 
 	num_land = 0; /* nothing in land array yet */
 	placed = 0; /* nothing placed yet */
@@ -203,11 +205,11 @@ put all land in the list, decrement the min_city_dist, and then
 remove any land which is too close to a city.
 */
 
-long regen_land (placed)
-long placed;
+count_t regen_land (placed)
+count_t placed;
 {
-	long num_land;
-	long i;
+	count_t num_land;
+	count_t i;
 
 	num_land = 0;
 	for (i = 0; i < MAP_SIZE; i++) {
@@ -230,10 +232,11 @@ long placed;
 Remove land that is too close to a city.
 */
 
-long remove_land (loc, num_land)
-long loc, num_land;
+count_t remove_land (loc, num_land)
+loc_t loc;
+count_t num_land;
 {
-	long new, i;
+	count_t new, i;
 
 	new = 0; /* nothing kept yet */
 	for (i = 0; i < num_land; i++) {
@@ -298,7 +301,7 @@ static pair_t pair_tab[MAX_CONT*MAX_CONT]; /* ranked pairs of continents */
 int select_cities (void) {
 	void find_cont(void), make_pair(void);
 
-	long compi, useri;
+	loc_t compi, useri;
 	city_info_t *compp, *userp;
 	int comp_cont, user_cont;
 	int pair;
@@ -346,8 +349,8 @@ city.  We rank the continents.
 */
 
 void find_cont (void) {
-	long i;
-	long mapi;
+	loc_t i;
+	loc_t mapi;
 
 	for (i = 0; i < MAP_SIZE; i++) marked[i] = 0; /* nothing marked yet */
 
@@ -364,9 +367,10 @@ If there are no more continents, we return false.
 */
 
 int find_next (mapi)
-long *mapi;
+loc_t *mapi;
 {
-	long i, val;
+	count_t i;
+	long val;
 
 	for (;;) {
 		if (*mapi >= MAP_SIZE) return (FALSE);
@@ -397,11 +401,11 @@ continent contains 2 cities and a shore city, we set the value of the
 continent and return true.  Otherwise we return false.
 */
 
-static long ncity, nland, nshore;
-static void mark_cont(long);
+static count_t ncity, nland, nshore;
+static void mark_cont(loc_t);
 
 int good_cont (mapi)
-long mapi;
+loc_t mapi;
 {
 	long val;
 
@@ -437,7 +441,7 @@ cities for the continent.  We then examine each surrounding cell.
 
 static void
 mark_cont (mapi)
-long mapi;
+loc_t mapi;
 {
 	int i;
 
@@ -714,7 +718,7 @@ void
 save_movie_screen (void)
 {
 	FILE *f; /* file to save game in */
-	long i;
+	count_t i;
 	piece_info_t *p;
 
 	f = fopen ("empmovie.dat", "a"); /* open for append */
@@ -798,7 +802,7 @@ void stat_display (mbuf, round)
 char *mbuf;
 int round;
 {
-	long i;
+	count_t i;
 	int counts[2*NUM_OBJECTS+2];
 	int user_cost, comp_cost;
 	char *p;

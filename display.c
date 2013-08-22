@@ -28,9 +28,9 @@ static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
-static void show_loc(view_map_t vmap[],long loc);
+static void show_loc(view_map_t vmap[],loc_t loc);
 static void disp_square(view_map_t *vp);
-int on_screen(long loc);
+int on_screen(loc_t loc);
 
 #ifdef A_COLOR
 void init_colors(void)
@@ -149,7 +149,7 @@ Return the current position of the cursor.  If the user's map
 is not on the screen, we return -1.
 */
 
-long cur_cursor (void) {
+loc_t cur_cursor (void) {
 	if (whose_map != USER) return (-1);
 	return (save_cursor);
 }
@@ -167,7 +167,7 @@ void
 display_loc (whose, vmap, loc)
 int whose; /* whose map to display */
 view_map_t vmap[];
-long loc; /* location to display */
+loc_t loc; /* location to display */
 {
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
@@ -183,7 +183,7 @@ void
 display_locx (whose, vmap, loc)
 int whose; /* whose map to display */
 view_map_t vmap[];
-long loc; /* location to display */
+loc_t loc; /* location to display */
 {
 	if (whose == whose_map && on_screen (loc))
 		show_loc (vmap, loc);
@@ -196,7 +196,7 @@ Display a location which exists on the screen.
 void
 show_loc (vmap, loc)
 view_map_t vmap[];
-long loc;
+loc_t loc;
 {
 	int r, c;
 	
@@ -358,7 +358,7 @@ view_map_t vmap[];
 {
 	int display_rows, display_cols;
 	int r, c;
-	long t;
+	loc_t t;
 
 	display_rows = lines - NUMTOPS - 1; /* num lines to display */
 	display_cols = cols - NUMSIDES;
@@ -379,10 +379,10 @@ We display the cursor on the screen, if possible.
 
 int
 move_cursor (cursor, offset)
-long *cursor; /* current cursor position */
+loc_t *cursor; /* current cursor position */
 int offset; /* offset to add to cursor */
 {
-	long t;
+	loc_t t;
 	int r, c;
  
 	t = *cursor + offset; /* proposed location */
@@ -404,7 +404,7 @@ See if a location is displayed on the screen.
 */
 
 int on_screen (loc)
-long loc;
+loc_t loc;
 {
 	int new_r, new_c;
 	

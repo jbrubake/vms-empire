@@ -23,11 +23,11 @@ For each move the user wants us to make, we do the following:
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
 int load_army(piece_info_t *obj);
-int lake( long loc );
+int lake( loc_t loc );
 int overproduced( city_info_t *cityp, int *city_count );
-int nearby_load( piece_info_t *obj, long loc );
-int nearby_count( long loc );
-void move_objective(piece_info_t *obj,path_map_t pathmap[],long new_loc,char *adj_list);
+int nearby_load( piece_info_t *obj, loc_t loc );
+int nearby_count( loc_t loc );
+void move_objective(piece_info_t *obj,path_map_t pathmap[],loc_t new_loc,char *adj_list);
 
 void
 comp_move (nmoves) 
@@ -140,7 +140,7 @@ int is_lake;
 	int city_count[NUM_OBJECTS]; /* # of cities producing each piece */
 	int cont_map[MAP_SIZE];
 	int total_cities;
-	long i;
+	count_t i;
 	int comp_ac;
 	city_info_t *p;
 	int need_count, interest;
@@ -156,12 +156,12 @@ int is_lake;
 	comp_ac = 0; /* no army producing computer cities */
 	
 	for (i = 0; i < MAP_SIZE; i++)
-	if (cont_map[i]) { /* for each cell of continent */
-		if (comp_map[i].contents == 'X') {
-			p = find_city (i);
-			ASSERT (p != NULL && p->owner == COMP);
-			if (p->prod == ARMY) comp_ac += 1;
-		}
+		if (cont_map[i]) { /* for each cell of continent */
+			if (comp_map[i].contents == 'X') {
+				p = find_city (i);
+				ASSERT (p != NULL && p->owner == COMP);
+				if (p->prod == ARMY) comp_ac += 1;
+			}
 	}
 	/* see if anything of interest is on continent */
 	interest = (counts.unexplored || counts.user_cities
@@ -356,7 +356,7 @@ have unexplored territory on the edges.
 
 int
 lake (loc)
-long loc;
+loc_t loc;
 {
 	int cont_map[MAP_SIZE];
 	scan_counts_t counts;
@@ -404,7 +404,7 @@ piece_info_t *obj;
 
 	int changed_loc;
 	int max_hits;
-	long saved_loc;
+	loc_t saved_loc;
 	city_info_t *cityp;
 
 	if (obj->type == SATELLITE) {
@@ -496,14 +496,14 @@ void
 army_move (obj)
 piece_info_t *obj;
 {
-	long move_away();
-	long find_attack();
+	loc_t move_away();
+	loc_t find_attack();
 	void make_army_load_map(), make_unload_map(), make_tt_load_map();
 	void board_ship();
 	
-	long new_loc;
+	loc_t new_loc;
 	path_map_t path_map2[MAP_SIZE];
-	long new_loc2;
+	loc_t new_loc2;
 	int cross_cost; /* cost to enter water */
 	
 	obj->func = 0; /* army doesn't want a tt */
@@ -580,11 +580,11 @@ void
 unmark_explore_locs (xmap)
 view_map_t *xmap;
 {
-	long i;
+	count_t i;
 
 	for (i = 0; i < MAP_SIZE; i++)
-	if (map[i].on_board && xmap[i].contents == ' ')
-		xmap[i].contents = emap[i].contents;
+		 if (map[i].on_board && xmap[i].contents == ' ')
+			 xmap[i].contents = emap[i].contents;
 }
 
 /*
@@ -624,7 +624,7 @@ view_map_t *vmap;
 int
 nearby_load (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	return obj->func == 1 && dist (obj->loc, loc) <= 2;
 }
@@ -633,7 +633,7 @@ long loc;
 
 int
 nearby_count (loc)
-long loc;
+loc_t loc;
 {
 	piece_info_t *obj;
 	int count;
@@ -699,7 +699,7 @@ make_unload_map (xmap, vmap)
 view_map_t *xmap;
 view_map_t *vmap;
 {
-	long i;
+	count_t i;
 	scan_counts_t counts;
 
 	(void) memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
@@ -750,7 +750,7 @@ void
 board_ship (obj, pmap, dest)
 piece_info_t *obj;
 path_map_t *pmap;
-long dest;
+loc_t dest;
 {
 	if (!load_army (obj)) {
 		obj->func = 1; /* loading */
@@ -767,7 +767,7 @@ one of the ships to become more full.
 piece_info_t *
 find_best_tt (best, loc)
 piece_info_t *best;
-long loc;
+loc_t loc;
 {
 	piece_info_t *p;
 
@@ -789,7 +789,7 @@ piece_info_t *obj;
 {
 	piece_info_t *p;
 	int i;
-	long x_loc;
+	loc_t x_loc;
 
 	p = find_best_tt (obj->ship, obj->loc); /* look here first */
 
@@ -818,13 +818,13 @@ Return the first location we find adjacent to the current location of
 the correct terrain.
 */
 
-long
+loc_t
 move_away (vmap, loc, terrain)
 view_map_t *vmap;
-long loc;
+loc_t loc;
 char *terrain;
 {
-	long new_loc;
+	loc_t new_loc;
 	int i;
 
 	for (i = 0; i < 8; i++) {
@@ -844,13 +844,13 @@ If there is an object we can attack, we return the location of the
 best of these.
 */
 
-long
+loc_t
 find_attack (loc, obj_list, terrain)
-long loc;
+loc_t loc;
 char *obj_list;
 char *terrain;
 {
-	long new_loc, best_loc;
+	loc_t new_loc, best_loc;
 	int i, best_val;
 	char *p;
 
@@ -889,7 +889,7 @@ piece_info_t *obj;
 {
 	void tt_do_move();
 
-	long new_loc;
+	loc_t new_loc;
 
 	/* empty transports can attack */
 	if (obj->count == 0) { /* empty? */
@@ -940,7 +940,7 @@ void
 fighter_move (obj)
 piece_info_t *obj;
 {
-	long new_loc;
+	loc_t new_loc;
 
 	new_loc = find_attack (obj->loc, fighter_attack, ".+");
 	if (new_loc != obj->loc) { /* something to attack? */
@@ -973,7 +973,7 @@ void
 ship_move (obj)
 piece_info_t *obj;
 {
-	long new_loc;
+	loc_t new_loc;
 	char *adj_list;
 
 	if (obj->hits < piece_attr[obj->type].max_hits) { /* head to port */
@@ -1011,15 +1011,15 @@ void
 move_objective (obj, pathmap, new_loc, adj_list)
 piece_info_t *obj;
 path_map_t pathmap[];
-long new_loc;
+loc_t new_loc;
 char *adj_list;
 {
 	char *terrain;
 	char *attack_list;
 	int d;
 	int reuse; /* true iff we should reuse old map */
-	long old_loc;
-	long old_dest;
+	loc_t old_loc;
+	loc_t old_dest;
 	
 	if (new_loc == obj->loc) {
 		obj->moved = piece_attr[obj->type].speed;

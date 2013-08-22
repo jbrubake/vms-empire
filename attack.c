@@ -29,7 +29,7 @@ if any.
 void
 attack_city (att_obj, loc)
 piece_info_t *att_obj;
-long loc;
+loc_t loc;
 {
 	city_info_t *cityp;
 	int att_owner, city_owner;
@@ -81,7 +81,7 @@ First we have to figure out what is being attacked.
 void
 attack_obj (att_obj, loc)
 piece_info_t *att_obj;
-long loc;
+loc_t loc;
 {
 	void describe(), survive();
 	
@@ -118,7 +118,7 @@ long loc;
 void
 attack (att_obj, loc)
 piece_info_t *att_obj;
-long loc;
+loc_t loc;
 {
 	if (map[loc].contents == '*') /* attacking a city? */
 		attack_city (att_obj, loc);
@@ -135,7 +135,7 @@ location.
 void
 survive (obj, loc)
 piece_info_t *obj;
-long loc;
+loc_t loc;
 {
 	while (obj_capacity (obj) < obj->count)
 		kill_obj (obj->cargo, loc);
@@ -146,7 +146,7 @@ long loc;
 void
 describe (win_obj, lose_obj, loc)
 piece_info_t *win_obj, *lose_obj;
-long loc;
+loc_t loc;
 {
 	char buf[STRSIZE];
 	char buf2[STRSIZE];

@@ -20,6 +20,10 @@ empire.h -- type and constant declarations
 
 typedef unsigned char uchar;
 
+typedef long loc_t;	/* represent a board location in 4-digit form */
+
+typedef long count_t;	/* for iterating over or counting board locations */
+
 #define ASSERT(x) if (!(x)) assert ("x", __FILE__, __LINE__);
 #define ABORT assert ("aborting", __FILE__, __LINE__)
 
@@ -59,7 +63,7 @@ typedef unsigned char uchar;
 #define LIST_SIZE 5000 /* max number of pieces on board */
 
 typedef struct city_info {
-	long loc; /* location of city */
+	loc_t loc; /* location of city */
 	uchar owner; /* UNOWNED, USER, COMP */
 	long func[NUM_OBJECTS]; /* function for each object */
 	long work; /* units of work performed */
@@ -115,7 +119,7 @@ typedef struct piece_info {
 	link_t cargo_link; /* linked list of cargo pieces */
 	int owner; /* owner of piece */
 	int type; /* type of piece */
-	long loc; /* location of piece */
+	loc_t loc; /* location of piece */
 	long func; /* programmed type of movement */
 	short hits; /* hits left */
 	int moved; /* moves made */

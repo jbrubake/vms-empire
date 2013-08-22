@@ -59,7 +59,7 @@ the max of the absolute differnce between the x and y coordinates.
 
 int
 dist (a, b)
-long a, b;
+loc_t a, b;
 {
 	int ax, ay, bx, by;
 

@@ -190,7 +190,7 @@ it as the computers.
 void
 c_give () {
 	int unowned[NUM_CITY];
-	long i, count;
+	count_t i, count;
 
 	count = 0; /* nothing in list yet */
 	for (i = 0; i < NUM_CITY; i++) {
