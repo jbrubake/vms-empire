@@ -17,21 +17,24 @@ For each move the user wants us to make, we do the following:
 
 #include <string.h>
 #include <curses.h>	/* Ugh...shouldn't be needed here */
+#include <stdbool.h>
 #include "empire.h"
 #include "extern.h"
 
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
-int load_army(piece_info_t *obj);
-int lake( loc_t loc );
+bool load_army(piece_info_t *obj);
+bool lake( loc_t loc );
 int overproduced( city_info_t *cityp, int *city_count );
-int nearby_load( piece_info_t *obj, loc_t loc );
-int nearby_count( loc_t loc );
+bool nearby_load( piece_info_t *obj, loc_t loc );
+count_t nearby_count( loc_t loc );
 void move_objective(piece_info_t *obj,path_map_t pathmap[],loc_t new_loc,char *adj_list);
+void comp_set_prod(city_info_t *, int);
+void comp_set_needed(city_info_t *, int *, bool, bool);
+void comp_prod(city_info_t *, bool);
 
 void
-comp_move(nmoves) 
-int nmoves;
+comp_move(int nmoves) 
 {
 	void do_cities(), do_pieces(), check_endgame();
 
@@ -78,10 +81,8 @@ build carriers, as we don't have a good strategy for moving these.
 
 void
 do_cities(void) {
-	void comp_prod();
-	
 	int i;
-	int is_lake;
+	bool is_lake;
 
 	for (i = 0; i < NUM_CITY; i++) /* new production */
 	if (city[i].owner == COMP) {
@@ -118,6 +119,7 @@ static int ratio3[NUM_OBJECTS] = {120,  20,  20,  10,  10,  60,  10,  10,  0};
 static int ratio4[NUM_OBJECTS] = {150,  30,  30,  20,  20,  70,  10,  10,  0};
 static int *ratio;
 
+	
 /*
 Set city production if necessary.
 
@@ -131,10 +133,8 @@ The algorithm below contains three parts:
 */
 
 void
-comp_prod(city_info_t *cityp, int is_lake)
+comp_prod(city_info_t *cityp, bool is_lake)
 {
-	void comp_set_prod(), comp_set_needed();
-	
 	int city_count[NUM_OBJECTS]; /* # of cities producing each piece */
 	int cont_map[MAP_SIZE];
 	int total_cities;
@@ -309,7 +309,7 @@ a flag telling us if armies are ok to produce.
 */
 
 void
-comp_set_needed(city_info_t *cityp, int *city_count, int army_ok, int is_lake)
+comp_set_needed(city_info_t *cityp, int *city_count, bool army_ok, bool is_lake)
 {
 	int best_prod;
 	int prod;
@@ -342,7 +342,7 @@ territory will appear as solid water.  Big bodies of water should
 have unexplored territory on the edges.
 */
 
-int
+bool
 lake(loc_t loc)
 {
 	int cont_map[MAP_SIZE];
@@ -601,7 +601,7 @@ make_army_load_map(piece_info_t *obj, view_map_t *xmap, view_map_t *vmap)
 
 /* Return true if an army is considered near a location for loading. */
 
-int
+bool
 nearby_load(piece_info_t *obj, loc_t loc)
 {
 	return obj->func == 1 && dist (obj->loc, loc) <= 2;
@@ -609,7 +609,7 @@ nearby_load(piece_info_t *obj, loc_t loc)
 	
 /* Return number of nearby armies. */
 
-int
+count_t
 nearby_count(loc_t loc)
 {
 	piece_info_t *obj;
@@ -751,7 +751,7 @@ find_best_tt(piece_info_t *best, loc_t loc)
 Load an army onto the most full non-full ship.
 */
 
-int
+bool
 load_army(piece_info_t *obj)
 {
 	piece_info_t *p;
