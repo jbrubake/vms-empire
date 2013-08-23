@@ -102,25 +102,28 @@ which are fairly useless.</para>
 </refsect1>
 
 <refsect1 id='introduction'><title>INTRODUCTION</title>
-<para>Empire is a war game played between you and the user.  The world
+
+<para>Empire is a war game played between you and the computer.  The world
 on which the game takes place is a square rectangle containing cities,
 land, and water.  Cities are used to build armies, planes, and ships
 which can move across the world destroying enemy pieces, exploring,
 and capturing more cities.  The objective of the game is to destroy
 all the enemy pieces, and capture all the cities.</para>
+
 <para>The world is a rectangle 60 by 100 squares on a side.  The world
-consists of sea (.), land (+), uncontrolled
-cities (*), computer-controlled cities (X), and cities that you
-control (O).</para>
-<para>The world is displayed on the player's screen during
-movement.  (On terminals with small screens, only a portion of
-the world is shown at any one time.)
-Each piece is represented by a unique
-character on the map.  With a few exceptions, you can
-only have one piece on a given location.  On the map, you
-are shown only the 8 squares adjacent to your units.
-This information is updated before and during each of your moves.
-The map displays the most recent information known.</para>
+consists of sea (.), land (+), uncontrolled cities (*),
+computer-controlled cities (X), and cities that you control
+(O).</para>
+
+<para>The world is displayed on the player's screen during movement.
+(On terminals with small screens, only a portion of the world is shown
+at any one time.)  Each piece is represented by a unique character on
+the map.  With a few exceptions, you can only have one piece on a
+given location.  On the map, you are shown only the 8 squares adjacent
+to your units.  This information is updated before and during each of
+your moves.  The map displays the most recent information
+known.</para>
+
 <para>The game starts by assigning you one city and the
 computer one city.  Cities can produce new pieces.  Every
 city that you own produces more pieces for you according
@@ -129,6 +132,7 @@ game is to issue the Automove command until you decide
 to do something special.  During movement in each round,
 the player is prompted to move each piece that does not
 otherwise have an assigned function.</para>
+
 <para>Map coordinates are 4-digit numbers.  The first two
 digits are the row, the second two digits are the
 column.</para>
@@ -243,80 +247,96 @@ column.</para>
 
 <para>The second column shows the map representation for your
 units.</para>
+
 <para>The third shows the representations of enemy units.</para>
+
 <para>Moves is the number of squares that the unit can move in a
 single round.</para>
+
 <para>Hits is the amount of damage a unit can take before it
 is destroyed.</para>
+
 <para>Strength is the amount of damage a unit can inflict upon an
 enemy during each round of an attack.</para>
+
 <para>Cost is the number of rounds needed for a city to produce
 the piece.</para>
+
 <para>The number in parenthesis is the cost for a city to
 produce the first unit.</para>
+
 <para>Each piece has certain advantages associated with it that
 can make it useful.  One of the primary strategic aspects
 of this game is deciding which pieces will be produced
 and in what quantities.</para>
-<para><emphasis remap='B'>Armies</emphasis> can only move on land, and are the only piece that can
-move on land.  Only armies can capture cities.
-This means that you must produce armies in order to win the
-game.  Armies have a 50% chance of capturing a city when they
-attack.  (Attacking one's own city results in the army's
-destruction.  Armies that move onto the sea will drown.
-Armies can attack objects at sea, but even if they win, they
-will drown.)  Armies can be carried by troop transports.
-If an army is moved onto a troop transport, then whenever
-the transport is moved, the army will be moved with the
+
+<para><emphasis remap='B'>Armies</emphasis> can only move on land, and
+are the only piece that can move on land.  Only armies can capture
+cities.  This means that you must produce armies in order to win the
+game.  Armies have a 50% chance of capturing a city when they attack.
+(Attacking one's own city results in the army's destruction.  Armies
+that move onto the sea will drown.  Armies can attack objects at sea,
+but even if they win, they will drown.)  Armies can be carried by
+troop transports.  If an army is moved onto a troop transport, then
+whenever the transport is moved, the army will be moved with the
 transport.  You cannot attack any piece at sea while on a
 transport.</para>
-<para><emphasis remap='B'>Fighters</emphasis> move over both land and sea, and they move 8 squares
-per round.  Their high speed and great mobility make fighters
-ideal for exploring.  However, fighters must periodically land
-at user-owned cities for refueling.  A fighter can travel 32
-squares without refeuling.  Fighters are also shot down if they
-attempt to fly over a city which is not owned by the user.</para>
-<para><emphasis remap='B'>Patrol boats</emphasis> are fast but lightly armored.  Therefore
-they are useful for patrolling ocean waters and exploring.
-In an attack against a stronger boat, however, patrol boats
-will suffer heavy casulties.</para>
-<para><emphasis remap='B'>Destroyers</emphasis> are fairly heavily armored and reasonably quick
-to produce.  Thus they are useful for destroying enemy transports
-which may be trying to spread the enemy across the face of the
-world.</para>
-<para>When a <emphasis remap='B'>submarine</emphasis> scores a hit, 3 hits are exacted instead of 1.
-Thus submarines can inflict heavy damage in a fight against
-heavily armored boats.  Notice that healthy submarines will
-typically defeat healthy destroyers two-thirds of the time.
-However, a submarine will defeat a fighter about two-thirds
-of the time, while a destroyer will defeat a fighter three-fourths
-of the time.</para>
-<para><emphasis remap='B'>Troop transports</emphasis> are the only pieces that can carry armies.
-A maximum of six armies can be carried by a transport.
-On any world containing a reasonable amount of water,
-transports will be a critical resource in winning the game.
-Notice that the weakness of transports implies they need
-protection from stronger ships.</para>
-<para><emphasis remap='B'>Aircraft carriers</emphasis> are the only ships that can
-carry fighters.  Carriers carry a maximum of the number
-of hits left of fighters.  Fighters are refueled when they
-land on a carrier.</para>
-<para><emphasis remap='B'>Battleships</emphasis> are similar to destroyers except that they are
-much stronger.</para>
+
+<para><emphasis remap='B'>Fighters</emphasis> move over both land and
+sea, and they move 8 squares per round.  Their high speed and great
+mobility make fighters ideal for exploring.  However, fighters must
+periodically land at user-owned cities for refueling.  A fighter can
+travel 32 squares without refeuling.  Fighters are also shot down if
+they attempt to fly over a city which is not owned by the user.</para>
+
+<para><emphasis remap='B'>Patrol boats</emphasis> are fast but lightly
+armored.  Therefore they are useful for patrolling ocean waters and
+exploring.  In an attack against a stronger boat, however, patrol
+boats will suffer heavy casulties.</para>
+
+<para><emphasis remap='B'>Destroyers</emphasis> are fairly heavily
+armored and reasonably quick to produce.  Thus they are useful for
+destroying enemy transports which may be trying to spread the enemy
+across the face of the world.</para>
+
+<para>When a <emphasis remap='B'>submarine</emphasis> scores a hit, 3
+hits are exacted instead of 1.  Thus submarines can inflict heavy
+damage in a fight against heavily armored boats.  Notice that healthy
+submarines will typically defeat healthy destroyers two-thirds of the
+time.  However, a submarine will defeat a fighter about two-thirds of
+the time, while a destroyer will defeat a fighter three-fourths of the
+time.</para>
+
+<para><emphasis remap='B'>Troop transports</emphasis> are the only
+pieces that can carry armies.  A maximum of six armies can be carried
+by a transport.  On any world containing a reasonable amount of water,
+transports will be a critical resource in winning the game.  Notice
+that the weakness of transports implies they need protection from
+stronger ships.</para>
+
+<para><emphasis remap='B'>Aircraft carriers</emphasis> are the only
+ships that can carry fighters.  Carriers carry a maximum of the number
+of hits left of fighters.  Fighters are refueled when they land on a
+carrier.</para>
+
+<para><emphasis remap='B'>Battleships</emphasis> are similar to
+destroyers except that they are much stronger.</para>
 <para><emphasis remap='B'>Satellites</emphasis> are only useful for reconaissance.  They can not
 be attacked.  They are launched in a random diagonal orbit, and
 stay up for 50 turns.  They can see one square farther than other
 objects.</para>
-<para>All ships can move only on sea.  Ships can also dock in a
+
+<para>All ships can move only on the sea.  Ships can also dock in a
 user-owned city.  Docked ships have damage repaired at the
 rate of 1 hit per turn.  Ships which have suffered a lot
 of damage will move more slowly.</para>
-<para>Because of their ability
-to be repaired, ships with lots of hits such as Carriers and
-Battleships have an additional advantage.
-After suffering minor damage while destroying enemy shipping,
-these ships can sail back to port and be quickly repaired before
-the enemy has time to replenish her destroyed shipping.</para>
+
+<para>Because of their ability to be repaired, ships with lots of hits
+such as Carriers and Battleships have an additional advantage.  After
+suffering minor damage while destroying enemy shipping, these ships
+can sail back to port and be quickly repaired before the enemy has
+time to replenish her destroyed shipping.</para>
+
 <para>The following table gives the probability that the piece listed
 on the side will defeat the piece listed at the top in a battle.
 (The table assumes that both pieces are undamaged.)</para>
@@ -391,6 +411,7 @@ of damage.</para>
 </refsect1>
 
 <refsect1 id='movement_functions'><title>MOVEMENT FUNCTIONS</title>
+
 <para>There are a variety of movement functions.  The movement functions
 of pieces can be specified in user mode and edit mode.
 Cities can have movement functions set for each type of piece.
@@ -399,9 +420,11 @@ then every time that type of piece appears in the city, the piece
 will acquire that movement function.  Be forewarned that moving
 loaded transports or loaded carriers into a city can have undesirable
 side effects.</para>
+
 <para>Normally, when a movement
 function has been specified, the piece will continue moving according to
 that function until one of the following happen:</para>
+
 <itemizedlist>
   <listitem>
 <para>An enemy piece or unowned city appears next to the piece.  In this case
@@ -468,9 +491,9 @@ armies respectively.</para>
   <varlistentry>
   <term><emphasis remap='B'>Grope</emphasis></term>
   <listitem>
-<para>This function causes a piece to explore.  The piece heads toward the nearest
-unseen square of the map on each of its moves.  Some attempt is made to 
-explore in an optimal fashion.</para>
+<para>This function causes a piece to explore.  The piece heads toward
+the nearest unseen square of the map on each of its moves.  Some
+attempt is made to explore in an optimal fashion.</para>
   </listitem>
   </varlistentry>
   <varlistentry>
@@ -526,37 +549,45 @@ non-intuitive.</para>
   </listitem>
   </varlistentry>
 </variablelist>
+
 <para>As examples of how to use these movement functions, typically
 when I have a new city on a continent, I set the Army function of the
-city to <emphasis remap='I'>attack</emphasis>.  Whenever an army is produced, it merrily goes off
-on its way exploring the continent and moving towards unowned cities
-or enemy armies or cities.</para>
+city to <emphasis remap='I'>attack</emphasis>.  Whenever an army is
+produced, it merrily goes off on its way exploring the continent and
+moving towards unowned cities or enemy armies or cities.</para>
+
 <para>I frequently set the ship functions for cities that are far from the
 front to automatically move ships towards the front.</para>
-<para>When I have armies on a continent, but there is nothing to explore
-or attack, I move the army to the shore and use the <emphasis remap='I'>transport</emphasis>
-function to have that army hop aboard the first passing transport.</para>
+
+<para>When I have armies on a continent, but there is nothing to
+explore or attack, I move the army to the shore and use the <emphasis
+remap='I'>transport</emphasis> function to have that army hop aboard
+the first passing transport.</para>
 </refsect1>
 
 <refsect1 id='commands'><title>COMMANDS</title>
+
 <para>There are three command modes.  The first of these is "command mode".
 In this mode, you give commands that affect the game as a whole.
 In the second mode, "move mode", you give commands to move your
 pieces.  The third mode is "edit mode", and in this mode you can
 edit the functions of your pieces and examine various portions of
 the map.</para>
-<para>All commands are one character long.  The full mnemonic names are
-listed below as a memorization aid.
-The mnemonics are somewhat contrived because there are so few
-characters in the English language.  Too bad this program isn't
-written in Japanese, neh?</para>
+
+<para>All commands are one character long.  The full mnemonic names
+are listed below as a memorization aid.  The mnemonics are somewhat
+contrived because there are so few characters in the English language.
+Too bad this program isn't written in Japanese, neh?</para>
+
 <para>In all command modes, typing "H" will print out a screen of help
 information, and typing &lt;ctrl-L&gt; will redraw the screen.</para>
 </refsect1>
 
 <refsect1 id='command_mode'><title>COMMAND MODE</title>
+
 <para>In command mode, the computer will prompt you for your orders.
 The following commands can be given at this time:</para>
+
 <variablelist>
   <varlistentry>
   <term><emphasis remap='B'>Automove</emphasis></term>
@@ -683,10 +714,12 @@ displayed, ships are preferred to fighters and armies.</para>
 </refsect1>
 
 <refsect1 id='move_mode'><title>MOVE MODE</title>
+
 <para>In move mode, the cursor will appear on the screen at the position
 of each piece that needs to be moved.  You can then give commands
 to move the piece.  Directions to move are specified by the
 following keys:</para>
+
 <literallayout>
 <emphasis remap='5'>
         QWE
@@ -694,11 +727,15 @@ following keys:</para>
         ZXC
 </emphasis>
 </literallayout>
-<para>The arrow and keypad keys on your terminal, if any, should also work.</para>
+
+<para>The arrow and keypad keys on your terminal, if any, should also
+work.</para>
+
 <para>These keys move in the direction of the key from S.  The
 characters are not echoed and only 1 character is
 accepted, so there is no need for a &lt;Return&gt;.  Hit the &lt;Space&gt;
 bar if you want the piece to stay put.</para>
+
 <para>Other commands are:</para>
 <variablelist>
   <varlistentry>
@@ -808,24 +845,29 @@ displayed.</para>
   </listitem>
   </varlistentry>
 </variablelist>
+
 <para>Attacking something is accomplished by  moving  onto  the
 square of the unit you wish to attack.  Hits are traded
 off at 50% probability of a hit landing on one or the
 other units until one unit is totally destroyed.  There
 is only 1 possible winner.</para>
-<para>You are "allowed" to do <emphasis remap='B'>fatal</emphasis> things like attack your
-own cities or other pieces.  If you try to make a fatal
-move, the computer will warn you and give you a chance to
+
+<para>You are "allowed" to do <emphasis remap='B'>fatal</emphasis>
+things like attack your own cities or other pieces.  If you try to
+make a fatal move, the computer will warn you and give you a chance to
 change your mind.</para>
+
 <para>You cannot move onto the edge of the world.</para>
 </refsect1>
 
 <refsect1 id='edit_mode'><title>EDIT MODE</title>
+
 <para>In edit mode, you can move around the world and examine pieces
 or assign them new functions.
 To move the cursor around, use the standard direction
 keys.
 Other commands are:</para>
+
 <variablelist>
   <varlistentry>
   <term><emphasis remap='B'>Build</emphasis></term>
@@ -937,8 +979,10 @@ in the city are displayed.</para>
   </listitem>
   </varlistentry>
 </variablelist>
+
 <para>Note that you cannot directly affect anything inside a city with
 the editor.</para>
+
 </refsect1>
 
 <refsect1 id='hints'><title>HINTS</title>
@@ -971,6 +1015,7 @@ ideas you can try that may make the game more interesting.</para>
 </refsect1>
 
 <refsect1 id='history'><title>HISTORY</title>
+
 <para>According to 
 <ulink url='http://www.classicempire.com/history.html'>
 A Brief History of Empire </ulink>, the ancestral game was written by
@@ -1017,7 +1062,9 @@ a "movie".</para>
 </refsect1>
 
 <refsect1 id='bugs'><title>BUGS</title>
+
 <para>No doubt numerous.</para>
+
 <para>Satellites are not completely implemented.  You should be able to
 move to a square that contains a satellite, but the program won't
 let you.  Enemy satellites should not cause your pieces to awaken.</para>
