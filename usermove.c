@@ -1026,7 +1026,7 @@ when they are next to an enemy object or an unowned city.  Armies
 on troop transports are not awakened if they are surrounded by sea.
 We return true if the object is now awake.  Objects are never
 completely awoken here if their function is a destination.  But we
-will return TRUE if we want the user to have control.
+will return true if we want the user to have control.
 */
 
 bool

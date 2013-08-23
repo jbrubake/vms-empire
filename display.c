@@ -26,11 +26,11 @@ static int ref_row; /* map loc displayed in upper-left corner */
 static int ref_col;
 static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
-static int change_ok = TRUE; /* true if new sector may be displayed */
+static bool change_ok = true; /* true if new sector may be displayed */
 
 static void show_loc(view_map_t vmap[],loc_t loc);
 static void disp_square(view_map_t *vp);
-int on_screen(loc_t loc);
+static bool on_screen(loc_t loc);
 
 #ifdef A_COLOR
 void init_colors(void)
@@ -130,7 +130,7 @@ screen even if the location to be displayed is already on the screen.
 */
 
 void sector_change (void) {
-	change_ok = TRUE;
+	change_ok = true;
 }
 
 /*
@@ -231,7 +231,7 @@ print_sector(int whose, view_map_t vmap[], int sector)
 	int r, c;
 
 	save_sector = sector; /* remember last sector displayed */
-	change_ok = FALSE; /* we are displaying a new sector */
+	change_ok = false; /* we are displaying a new sector */
 
 	display_rows = lines - NUMTOPS - 1; /* num lines to display */
 	display_cols = cols - NUMSIDES;
@@ -361,12 +361,12 @@ void display_screen(view_map_t vmap[])
 }
 
 /*
-Move the cursor in a specified direction.  We return TRUE if the
-cursor remains in the currently displayed screen, otherwise FALSE.
+Move the cursor in a specified direction.  We return true if the
+cursor remains in the currently displayed screen, otherwise false.
 We display the cursor on the screen, if possible.
 */
 
-int
+bool
 move_cursor(loc_t *cursor, int offset)
 /* cursor is current cursor position, offset is offset to add to cursor */
 {
@@ -374,8 +374,8 @@ move_cursor(loc_t *cursor, int offset)
 	int r, c;
  
 	t = *cursor + offset; /* proposed location */
-	if (!map[t].on_board) return (FALSE); /* trying to move off map */
-	if (!on_screen (t)) return (FALSE); /* loc is off screen */
+	if (!map[t].on_board) return (false); /* trying to move off map */
+	if (!on_screen (t)) return (false); /* loc is off screen */
 	
 	*cursor = t; /* update cursor position */
 	save_cursor = *cursor;
@@ -384,14 +384,14 @@ move_cursor(loc_t *cursor, int offset)
 	c = loc_col (save_cursor);
 	(void) move (r-ref_row+NUMTOPS, c-ref_col);
        
-	return (TRUE);
+	return (true);
 }
 
 /*
 See if a location is displayed on the screen.
 */
 
-int on_screen (loc_t loc)
+bool on_screen (loc_t loc)
 {
 	int new_r, new_c;
 	
@@ -402,9 +402,9 @@ int on_screen (loc_t loc)
 	 || new_r - ref_row > lines - NUMTOPS - 1 /* past bot of screen? */
 	 || new_c < ref_col /* past left edge of screen? */
 	 || new_c - ref_col > cols - NUMSIDES) /* past right edge of screen? */
-	return (FALSE);
+	return (false);
 
-	return (TRUE);
+	return (true);
 }
 
 /* Print a view map for debugging. */

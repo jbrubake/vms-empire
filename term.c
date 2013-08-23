@@ -36,7 +36,7 @@ to read the lines.  The new information is then displayed, and the
 #include "empire.h"
 #include "extern.h"
 
-static int need_delay;
+static bool need_delay;
 static FILE *my_stream;
 
 void
@@ -261,7 +261,7 @@ get_strq(char *buf, int sizep)
 	(void) nocrmode ();
 	(void) refresh ();
 	(void) getstr (buf);
-	need_delay = FALSE;
+	need_delay = false;
 	info (0, 0, 0);
 	(void) crmode ();
 }
@@ -345,10 +345,10 @@ get_cq(void)
 
 /*
 Input a yes or no response from the user.  We loop until we get
-a valid response.  We return TRUE iff the user replies 'y'.
+a valid response.  We return true iff the user replies 'y'.
 */
 
-int
+bool
 getyn(char *message)
 {
 	char c;
@@ -357,8 +357,8 @@ getyn(char *message)
 		prompt (message,0,0,0,0,0,0,0,0);
 		c = get_chx ();
 
-		if (c == 'Y') return (TRUE);
-		if (c == 'N') return (FALSE);
+		if (c == 'Y') return (true);
+		if (c == 'N') return (false);
 
 		error ("Please answer Y or N.",0,0,0,0,0,0,0,0);
 	}

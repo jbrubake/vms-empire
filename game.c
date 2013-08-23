@@ -527,7 +527,7 @@ void save_game(void) {
 
 /*
 Recover a saved game from emp_save.dat.
-We return TRUE if we succeed, otherwise false.
+We return true if we succeed, otherwise false.
 */
 
 #define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (false);
@@ -649,7 +649,7 @@ void inconsistent(void) {
 }
 
 /*
-Write a buffer to a file.  If we cannot write everything, return FALSE.
+Write a buffer to a file.  If we cannot write everything, return false.
 Also, tell the user why the write did not work if it didn't.
 */
 

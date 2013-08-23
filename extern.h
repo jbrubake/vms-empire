@@ -147,7 +147,7 @@ long cur_cursor (void);
 void display_loc (int whose, view_map_t vmap[], long loc);
 void display_locx (int whose, view_map_t vmap[], long loc);
 void print_sector (int whose, view_map_t vmap[], int sector);
-int move_cursor (long *cursor, int offset);
+bool move_cursor (long *cursor, int offset);
 void print_zoom (view_map_t *vmap);
 void print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap);
 void print_xzoom (view_map_t *vmap);
@@ -179,7 +179,7 @@ char get_chx (void);
 int getint (char *message);
 char get_c (void);
 char get_cq (void);
-int getyn (char *message);
+bool getyn (char *message);
 int get_range (char *message, int low, int high);
 
 void rndini (void); /* math routines */

@@ -72,10 +72,10 @@ objects on the map have non-zero hits.
 cargo list.
 */
 
-static int in_free[LIST_SIZE]; /* TRUE if object in free list */
-static int in_obj[LIST_SIZE]; /* TRUE if object in obj list */
-static int in_loc[LIST_SIZE]; /* TRUE if object in a loc list */
-static int in_cargo[LIST_SIZE]; /* TRUE if object in a cargo list */
+static bool in_free[LIST_SIZE]; /* true if object in free list */
+static bool in_obj[LIST_SIZE]; /* true if object in obj list */
+static bool in_loc[LIST_SIZE]; /* true if object in a loc list */
+static bool in_cargo[LIST_SIZE]; /* true if object in a cargo list */
 
 void
 check(void) {
