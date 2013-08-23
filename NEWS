@@ -1,9 +1,9 @@
 			vms-empire news
 
-1.10:
+1.10: 2013-08-22T23:46:03
 	Fix core dump when a satellite bounced off the world edge.
 	Full ANSIfication of function prototypes (which fixed the 
-	sat bug - the code appeasrs to have been tickling some obscure
+	sat bug - the code appears to have been tickling some obscure
 	bug in the compilation of function calls with K&R-style prototypes).
 
 1.9: 2012-02-16T02:49:47
