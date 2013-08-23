@@ -134,8 +134,7 @@ e_cursor(loc_t *edit_cursor)
 		e = getch ();
 	}
 	(void) nocrmode (); /* reset terminal */
-	if (islower (e)) e = upper (e);
-	return e;
+	return toupper(e);
 }
 
 /*
@@ -498,7 +497,7 @@ e_piece_info(loc_t edit_cursor, char ab)
 	int type;
 	char *p;
 
-	ab = upper (ab);
+	ab = toupper (ab);
 	p = strchr (type_chars, ab);
 	type = p - type_chars;
 

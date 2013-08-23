@@ -17,36 +17,9 @@ util.c -- various utility routines.
 #include "empire.h"
 #include "extern.h"
 
-
-/*
-Convert a string to uppercase.
-Shirley this is defined elsewhere?
-*/
-
 #include <sys/types.h>
 #include <unistd.h>
 #include <ctype.h>
-
-void
-tupper(char *str)
-{
-	while (*str) {
-		if (islower (*str)) *str = upper (*str);
-		str++;
-	}
-}
-
-/*
-Convert a character to uppercase (if it is lowercase)
-*/
-
-char
-upper(char c)
-{
-	if (islower (c))
-		return toupper (c);
-	else return c;
-}
 
 /*
 Report a bug.

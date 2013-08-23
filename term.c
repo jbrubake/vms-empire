@@ -278,7 +278,7 @@ get_chx(void)
 	c = get_cq ();
 
 	if (islower(c))
-		return (upper(c));
+		return (toupper(c));
 	else
 		return (c);
 }
