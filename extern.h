@@ -77,7 +77,7 @@ bool debug; /* true iff in debugging mode */
 bool print_debug; /* true iff we print debugging stuff */
 bool print_vmap; /* true iff we print view maps */
 bool trace_pmap; /* true if we are tracing pmaps */
-int win; /* set when game is over */
+int win; /* set when game is over - not a bool */
 char jnkbuf[STRSIZE]; /* general purpose temporary buffer */
 bool save_movie; /* true iff we should save movie screens */
 int user_score; /* "score" for user and computer */
