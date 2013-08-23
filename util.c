@@ -12,14 +12,11 @@ util.c -- various utility routines.
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>	/* Ugh...shouldn't be needed here */
-#include <ctype.h>
 #include <signal.h>
-#include "empire.h"
-#include "extern.h"
-
 #include <sys/types.h>
 #include <unistd.h>
-#include <ctype.h>
+#include "empire.h"
+#include "extern.h"
 
 /*
 Report a bug.
