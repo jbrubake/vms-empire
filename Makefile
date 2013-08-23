@@ -9,7 +9,7 @@ VERS=1.10
 # Use -g to compile the program for debugging.
 
 #DEBUG = -g -DDEBUG -Wall
-DEBUG = -O2
+DEBUG = -O2 -Wall
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE

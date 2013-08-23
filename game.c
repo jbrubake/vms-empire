@@ -13,7 +13,6 @@ game.c -- Routines to initialize, save, and restore a game.
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include "empire.h"
 #include "extern.h"
 
@@ -764,7 +763,7 @@ replay_movie(void)
 		for (c = 0; c < MAP_WIDTH; c += col_inc)
 		print_movie_cell (mapbuf, r, c, row_inc, col_inc);
 		
-		(void) refresh ();
+		(void) redisplay ();
 		delay ();
 	}
 	(void) fclose (f);

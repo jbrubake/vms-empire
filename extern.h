@@ -157,6 +157,7 @@ void init_colors (void);
 #endif /* A_COLOR */
 void redraw (void);
 void clear_screen (void);
+void complain (void);
 void delay (void);
 void close_disp (void);
 void pos_str (int row, int col, char *str, int a, int b, int c, int d, int e, int f, int g, int h);

@@ -16,7 +16,6 @@ For each move the user wants us to make, we do the following:
 */
 
 #include <string.h>
-#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include <stdbool.h>
 #include "empire.h"
 #include "extern.h"
@@ -60,7 +59,7 @@ comp_move(int nmoves)
 		check_endgame (); /* see if game is over */
 
 		topini ();
-		(void) refresh ();
+		(void) redisplay ();
 	}
 }
 
@@ -488,7 +487,7 @@ army_move(piece_info_t *obj)
 	loc_t new_loc;
 	path_map_t path_map2[MAP_SIZE];
 	loc_t new_loc2;
-	int cross_cost; /* cost to enter water */
+	int cross_cost = 0; /* cost to enter water */
 	
 	obj->func = 0; /* army doesn't want a tt */
 	if (vmap_at_sea (comp_map, obj->loc)) { /* army can't move? */

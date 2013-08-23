@@ -11,7 +11,6 @@ parser, and the simple commands.
 */
 
 #include <stdio.h>
-#include <curses.h>	/* Ugh...shouldn't be needed here */
 #include "empire.h"
 #include "extern.h"
 
@@ -39,7 +38,7 @@ empire(void) {
 	clear_screen (); /* nothing on screen */
 	pos_str (7, 0, "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988",0,0,0,0,0,0,0,0);
 	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n",0,0,0,0,0,0,0,0);
-	(void) refresh ();
+	(void) redisplay ();
 
 	if (!restore_game ()) /* try to restore previous game */
 		init_game (); /* otherwise init a new game */

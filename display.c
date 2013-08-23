@@ -600,6 +600,16 @@ clear_screen(void)
 }
 
 /*
+Audible complaint.
+*/
+
+void 
+complain(void)
+{
+	(void) beep ();
+}
+
+/*
 Redraw the screen.
 */
 
