@@ -77,7 +77,7 @@ do_command(char orders)
 
 	switch (orders) {
 	case 'A': /* turn on auto move mode */
-		automove = TRUE;
+		automove = true;
 		error ("Now in Auto-Mode",0,0,0,0,0,0,0,0);
 		user_move ();
 		comp_move (1);
@@ -166,8 +166,8 @@ do_command(char orders)
 
 	case '+': /* change debug state */
 		e = get_chx();
-		if ( e  ==  '+' ) debug = TRUE;
-		else if ( e  ==  '-' ) debug = FALSE;
+		if ( e  ==  '+' ) debug = true;
+		else if ( e  ==  '-' ) debug = false;
 		else huh ();
 		break;
 
@@ -226,15 +226,15 @@ c_debug(char order)
 	
 	case '@': /* change trace state */
 		e = get_chx();
-		if ( e  ==  '+' ) trace_pmap = TRUE;
-		else if ( e  ==  '-' ) trace_pmap = FALSE;
+		if ( e  ==  '+' ) trace_pmap = true;
+		else if ( e  ==  '-' ) trace_pmap = false;
 		else huh ();
 		break;
 
 	case '$': /* change print_debug state */
 		e = get_chx();
-		if ( e  ==  '+' ) print_debug = TRUE;
-		else if ( e  ==  '-' ) print_debug = FALSE;
+		if ( e  ==  '+' ) print_debug = true;
+		else if ( e  ==  '-' ) print_debug = false;
 		else huh ();
 		break;
 

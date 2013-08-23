@@ -71,15 +71,15 @@ extern int user_lines;
 
 /* miscellaneous */
 long date; /* number of game turns played */
-char automove; /* TRUE iff user is in automove mode */
-char resigned; /* TRUE iff computer resigned */
-char debug; /* TRUE iff in debugging mode */
-char print_debug; /* TRUE iff we print debugging stuff */
-char print_vmap; /* TRUE iff we print view maps */
-char trace_pmap; /* TRUE if we are tracing pmaps */
+bool automove; /* true iff user is in automove mode */
+bool resigned; /* true iff computer resigned */
+bool debug; /* true iff in debugging mode */
+bool print_debug; /* true iff we print debugging stuff */
+bool print_vmap; /* true iff we print view maps */
+bool trace_pmap; /* true if we are tracing pmaps */
 int win; /* set when game is over */
 char jnkbuf[STRSIZE]; /* general purpose temporary buffer */
-char save_movie; /* TRUE iff we should save movie screens */
+bool save_movie; /* true iff we should save movie screens */
 int user_score; /* "score" for user and computer */
 int comp_score;
 char *savefile;
@@ -119,7 +119,7 @@ void rmap_cont (int *cont_map, long loc, char bad_terrain);
 void vmap_mark_up_cont (int *cont_map, view_map_t *vmap, long loc, char bad_terrain);
 scan_counts_t vmap_cont_scan (int *cont_map, view_map_t *vmap);
 scan_counts_t rmap_cont_scan (int *cont_map);
-int map_cont_edge (int *cont_map, long loc);
+bool map_cont_edge (int *cont_map, long loc);
 long vmap_find_aobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
 long vmap_find_wobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
 long vmap_find_lobj (path_map_t path_map[], view_map_t *vmap, long loc, move_info_t *move_info);
@@ -132,10 +132,10 @@ void vmap_mark_adjacent (path_map_t path_map[], long loc);
 void vmap_mark_near_path (path_map_t path_map[], long loc);
 long vmap_find_dir (path_map_t path_map[], view_map_t *vmap, long loc,  char *terrain, char *adjchar);
 int vmap_count_adjacent (view_map_t *vmap, long loc, char *adj_char);
-int vmap_shore (view_map_t *vmap, long loc);
-int rmap_shore (long loc);
-int vmap_at_sea (view_map_t *vmap, long loc);
-int rmap_at_sea (long loc);
+bool vmap_shore (view_map_t *vmap, long loc);
+bool rmap_shore (long loc);
+bool vmap_at_sea (view_map_t *vmap, long loc);
+bool rmap_at_sea (long loc);
 
 /* display routines */
 void announce (char *);
@@ -200,7 +200,7 @@ void kill_city (city_info_t *cityp);
 void produce (city_info_t *cityp);
 void move_obj (piece_info_t *obj, long new_loc);
 void move_sat (piece_info_t *obj);
-int good_loc (piece_info_t *obj, long loc);
+bool good_loc (piece_info_t *obj, long loc);
 void embark (piece_info_t *ship, piece_info_t *obj);
 void disembark (piece_info_t *obj);
 void describe_obj (piece_info_t *obj);

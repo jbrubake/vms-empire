@@ -18,7 +18,7 @@ usermove.c -- Let the user move her troops.
 void fatal(piece_info_t *obj,loc_t loc,char *message,char *response);
 void move_to_dest(piece_info_t *obj,loc_t dest);
 void move_army_to_city(piece_info_t *obj,loc_t city_loc);
-int awake(piece_info_t *obj);
+bool awake(piece_info_t *obj);
 extern int get_piece_name(void);
 
 void
@@ -108,10 +108,10 @@ piece_move(piece_info_t *obj)
 	void move_armyattack(), move_ttload(), move_repair();
 	void move_transport();
 
-	int changed_loc;
+	bool changed_loc;
 	int speed, max_hits;
 	int saved_moves;
-	int need_input;
+	bool need_input;
 	loc_t saved_loc;
 	city_info_t *cityp;
 
@@ -121,10 +121,10 @@ piece_move(piece_info_t *obj)
 		if (cityp->func[obj->type] != NOFUNC)
 			obj->func = cityp->func[obj->type];
 
-	changed_loc = FALSE; /* not changed yet */
+	changed_loc = false; /* not changed yet */
 	speed = piece_attr[obj->type].speed;
 	max_hits = piece_attr[obj->type].max_hits;
-	need_input = FALSE; /* don't require user input yet */
+	need_input = false; /* don't require user input yet */
 
 	while (obj->moved < obj_moves (obj)) {
 		saved_moves = obj->moved; /* save moves made */
@@ -135,7 +135,7 @@ piece_move(piece_info_t *obj)
 			topini (); /* clear info lines */
 			display_loc_u (obj->loc); /* let user see result */
 			(void) redisplay ();
-			need_input = FALSE; /* we got it */
+			need_input = false; /* we got it */
 		}
 		
 		if (obj->moved == saved_moves) /* user set function? */
@@ -165,7 +165,7 @@ piece_move(piece_info_t *obj)
 		default: move_path (obj); break;
 		}
 
-		if (obj->moved == saved_moves) need_input = TRUE;
+		if (obj->moved == saved_moves) need_input = true;
 		
 		/* handle fighters specially.  If in a city or carrier, turn
 		is over and reset range to max.  Otherwise, if
@@ -186,7 +186,7 @@ piece_move(piece_info_t *obj)
 			}
 		}
 
-		if (saved_loc != obj->loc) changed_loc = TRUE;
+		if (saved_loc != obj->loc) changed_loc = true;
 	}
 	/* if a boat is in port, damaged, and never moved, fix some damage */
 	if (obj->hits > 0 /* still alive? */
@@ -839,9 +839,9 @@ necessary, and attack if necessary.
 void
 user_dir_army(piece_info_t *obj, loc_t loc)
 {
-	int enemy_killed;
+	bool enemy_killed;
 	
-	enemy_killed = FALSE;
+	enemy_killed = false;
 
 	if (user_map[loc].contents == 'O') /* attacking own city */
 		move_army_to_city (obj, loc);
@@ -927,9 +927,9 @@ a city, attacking self, attacking enemy.
 void
 user_dir_ship(piece_info_t *obj, loc_t loc)
 {
-	int enemy_killed;
+	bool enemy_killed;
 
-	enemy_killed = FALSE;
+	enemy_killed = false;
 
 	if (map[loc].contents == '*') {
 		(void) sprintf (jnkbuf, "Your %s broke up on shore.",
@@ -1005,7 +1005,7 @@ user_cancel_auto(void)
 	if (!automove)
 		comment ("Not in auto mode!",0,0,0,0,0,0,0,0);
 	else {
-		automove = FALSE;
+		automove = false;
 		comment ("Auto mode cancelled.",0,0,0,0,0,0,0,0);
 	}
 }
@@ -1029,7 +1029,7 @@ completely awoken here if their function is a destination.  But we
 will return TRUE if we want the user to have control.
 */
 
-int
+bool
 awake(piece_info_t *obj)
 {
 	int i;
@@ -1038,26 +1038,26 @@ awake(piece_info_t *obj)
 
 	if (obj->type == ARMY && vmap_at_sea (user_map, obj->loc)) {
 	    obj->moved = piece_attr[ARMY].range;
-	    return (FALSE);
+	    return (false);
 	}
-	if (obj->func == NOFUNC) return (TRUE); /* object is awake */
+	if (obj->func == NOFUNC) return (true); /* object is awake */
 	
 	if (obj->type == FIGHTER /* wake fighters */
 	    && obj->func != LAND /* that aren't returning to base */
 	    && obj->func < 0 /* and which don't have a path */
 	    && obj->range <= find_nearest_city (obj->loc, USER, &t) + 2) {
 		obj->func = NOFUNC; /* wake piece */
-		return (TRUE);
+		return (true);
 	}
 	for (i = 0; i < 8; i++) { /* for each surrounding cell */
 		c = user_map[obj->loc+dir_offset[i]].contents;
 
 		if (islower (c) || c == '*' || c == 'X') {
 			if (obj->func < 0) obj->func = NOFUNC; /* awaken */
-			return (TRUE);
+			return (true);
 		}
 	}
-	return (FALSE);
+	return (false);
 }
 
 /*

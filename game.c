@@ -17,11 +17,11 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "extern.h"
 
 count_t remove_land(loc_t loc, count_t num_land);
-int select_cities(void);
-int find_next(loc_t *mapi);
-int good_cont(loc_t mapi);
-int xread(FILE *f, char *buf, int size);
-int xwrite(FILE *f, char *buf, int size);
+bool select_cities(void);
+bool find_next(loc_t *mapi);
+bool good_cont(loc_t mapi);
+bool xread(FILE *f, char *buf, int size);
+bool xwrite(FILE *f, char *buf, int size);
 void stat_display( char *mbuf, int round);
 
 /*
@@ -36,13 +36,13 @@ void init_game(void) {
 	count_t i;
 
 	kill_display (); /* nothing on screen */
-	automove = FALSE;
-	resigned = FALSE;
-	debug = FALSE;
-	print_debug = FALSE;
-	print_vmap = FALSE;
-	trace_pmap = FALSE;
-	save_movie = FALSE;
+	automove = false;
+	resigned = false;
+	debug = false;
+	print_debug = false;
+	print_vmap = false;
+	trace_pmap = false;
+	save_movie = false;
 	win = 0;
 	date = 0; /* no date yet */
 	user_score = 0;
@@ -257,7 +257,7 @@ land, and that there will be enough cities, to make this case extremely rare.
 
 First we make a list of continents which contain at least two cities, one
 or more of which is on the coast.  If there are no such continents, we return
-FALSE, and our caller should decide again where cities should be placed
+false, and our caller should decide again where cities should be placed
 on the map.  While making this list, we will rank the continents.  Our ranking
 is based on the thought that shore cities are better than inland cities,
 that any city is very important, and that the land area of a continent
@@ -294,7 +294,7 @@ static cont_t cont_tab[MAX_CONT]; /* list of good continenets */
 static int rank_tab[MAX_CONT]; /* indices to cont_tab in order of rank */
 static pair_t pair_tab[MAX_CONT*MAX_CONT]; /* ranked pairs of continents */
 
-int select_cities(void) {
+bool select_cities(void) {
 	void find_cont(void), make_pair(void);
 
 	loc_t compi, useri;
@@ -303,7 +303,7 @@ int select_cities(void) {
 	int pair;
 
 	find_cont (); /* find and rank the continents */
-	if (ncont == 0) return (FALSE); /* there are no good continents */
+	if (ncont == 0) return (false); /* there are no good continents */
 
 	make_pair (); /* create list of ranked pairs */
 
@@ -336,7 +336,7 @@ int select_cities(void) {
 	userp->work = 0;
 	scan (user_map, userp->loc);
 	set_prod (userp);
-	return (TRUE);
+	return (true);
 }
 
 /*
@@ -362,13 +362,13 @@ Find the next continent and insert it in the rank table.
 If there are no more continents, we return false.
 */
 
-int find_next(loc_t *mapi)
+bool find_next(loc_t *mapi)
 {
 	count_t i;
 	long val;
 
 	for (;;) {
-		if (*mapi >= MAP_SIZE) return (FALSE);
+		if (*mapi >= MAP_SIZE) return (false);
 
 		if (!map[*mapi].on_board || marked[*mapi]
 			|| map[*mapi].contents == '.') *mapi += 1;
@@ -384,7 +384,7 @@ int find_next(loc_t *mapi)
 				else break;
 			}
 			ncont++; /* count continents */
-			return (TRUE);
+			return (true);
 		}
 	}
 }
@@ -399,7 +399,7 @@ continent and return true.  Otherwise we return false.
 static count_t ncity, nland, nshore;
 static void mark_cont(loc_t);
 
-int good_cont(loc_t mapi)
+bool good_cont(loc_t mapi)
 {
 	long val;
 
@@ -409,7 +409,7 @@ int good_cont(loc_t mapi)
 
 	mark_cont (mapi);
 
-	if (nshore < 1 || ncity < 2) return (FALSE);
+	if (nshore < 1 || ncity < 2) return (false);
 
 	/* The first two cities, one of which must be a shore city,
 	don't contribute to the value.  Otherwise shore cities are
@@ -423,7 +423,7 @@ int good_cont(loc_t mapi)
 	val += nland;
 	cont_tab[ncont].value = val;
 	cont_tab[ncont].ncity = ncity;
-	return (TRUE);
+	return (true);
 }
 
 /*
@@ -527,11 +527,11 @@ void save_game(void) {
 
 /*
 Recover a saved game from emp_save.dat.
-We return TRUE if we succeed, otherwise FALSE.
+We return TRUE if we succeed, otherwise false.
 */
 
-#define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (FALSE);
-#define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (FALSE);
+#define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (false);
+#define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (false);
 
 int restore_game(void) {
 	void read_embark();
@@ -544,7 +544,7 @@ int restore_game(void) {
 	f = fopen (savefile, "r"); /* open for input */
 	if (f == NULL) {
 		perror ("Cannot open saved game");
-		return (FALSE);
+		return (false);
 	}
 	rbuf (map);
 	rbuf (comp_map);
@@ -611,7 +611,7 @@ int restore_game(void) {
 	(void) fclose (f);
 	kill_display (); /* what we had is no longer good */
 	topmsg (3, "Game restored from save file.",0,0,0,0,0,0,0,0);
-	return (TRUE);
+	return (true);
 }
 	
 /*
@@ -653,41 +653,41 @@ Write a buffer to a file.  If we cannot write everything, return FALSE.
 Also, tell the user why the write did not work if it didn't.
 */
 
-int xwrite(FILE *f, char *buf, int size)
+bool xwrite(FILE *f, char *buf, int size)
 {
 	int bytes;
  
 	bytes = fwrite (buf, 1, size, f);
 	if (bytes == -1) {
 		perror ("Write to save file failed");
-		return (FALSE);
+		return (false);
 	}
 	if (bytes != size) {
 		perror ("Cannot complete write to save file.\n");
-		return (FALSE);
+		return (false);
 	}
-	return (TRUE);
+	return (true);
 }
 
 /*
 Read a buffer from a file.  If the read fails, we tell the user why
-and return FALSE.
+and return false.
 */
 
-int xread(FILE *f, char *buf, int size)
+bool xread(FILE *f, char *buf, int size)
 {
 	int bytes;
 
 	bytes = fread (buf, 1, size, f);
 	if (bytes == -1) {
 		perror ("Read from save file failed");
-		return (FALSE);
+		return (false);
 	}
 	if (bytes != size) {
 		perror ("Saved file is too short.\n");
-		return (FALSE);
+		return (false);
 	}
-	return (TRUE);
+	return (true);
 }
 
 /*

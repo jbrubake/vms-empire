@@ -16,7 +16,6 @@ For each move the user wants us to make, we do the following:
 */
 
 #include <string.h>
-#include <stdbool.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -24,7 +23,7 @@ static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
 bool load_army(piece_info_t *obj);
 bool lake( loc_t loc );
-int overproduced( city_info_t *cityp, int *city_count );
+bool overproduced( city_info_t *cityp, int *city_count );
 bool nearby_load( piece_info_t *obj, loc_t loc );
 count_t nearby_count( loc_t loc );
 void move_objective(piece_info_t *obj,path_map_t pathmap[],loc_t new_loc,char *adj_list);
@@ -272,7 +271,7 @@ comp_set_prod(city_info_t *cityp, int type)
 See if a city is producing an object which is being overproduced.
 */
 
-int
+bool
 overproduced(city_info_t *cityp, int *city_count)
 {
 	int i;
@@ -282,9 +281,9 @@ overproduced(city_info_t *cityp, int *city_count)
 		if (i != cityp->prod
 		 && ((city_count[(int)cityp->prod] - 1) * ratio[i]
 		   > (city_count[i] + 1) * ratio[(int)cityp->prod]))
-  		return (TRUE);
+  		return true;
 	}
-	return (FALSE);
+	return false;
 }
 
 /*
@@ -387,7 +386,7 @@ cpiece_move(piece_info_t *obj)
 {
 	void move1();
 
-	int changed_loc;
+	bool changed_loc;
 	int max_hits;
 	loc_t saved_loc;
 	city_info_t *cityp;
@@ -398,7 +397,7 @@ cpiece_move(piece_info_t *obj)
 	}
 	
 	obj->moved = 0; /* not moved yet */
-	changed_loc = FALSE; /* not changed yet */
+	changed_loc = false; /* not changed yet */
 	max_hits = piece_attr[obj->type].max_hits;
 
 	if (obj->type == FIGHTER) { /* init fighter range */
@@ -409,7 +408,7 @@ cpiece_move(piece_info_t *obj)
 	while (obj->moved < obj_moves (obj)) {
 		saved_loc = obj->loc; /* remember starting location */
 		move1 (obj);
-		if (saved_loc != obj->loc) changed_loc = TRUE;
+		if (saved_loc != obj->loc) changed_loc = true;
 		
 		if (obj->type == FIGHTER && obj->hits > 0) {
 			if (comp_map[obj->loc].contents == 'X')
@@ -765,7 +764,7 @@ load_army(piece_info_t *obj)
 			p = find_best_tt (p, x_loc);
 
 	}
-	if (!p) return FALSE; /* no tt to be found */
+	if (!p) return false; /* no tt to be found */
 
 	if (p->loc == obj->loc) { /* stay in same place */
 		obj->moved = piece_attr[ARMY].speed;
@@ -776,7 +775,7 @@ load_army(piece_info_t *obj)
 		disembark (obj);
 		embark (p, obj);
 	}
-	return TRUE;
+	return true;
 }
 
 /*
@@ -1109,9 +1108,9 @@ check_endgame(void) { /* see if game is over */
 		announce ("\nThe enemy inadvertantly revealed its code used for");
 		announce ("\nreceiving battle information. You can display what");
 		announce ("\nthey've learned with the ''E'' command.");
-		resigned = TRUE;
+		resigned = true;
 		win = 2;
-		automove = FALSE;
+		automove = false;
 	}
 	else if (ncomp_city == 0 && ncomp_army == 0) {
 		clear_screen ();
@@ -1120,7 +1119,7 @@ check_endgame(void) { /* see if game is over */
 	    	announce ("There may be, however, remnants of the enemy fleet\n");
 	    	announce ("to be routed out and destroyed.\n");
 		win = 1;
-		automove = FALSE;
+		automove = false;
 	}
 	else if (nuser_city == 0 && nuser_army == 0) {
 	    	clear_screen ();
@@ -1129,6 +1128,6 @@ check_endgame(void) { /* see if game is over */
 	    	announce ("empire is lost. If you have any ships left, you\n");
 	    	announce ("may attempt to harass enemy shipping.");
 		win = 1;
-		automove = FALSE;
+		automove = false;
 	}
 }

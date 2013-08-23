@@ -436,17 +436,17 @@ terrain type for the location.  Boats may move into port, armies may
 move onto transports, and fighters may move onto cities or carriers.
 */
 
-int good_loc(piece_info_t *obj, loc_t loc)
+bool good_loc(piece_info_t *obj, loc_t loc)
 {
 	view_map_t *vmap;
 	piece_info_t *p;
 	
-	if (!map[loc].on_board) return (FALSE);
+	if (!map[loc].on_board) return (false);
 
 	vmap = MAP (obj->owner);
 
 	if (strchr (piece_attr[obj->type].terrain, vmap[loc].contents) != NULL)
-		return (TRUE);
+		return (true);
 
 	/* armies can move into unfull transports */
 	if (obj->type == ARMY) {
@@ -456,7 +456,7 @@ int good_loc(piece_info_t *obj, loc_t loc)
 
 	/* ships and fighters can move into cities */
 	if (map[loc].cityp && map[loc].cityp->owner == obj->owner)
-		return (TRUE);
+		return (true);
 
 	/* fighters can move onto unfull carriers */
 	if (obj->type == FIGHTER) {
@@ -464,7 +464,7 @@ int good_loc(piece_info_t *obj, loc_t loc)
 		return (p != NULL && p->owner == obj->owner);
 	}
 
-	return (FALSE);
+	return (false);
 }
 
 void describe_obj(piece_info_t *obj)

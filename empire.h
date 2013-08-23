@@ -9,10 +9,7 @@
 empire.h -- type and constant declarations
 */
 
-#ifndef TRUE
-#define TRUE 1
-#define FALSE 0
-#endif
+#include <stdbool.h>
 
 #ifndef NULL
 #define NULL 0
@@ -203,7 +200,7 @@ You can change them and the code will adjust properly.
 
 typedef struct real_map { /* a cell of the actual map */
 	char contents; /* '+', '.', or '*' */
-	uchar on_board; /* TRUE iff on the board */
+	bool on_board; /* TRUE iff on the board */
 	city_info_t *cityp; /* ptr to city at this location */
 	piece_info_t *objp; /* list of objects at this location */
 } real_map_t;
