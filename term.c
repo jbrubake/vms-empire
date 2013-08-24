@@ -32,6 +32,7 @@ to read the lines.  The new information is then displayed, and the
 #include <stdlib.h>
 #include <curses.h>
 #include <ctype.h>
+#include <stdarg.h>
 
 #include "empire.h"
 #include "extern.h"
@@ -63,47 +64,47 @@ topini(void)
 Write a message to one of the top lines.
 */
 
-void
-/* VARARGS2 */
-topmsg(int linep, char *buf,
-       int a, int b, int c, int d, int e, int f, int g, int h)
+static void vtopmsg(int line, const char *fmt, va_list varglist)
+/* assemble command in printf(3) style, print to a top line */
 {
-	if (linep < 1 || linep > NUMTOPS)
-		linep = 1;
-	(void) move (linep - 1, 0);
+	char junkbuf[STRSIZE];
 	
-	if (buf != NULL && strlen (buf) > 0)
-		addprintf (buf, a, b, c, d, e, f, g, h);
-	
-	(void) clrtoeol ();
+	if (line < 1 || line > NUMTOPS)
+	    line = 1;
+	(void) move (line - 1, 0);
+	vsprintf(junkbuf, fmt, varglist);
+	(void) addstr (junkbuf);
+	(void) clrtoeol();
 }
 
 void
-topmsg1(int linep, char *buf, char *a,
-	int b, int c, int d, int e, int f, int g, int h)
+topmsg(int line, char *fmt, ...)
 {
-	if (linep < 1 || linep > NUMTOPS)
-		linep = 1;
-	(void) move (linep - 1, 0);
-	
-	if (buf != NULL && strlen (buf) > 0)
-		addprintf1 (buf, a, b, c, d, e, f, g, h);
-	
-	(void) clrtoeol ();
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(line, fmt, ap);
+	va_end(ap);
 }
 
 void
-topmsg2(int linep, char *buf, 
-	char *a, int b, int c, int d, char *e, char *f, int g, int h)
+topmsg1(int line, char *fmt, ...)
 {
-	if (linep < 1 || linep > NUMTOPS)
-		linep = 1;
-	(void) move (linep - 1, 0);
-	
-	if (buf != NULL && strlen (buf) > 0)
-		addprintf2 (buf, a, b, c, d, e, f, g, h);
-	
-	(void) clrtoeol ();
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(line, fmt, ap);
+	va_end(ap);
+}
+
+void
+topmsg2(int line, char *fmt, ...) 
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(line, fmt, ap);
+	va_end(ap);
 }
 
 /*
