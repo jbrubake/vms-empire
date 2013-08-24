@@ -210,34 +210,41 @@ comment1(char *buf, char *a,
 }
 	
 /* kermyt begin */
+
 void
-ksend(char *buf,
-       int a, int b, int c, int d, int e, int f, int g, int h)
+vksend(const char *fmt, va_list varglist)
 {
 	if(!(my_stream=fopen("info_list.txt","a")))
 	{
-		error("Cannot open info_list.txt",0,0,0,0,0,0,0,0);
+	    error("Cannot open info_list.txt",0,0,0,0,0,0,0,0);
 		return;
 	}
-	fprintf(my_stream, buf, a, b, c, d, e, f, g, h);
+	vfprintf(my_stream, fmt, varglist);
 	fclose(my_stream);
 	return;
 }
 
 void
-ksend1(char *buf, char *a, 
-	int b, int c, int d, int e, int f, int g, int h)
+ksend(char *fmt, ...)
 {
-	if(!(my_stream=fopen("info_list.txt","a")))
-	{
-		error("Cannot open info_list.txt",0,0,0,0,0,0,0,0);
-		return;
-	}
-	fprintf(my_stream, buf, a, b, c, d, e, f, g, h);
-	fclose(my_stream);
-	return;
+	va_list ap;
+
+	va_start(ap, fmt);
+	vksend(fmt, ap);
+	va_end(ap);
+}
+
+void
+ksend1(char *fmt, ...)
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+	vksend(fmt, ap);
+	va_end(ap);
 }
 /* kermyt end */
+
 /*
 Get a string from the user, echoing characters all the while.
 */

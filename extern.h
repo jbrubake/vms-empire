@@ -226,8 +226,8 @@ void extra (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
 void huh (void);
 void help (char **text, int nlines);
 void set_need_delay (void);
-void ksend (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
-void ksend1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
+void ksend (char *buf, ...);
+void ksend1 (char *buf, ...);
 
 /* utility routines */
 void ttinit (void);
