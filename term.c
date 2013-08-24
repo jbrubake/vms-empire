@@ -190,9 +190,9 @@ void
 info(char *a, char *b, char *c)
 {
 	if (need_delay) delay ();
-	topmsg (1, a,0,0,0,0,0,0,0,0);
-	topmsg (2, b,0,0,0,0,0,0,0,0);
-	topmsg (3, c,0,0,0,0,0,0,0,0);
+	topmsg (1, a);
+	topmsg (2, b);
+	topmsg (3, c);
 	need_delay = (a || b || c);
 }
 
@@ -202,26 +202,33 @@ set_need_delay(void) {
 }
 
 void
-comment (char *buf,
-       int a, int b, int c, int d, int e, int f, int g, int h)
+comment (char *fmt, ...)
 {
+	va_list ap;
+
+	va_start(ap, fmt);
 	if (need_delay) delay ();
-	topmsg (1, 0,0,0,0,0,0,0,0,0);
-	topmsg (2, 0,0,0,0,0,0,0,0,0);
-	topmsg (3, buf, a, b, c, d, e, f, g, h);
-	need_delay = (buf != 0);
+	topmsg (1, "");
+	topmsg (2, "");
+	vtopmsg (3, fmt, ap);
+	need_delay = (fmt != 0);
+	va_end(ap);
 }
 	
 void
-comment1(char *buf, char *a,
-	 int b, int c, int d, int e, int f, int g, int h)
+comment1 (char *fmt, ...)
 {
+	va_list ap;
+
+	va_start(ap, fmt);
 	if (need_delay) delay ();
-	topmsg1 (1, 0,0,0,0,0,0,0,0,0);
-	topmsg1 (2, 0,0,0,0,0,0,0,0,0);
-	topmsg1 (3, buf, a, b, c, d, e, f, g, h);
-	need_delay = (buf != 0);
+	topmsg (1, "");
+	topmsg (2, "");
+	vtopmsg (3, fmt, ap);
+	need_delay = (fmt != 0);
+	va_end(ap);
 }
+	
 	
 /* kermyt begin */
 
