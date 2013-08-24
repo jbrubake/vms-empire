@@ -18,6 +18,7 @@ information:
 
 #include <string.h>
 #include <curses.h>
+#include <stdarg.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -667,19 +668,29 @@ Position the cursor and output a string.
 */
 
 void
-pos_str1(int row, int col, char *str, char *a, 
-	  int b, int c, int d, int e, int f, int g, int h)
+pos_str1(int row, int col, char *str, ...)
 {
+	va_list ap;
+	char junkbuf[STRSIZE];
+
+	va_start(ap, str);
 	(void) move (row, col);
-	addprintf1 (str, a, b, c, d, e, f, g, h);
+	vsprintf(junkbuf, str, ap);
+	(void) addstr (junkbuf);
+	va_end(ap);
 }
 
 void
-pos_str(int row, int col, char *str, 
-	int a, int b, int c, int d, int e, int f, int g, int h)
+pos_str(int row, int col, char *str, ...)
 {
+	va_list ap;
+	char junkbuf[STRSIZE];
+
+	va_start(ap, str);
 	(void) move (row, col);
-	addprintf (str, a, b, c, d, e, f, g, h);
+	vsprintf(junkbuf, str, ap);
+	(void) addstr (junkbuf);
+	va_end(ap);
 }
 
 void
