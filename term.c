@@ -112,24 +112,33 @@ Print a prompt on the first message line.
 */
 
 void
-/* VARARGS1 */
-prompt(char *buf,
-       int a, int b, int c, int d, int e, int f, int g, int h)
+prompt(char *fmt, ...)
 {
-	topmsg(1, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(1, fmt, ap);
+	va_end(ap);
 }
 
 void
-prompt1(char *buf, char *a, 
-	int b, int c, int d, int e, int f, int g, int h)
+prompt1(char *fmt, ...)
 {
-	topmsg1(1, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(1, fmt, ap);
+	va_end(ap);
 }
 
 void
-prompt2 (char *buf, 
-	char *a, int b, int c, int d, char *e, char *f, int g, int h){
-	topmsg2(1, buf, a, b, c, d, e, f, g, h);
+prompt2 (char *fmt, ...)
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(1, fmt, ap);
+	va_end(ap);
 }
 
 /*
@@ -137,11 +146,13 @@ Print an error message on the second message line.
 */
 
 void
-/* VARARGS1 */
-error(char *buf,
-       int a, int b, int c, int d, int e, int f, int g, int h)
+error(char *fmt, ...)
 {
-	topmsg(2, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(2, fmt, ap);
+	va_end(ap);
 }
 
 /*
@@ -149,12 +160,15 @@ Print out extra information.
 */
 
 void
-/* VARARGS1 */
-extra(char *buf,
-       int a, int b, int c, int d, int e, int f, int g, int h)
+extra(char *fmt, ...)
 {
-	topmsg(3, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, fmt);
+	vtopmsg(3, fmt, ap);
+	va_end(ap);
 }
+
 
 /*
 Print out a generic error message.
@@ -163,7 +177,7 @@ Print out a generic error message.
 void
 huh(void)
 {
-	error ("Type H for Help.",0,0,0,0,0,0,0,0);
+	error ("Type H for Help.");
 }
 
 /*
@@ -216,7 +230,7 @@ vksend(const char *fmt, va_list varglist)
 {
 	if(!(my_stream=fopen("info_list.txt","a")))
 	{
-	    error("Cannot open info_list.txt",0,0,0,0,0,0,0,0);
+		error("Cannot open info_list.txt");
 		return;
 	}
 	vfprintf(my_stream, fmt, varglist);

@@ -211,23 +211,23 @@ void set_prod (city_info_t *cityp);
 /* terminal routines */
 void pdebug (char *s, int a, int b, int c, int d, int e, int f, int g, int h);
 void topini (void);
-void clreol (int linep, int colp);
-void topmsg (int linep, char *buf, ...);
-void topmsg1 (int linep, char *buf, ...);
-void topmsg2 (int linep, char *buf, ...);
-void prompt (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
-void prompt1 (char *buf, char *a, int b, int c, int d, int e, int f, int g, int h);
-void prompt2 (char *buf, char *a, int b, int c, int d, char *e, char *f, int g, int h);
-void error (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void clreol (int line, int colp);
+void topmsg (int line, char *fmt, ...);
+void topmsg1 (int line, char *fmt, ...);
+void topmsg2 (int line, char *fmt, ...);
+void prompt (char *fmt, ...);
+void prompt1 (char *fmt, ...);
+void prompt2 (char *fmt, ...);
+void error (char *fmt, ...);
 void info (char *a, char *b, char *c);
-void comment (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
-void comment1 (char *buf,char *a, int b, int c, int d, int e, int f, int g, int h);
-void extra (char *buf, int a, int b, int c, int d, int e, int f, int g, int h);
+void comment (char *fmt, int a, int b, int c, int d, int e, int f, int g, int h);
+void comment1 (char *fmt,char *a, int b, int c, int d, int e, int f, int g, int h);
+void extra (char *fmt, ...);
 void huh (void);
 void help (char **text, int nlines);
 void set_need_delay (void);
-void ksend (char *buf, ...);
-void ksend1 (char *buf, ...);
+void ksend (char *fmt, ...);
+void ksend1 (char *fmt, ...);
 
 /* utility routines */
 void ttinit (void);
