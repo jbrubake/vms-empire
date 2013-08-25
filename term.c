@@ -40,15 +40,6 @@ to read the lines.  The new information is then displayed, and the
 static bool need_delay;
 static FILE *my_stream;
 
-void
-/* VARARGS1 */
-pdebug(char *s, 
-       int a, int b, int c, int d, int e, int f, int g, int h)
-{
-	if (!print_debug) return;
-	comment (s, a, b, c, d, e, f, g, h);
-}
-
 /*
 Here are routines that handle printing to the top few lines of the
 screen.  'topini' should be called at initialization, and whenever
@@ -230,6 +221,22 @@ comment1 (char *fmt, ...)
 }
 	
 	
+void
+pdebug(char *fmt, ...)
+{
+	va_list ap;
+
+	if (!print_debug) return;
+
+	va_start(ap, fmt);
+	if (need_delay) delay ();
+	topmsg (1, "");
+	topmsg (2, "");
+	vtopmsg (3, fmt, ap);
+	need_delay = (fmt != 0);
+	va_end(ap);
+}
+
 /* kermyt begin */
 
 void

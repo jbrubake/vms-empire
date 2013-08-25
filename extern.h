@@ -206,7 +206,7 @@ void scan_sat (view_map_t *vmap, long loc);
 void set_prod (city_info_t *cityp);
 
 /* terminal routines */
-void pdebug (char *s, int a, int b, int c, int d, int e, int f, int g, int h);
+void pdebug (char *s, ...);
 void topini (void);
 void clreol (int line, int colp);
 void topmsg (int line, char *fmt, ...);
