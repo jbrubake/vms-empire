@@ -1115,7 +1115,7 @@ check_endgame(void)
 	announce ("\nreceiving battle information. You can display what");
 	announce ("\nthey've learned with the ''E'' command.");
 	resigned = true;
-	win = 2;
+	win = ratio_win;
 	automove = false;
     }
     else if (ncomp_city == 0 && ncomp_army == 0) {
@@ -1124,7 +1124,7 @@ check_endgame(void)
 	announce ("You are free to rape the empire as you wish.\n");
 	announce ("There may be, however, remnants of the enemy fleet\n");
 	announce ("to be routed out and destroyed.\n");
-	win = 1;
+	win = wipeout_win;
 	automove = false;
     }
     else if (nuser_city == 0 && nuser_army == 0) {

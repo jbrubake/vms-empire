@@ -44,7 +44,7 @@ void init_game(void)
     print_vmap = false;
     trace_pmap = false;
     save_movie = false;
-    win = 0;
+    win = no_win;
     date = 0; /* no date yet */
     user_score = 0;
     comp_score = 0;

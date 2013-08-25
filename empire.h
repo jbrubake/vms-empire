@@ -261,3 +261,7 @@ typedef struct {
 	long len; /* number of items in list */
 	long list[MAP_SIZE]; /* list of locations */
 } perimeter_t;
+
+enum win_t {no_win, wipeout_win, ratio_win};
+
+/* end */

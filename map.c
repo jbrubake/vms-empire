@@ -481,7 +481,7 @@ constant and 'memcpy'.
 */
 
 static path_map_t pmap_init[MAP_SIZE];
-static int init_done = 0;
+static bool init_done = false;
 
 STATIC void
 start_perimeter(path_map_t *pmap, perimeter_t *perim, loc_t loc, int terrain)
@@ -490,7 +490,7 @@ start_perimeter(path_map_t *pmap, perimeter_t *perim, loc_t loc, int terrain)
     if (!init_done) {
 	int i;
 	
-	init_done = 1;
+	init_done = true;
 	for (i = 0; i < MAP_SIZE; i++) {
 	    pmap_init[i].cost = INFINITY; /* everything lies outside perim */
 	    pmap_init[i].terrain = T_UNKNOWN;
