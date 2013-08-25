@@ -150,7 +150,7 @@ info(char *a, char *b, char *c)
 void
 set_need_delay(void)
 {
-    need_delay = 1;
+    need_delay = true;
 }
 
 void
@@ -159,7 +159,8 @@ comment (char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    if (need_delay) delay ();
+    if (need_delay)
+	delay ();
     topmsg (1, "");
     topmsg (2, "");
     vtopmsg (3, fmt, ap);
@@ -175,7 +176,8 @@ pdebug(char *fmt, ...)
     if (!print_debug) return;
 
     va_start(ap, fmt);
-    if (need_delay) delay ();
+    if (need_delay)
+	delay ();
     topmsg (1, "");
     topmsg (2, "");
     vtopmsg (3, fmt, ap);

@@ -975,7 +975,7 @@ move_objective(piece_info_t *obj, path_map_t pathmap[],
 {
     char *terrain;
     int d;
-    int reuse; /* true iff we should reuse old map */
+    bool reuse; /* true iff we should reuse old map */
     loc_t old_loc;
     loc_t old_dest;
 	
@@ -989,11 +989,11 @@ move_objective(piece_info_t *obj, path_map_t pathmap[],
     old_dest = new_loc; /* and where we're going */
 	
     d = dist (new_loc, obj->loc);
-    reuse = 1; /* try to reuse unless we learn otherwise */
+    reuse = true; /* try to reuse unless we learn otherwise */
 	
     if (comp_map[new_loc].contents == ' ' && d == 2) { /* are we exploring? */
 	vmap_mark_adjacent (pathmap, obj->loc);
-	reuse = 0;
+	reuse = false;
     }
     else vmap_mark_path (pathmap, comp_map, new_loc); /* find routes to destination */
 	
@@ -1010,7 +1010,7 @@ move_objective(piece_info_t *obj, path_map_t pathmap[],
     if (new_loc == obj->loc /* path is blocked? */
 	&& (obj->type != ARMY || !obj->ship)) { /* don't unblock armies on a ship */
 	vmap_mark_near_path (pathmap, obj->loc);
-	reuse = 0;
+	reuse = false;
 	new_loc = vmap_find_dir (pathmap, comp_map, obj->loc,
 				 terrain, adj_list);
     }
@@ -1019,7 +1019,7 @@ move_objective(piece_info_t *obj, path_map_t pathmap[],
     if (new_loc == obj->loc && map[obj->loc].cityp != NULL
 	&& obj->type == ARMY) {
 	new_loc = move_away (comp_map, obj->loc, "+");
-	reuse = 0;
+	reuse = false;
     }
     if (new_loc == obj->loc) {
 	obj->moved = piece_attr[obj->type].speed;
