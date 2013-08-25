@@ -1021,8 +1021,9 @@ ideas you can try that may make the game more interesting.</para>
 A Brief History of Empire </ulink>, the ancestral game was written by
 Walter Bright sometime in the early 1970s while he was a student at
 Caltech.  A copy leaked out of Caltech and was ported to DEC's VAX/VMS
-from the TOPS-10/20 FORTRAN sources available sometime around fall 1979.
-Support for different terminal types was added by Craig Leres.</para>
+from the TOPS-10/20 FORTRAN sources available sometime around fall
+1979.  Craig Leres found the source code on a DECUS tape in 1983 and
+added support for different terminal types.</para>
 
 <para>Ed James got hold of the sources at Berkeley and converted
 portions of the code to C, mostly to use curses for the screen
