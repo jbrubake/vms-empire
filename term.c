@@ -230,11 +230,9 @@ Get a string from the user, ignoring the current echo mode.
 void
 get_strq(char *buf, int sizep)
 {
-    sizep = sizep; /* size of buf, currently unused */
-
     (void) nocrmode ();
     (void) refresh ();
-    (void) getstr (buf);
+    (void) getnstr (buf, sizep);
     need_delay = false;
     info (0, 0, 0);
     (void) crmode ();
