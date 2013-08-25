@@ -421,8 +421,8 @@ move_sat(piece_info_t *obj)
 		move_sat1 (obj);
 		if (obj->range == 0) {
 			if (obj->owner == USER)
-				comment ("Satellite at %d crashed and burned.", loc_disp(obj->loc),0,0,0,0,0,0,0);
-				ksend ("Satellite at %d crashed and burned.", loc_disp(obj->loc),0,0,0,0,0,0,0);
+				comment ("Satellite at %d crashed and burned.", loc_disp(obj->loc));
+				ksend ("Satellite at %d crashed and burned.", loc_disp(obj->loc));
 			kill_obj (obj, obj->loc);
 		}
 	}
@@ -491,13 +491,13 @@ void describe_obj(piece_info_t *obj)
 		break;
 	}
 
-	prompt2 ("%s at %d:  moves = %d; hits = %d; func = %s%s",
+	prompt ("%s at %d:  moves = %d; hits = %d; func = %s%s",
 		piece_attr[obj->type].name,
 		loc_disp(obj->loc),
 		obj_moves (obj) - obj->moved,
 		obj->hits,
 		func,
-		other,0,0);
+		other);
 }
 
 /*
@@ -597,12 +597,12 @@ set_prod(city_info_t *cityp)
 	display_loc_u (cityp->loc);
 
 	for (;;) {
-		prompt ("What do you want the city at %d to produce? ",loc_disp(cityp->loc),0,0,0,0,0,0,0);
+		prompt ("What do you want the city at %d to produce? ",loc_disp(cityp->loc));
 
 		i = get_piece_name ();
 		
 		if (i == NOPIECE)
-			error ("I don't know how to build those.",0,0,0,0,0,0,0,0);
+			error ("I don't know how to build those.");
 			
 		else {
 			cityp->prod = i;

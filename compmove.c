@@ -46,7 +46,7 @@ comp_move(int nmoves)
 		scan (comp_map, obj->loc); /* refresh comp's view of world */
 
 	for (i = 1; i <= nmoves; i++) { /* for each move we get... */
-		comment ("Thinking...",0,0,0,0,0,0,0,0);
+		comment ("Thinking...");
 
 		(void) memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
 		vmap_prune_explore_locs (emap);
@@ -262,7 +262,7 @@ comp_set_prod(city_info_t *cityp, int type)
 {
 	if (cityp->prod == type) return;
 	
-	pdebug ("Changing city prod at %d from %d to %d\n",loc_disp(cityp->loc), cityp->prod, type,0,0,0,0,0);
+	pdebug ("Changing city prod at %d from %d to %d\n",loc_disp(cityp->loc), cityp->prod, type);
 	cityp->prod = type;
 	cityp->work = -(piece_attr[type].build_time / 5);
 }
@@ -414,8 +414,8 @@ cpiece_move(piece_info_t *obj)
 			if (comp_map[obj->loc].contents == 'X')
 				obj->moved = piece_attr[FIGHTER].speed;
 			else if (obj->range == 0) {
-				pdebug ("Fighter at %d crashed and burned\n", loc_disp(obj->loc),0,0,0,0,0,0,0);
-				ksend ("Fighter at %d crashed and burned\n", loc_disp(obj->loc),0,0,0,0,0,0,0);
+				pdebug ("Fighter at %d crashed and burned\n", loc_disp(obj->loc));
+				ksend ("Fighter at %d crashed and burned\n", loc_disp(obj->loc));
 				kill_obj (obj, obj->loc); /* crash & burn */
 			}
 		}
@@ -977,7 +977,7 @@ move_objective(piece_info_t *obj, path_map_t pathmap[],
 	if (new_loc == obj->loc) {
 		obj->moved = piece_attr[obj->type].speed;
 		obj->range -= 1;
-		pdebug ("No destination found for %d at %d; func=%d\n",	obj->type, loc_disp(obj->loc), obj->func,0,0,0,0,0);
+		pdebug ("No destination found for %d at %d; func=%d\n",	obj->type, loc_disp(obj->loc), obj->func);
 		return;
 	}
 	old_loc = obj->loc; /* remember where we are */
@@ -1020,7 +1020,7 @@ move_objective(piece_info_t *obj, path_map_t pathmap[],
 		obj->moved = piece_attr[obj->type].speed;
 		
 		if (obj->type == ARMY && obj->ship) ;
-		else pdebug ("Cannot move %d at %d toward objective; func=%d\n", obj->type, loc_disp(obj->loc), obj->func,0,0,0,0,0);
+		else pdebug ("Cannot move %d at %d toward objective; func=%d\n", obj->type, loc_disp(obj->loc), obj->func);
 	}
 	else move_obj (obj, new_loc);
 	
@@ -1100,9 +1100,9 @@ check_endgame(void) { /* see if game is over */
 		
 	if (ncomp_city < nuser_city/3 && ncomp_army < nuser_army/3) {
 		clear_screen ();
-		prompt ("The computer acknowledges defeat. Do",0,0,0,0,0,0,0,0);
-		ksend ("The computer acknowledges defeat.",0,0,0,0,0,0,0,0);
-		error ("you wish to smash the rest of the enemy? ",0,0,0,0,0,0,0,0);
+		prompt ("The computer acknowledges defeat. Do");
+		ksend ("The computer acknowledges defeat.");
+		error ("you wish to smash the rest of the enemy?");
 
 		if (get_chx() !=  'Y') empend ();
 		announce ("\nThe enemy inadvertantly revealed its code used for");

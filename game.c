@@ -522,7 +522,7 @@ void save_game(void) {
 	wval (comp_score);
 
 	(void) fclose (f);
-	topmsg (3, "Game saved.",0,0,0,0,0,0,0,0);
+	topmsg (3, "Game saved.");
 }
 
 /*
@@ -610,7 +610,7 @@ int restore_game(void) {
 	
 	(void) fclose (f);
 	kill_display (); /* what we had is no longer good */
-	topmsg (3, "Game restored from save file.",0,0,0,0,0,0,0,0);
+	topmsg (3, "Game restored from save file.");
 	return (true);
 }
 	
@@ -805,12 +805,12 @@ void stat_display(char *mbuf, int round)
 		comp_cost += counts[i] * piece_attr[i-NUM_OBJECTS-2].build_time;
 		
 	for (i = 0; i < NUM_OBJECTS+1; i++) {
-		pos_str (1, (int) i * 6, "%2d %c  ", counts[i], pieces[i],0,0,0,0,0,0);
-		pos_str (2,(int) i * 6, "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1],0,0,0,0,0,0);
+		pos_str (1, (int) i * 6, "%2d %c  ", counts[i], pieces[i]);
+		pos_str (2,(int) i * 6, "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1]);
 	}
 
-	pos_str (1, (int) i * 6, "%5d", user_cost,0,0,0,0,0,0,0);
-	pos_str (2, (int) i * 6, "%5d", comp_cost,0,0,0,0,0,0,0);
-	pos_str (0, 0, "Round %3d", (round + 1) / 2,0,0,0,0,0,0,0);
+	pos_str (1, (int) i * 6, "%5d", user_cost);
+	pos_str (2, (int) i * 6, "%5d", comp_cost);
+	pos_str (0, 0, "Round %3d", (round + 1) / 2);
 }
 

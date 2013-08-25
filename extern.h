@@ -210,21 +210,15 @@ void pdebug (char *s, ...);
 void topini (void);
 void clreol (int line, int colp);
 void topmsg (int line, char *fmt, ...);
-void topmsg1 (int line, char *fmt, ...);
-void topmsg2 (int line, char *fmt, ...);
 void prompt (char *fmt, ...);
-void prompt1 (char *fmt, ...);
-void prompt2 (char *fmt, ...);
 void error (char *fmt, ...);
 void info (char *a, char *b, char *c);
 void comment (char *fmt, ...);
-void comment1 (char *fmt, ...);
 void extra (char *fmt, ...);
 void huh (void);
 void help (char **text, int nlines);
 void set_need_delay (void);
 void ksend (char *fmt, ...);
-void ksend1 (char *fmt, ...);
 
 /* utility routines */
 void ttinit (void);

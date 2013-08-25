@@ -40,12 +40,12 @@ attack_city(piece_info_t *att_obj, loc_t loc)
 
 	if (irand (2) == 0) { /* attack fails? */
 		if (att_owner == USER) {
-			comment ("The scum defending the city crushed your attacking blitzkrieger.",0,0,0,0,0,0,0,0);
-			ksend ("The scum defending the city crushed your attacking blitzkrieger.\n",0,0,0,0,0,0,0,0); //kermyt
+		    comment ("The scum defending the city crushed your attacking blitzkrieger.");
+			ksend ("The scum defending the city crushed your attacking blitzkrieger.\n"); //kermyt
 		}
 		else if (city_owner == USER) {
-			ksend ("Your city at %d is under attack.\n",loc_disp(cityp->loc),0,0,0,0,0,0,0); //kermyt
-			comment ("Your city at %d is under attack.",loc_disp(cityp->loc),0,0,0,0,0,0,0);
+			ksend ("Your city at %d is under attack.\n",loc_disp(cityp->loc)); //kermyt
+			comment ("Your city at %d is under attack.",loc_disp(cityp->loc));
 		}
 		kill_obj (att_obj, loc);
 	}
@@ -55,16 +55,16 @@ attack_city(piece_info_t *att_obj, loc_t loc)
 		kill_obj (att_obj, loc);
 
 		if (att_owner == USER) {
-			ksend ("City at %d has been subjugated!\n",loc_disp(cityp->loc),0,0,0,0,0,0,0); //kermyt
-			error ("City at %d has been subjugated!",loc_disp(cityp->loc),0,0,0,0,0,0,0);
+			ksend ("City at %d has been subjugated!\n",loc_disp(cityp->loc)); //kermyt
+			error ("City at %d has been subjugated!",loc_disp(cityp->loc));
 
-			extra ("Your army has been dispersed to enforce control.",0,0,0,0,0,0,0,0);
-			ksend ("Your army has been dispersed to enforce control.\n",0,0,0,0,0,0,0,0);
+			extra ("Your army has been dispersed to enforce control.");
+			ksend ("Your army has been dispersed to enforce control.\n");
 			set_prod (cityp);
 		}
 		else if (city_owner == USER) {
-			ksend("City at %d has been lost to the enemy!\n",loc_disp(cityp->loc),0,0,0,0,0,0,0); //kermyt
-			comment ("City at %d has been lost to the enemy!",loc_disp(cityp->loc),0,0,0,0,0,0,0);
+		    ksend("City at %d has been lost to the enemy!\n",loc_disp(cityp->loc)); //kermyt
+			comment ("City at %d has been lost to the enemy!",loc_disp(cityp->loc));
 		}
 	}
 	/* let city owner see all results */
@@ -148,27 +148,27 @@ describe(piece_info_t *win_obj, piece_info_t *lose_obj, loc_t loc)
 	if (win_obj->owner != lose_obj->owner) {
 		if (win_obj->owner == USER) {
 			user_score += piece_attr[lose_obj->type].build_time; 
-			ksend1 ("Enemy %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc),0,0,0,0,0,0); //kermyt
-			topmsg1 (1, "Enemy %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc),0,0,0,0,0,0);
-			ksend1 ("Your %s has %d hits left\n",piece_attr[win_obj->type].name,win_obj->hits,0,0,0,0,0,0); //kermyt
-			topmsg1 (2, "Your %s has %d hits left.", piece_attr[win_obj->type].name, win_obj->hits,0,0,0,0,0,0);
+			ksend ("Enemy %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc)); //kermyt
+			topmsg (1, "Enemy %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc));
+			ksend ("Your %s has %d hits left\n",piece_attr[win_obj->type].name,win_obj->hits); //kermyt
+			topmsg (2, "Your %s has %d hits left.", piece_attr[win_obj->type].name, win_obj->hits);
 				
 			diff = win_obj->count - obj_capacity (win_obj);
 			if (diff > 0) switch (win_obj->cargo->type) {
 			case ARMY:
-				ksend("%d armies fell overboard and drowned in the assault.\n",diff,0,0,0,0,0,0,0); //kermyt
-			     topmsg (3,"%d armies fell overboard and drowned in the assault.",diff,0,0,0,0,0,0,0);
+				ksend("%d armies fell overboard and drowned in the assault.\n",diff); //kermyt
+			     topmsg (3,"%d armies fell overboard and drowned in the assault.",diff);
 			     break;
 			case FIGHTER:
-				ksend("%d fighters fell overboard and were lost in the assult.\n",diff,0,0,0,0,0,0,0); //kermyt
-			     topmsg (3,"%d fighters fell overboard and were lost in the assault.",diff,0,0,0,0,0,0,0);
+				ksend("%d fighters fell overboard and were lost in the assult.\n",diff); //kermyt
+			     topmsg (3,"%d fighters fell overboard and were lost in the assault.",diff);
 			     break;
 			}
 		}
 		else {
 			comp_score += piece_attr[lose_obj->type].build_time;
-			ksend1 ("Your %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc),0,0,0,0,0,0); //kermyt
-			topmsg1 (3, "Your %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc),0,0,0,0,0,0);
+			ksend ("Your %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc)); //kermyt
+			topmsg (3, "Your %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc));
 		}
 		set_need_delay ();
 	}

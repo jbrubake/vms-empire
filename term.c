@@ -78,52 +78,12 @@ topmsg(int line, char *fmt, ...)
 	va_end(ap);
 }
 
-void
-topmsg1(int line, char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vtopmsg(line, fmt, ap);
-	va_end(ap);
-}
-
-void
-topmsg2(int line, char *fmt, ...) 
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vtopmsg(line, fmt, ap);
-	va_end(ap);
-}
-
 /*
 Print a prompt on the first message line.
 */
 
 void
 prompt(char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vtopmsg(1, fmt, ap);
-	va_end(ap);
-}
-
-void
-prompt1(char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vtopmsg(1, fmt, ap);
-	va_end(ap);
-}
-
-void
-prompt2 (char *fmt, ...)
 {
 	va_list ap;
 
@@ -207,21 +167,6 @@ comment (char *fmt, ...)
 }
 	
 void
-comment1 (char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	if (need_delay) delay ();
-	topmsg (1, "");
-	topmsg (2, "");
-	vtopmsg (3, fmt, ap);
-	need_delay = (fmt != 0);
-	va_end(ap);
-}
-	
-	
-void
 pdebug(char *fmt, ...)
 {
 	va_list ap;
@@ -254,16 +199,6 @@ vksend(const char *fmt, va_list varglist)
 
 void
 ksend(char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vksend(fmt, ap);
-	va_end(ap);
-}
-
-void
-ksend1(char *fmt, ...)
 {
 	va_list ap;
 
@@ -414,7 +349,7 @@ get_range(char *message, int low, int high)
 
 		if (result >= low && result <= high) return (result);
 
-		error ("Please enter an integer in the range %d..%d.",low, high,0,0,0,0,0,0);
+		error ("Please enter an integer in the range %d..%d.",low, high);
 	}
 }
 
@@ -432,17 +367,17 @@ help(char **text, int nlines)
 
 	clear_screen ();
 
-	pos_str (NUMTOPS, 1, text[0],0,0,0,0,0,0,0,0); /* mode */
-	pos_str (NUMTOPS, 41, "See empire(6) for more information.",0,0,0,0,0,0,0,0);
+	pos_str (NUMTOPS, 1, text[0]); /* mode */
+	pos_str (NUMTOPS, 41, "See empire(6) for more information.");
 
 	for (i = 1; i < nlines; i++) {
 		if (i > text_lines)
-			pos_str (i - text_lines + NUMTOPS + 1, 41, text[i],0,0,0,0,0,0,0,0);
-		else pos_str (i + NUMTOPS + 1, 1, text[i],0,0,0,0,0,0,0,0);
+			pos_str (i - text_lines + NUMTOPS + 1, 41, text[i]);
+		else pos_str (i + NUMTOPS + 1, 1, text[i]);
 	}
 
-	pos_str (text_lines + NUMTOPS + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost",0,0,0,0,0,0,0,0);
-	pos_str (text_lines + NUMTOPS + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost",0,0,0,0,0,0,0,0);
+	pos_str (text_lines + NUMTOPS + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");
+	pos_str (text_lines + NUMTOPS + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost");
 
 	for (i = 0; i < NUM_OBJECTS; i++) {
 		if (i >= (NUM_OBJECTS+1)/2) {

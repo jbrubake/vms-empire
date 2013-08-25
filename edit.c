@@ -520,7 +520,7 @@ e_city_info(loc_t edit_cursor)
 	char temp_buf[STRSIZE];
 	char junk_buf2[STRSIZE];
 
-	error (0,0,0,0,0,0,0,0,0); /* clear line */
+	error (""); /* clear line */
 
 	f = 0; /* no fighters counted yet */
 	for (obj = map[edit_cursor].objp; obj != NULL;
@@ -587,6 +587,6 @@ get help
 void
 e_help(void) {
 	help (help_edit, edit_lines);
-	prompt ("Press any key to continue: ",0,0,0,0,0,0,0,0);
+	prompt ("Press any key to continue: ");
 	(void) get_chx ();
 }

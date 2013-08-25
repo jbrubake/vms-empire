@@ -36,8 +36,8 @@ empire(void) {
 	rndini (); /* init random number generator */
 
 	clear_screen (); /* nothing on screen */
-	pos_str (7, 0, "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988",0,0,0,0,0,0,0,0);
-	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n",0,0,0,0,0,0,0,0);
+	pos_str (7, 0, "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
+	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
 	(void) redisplay ();
 
 	if (!restore_game ()) /* try to restore previous game */
@@ -53,9 +53,9 @@ empire(void) {
 			save_game ();
 	    }
 	    else {
-		prompt (0,0,0,0,0,0,0,0,0); /* blank top line */
+		prompt (""); /* blank top line */
 		void redisplay();
-	        prompt ("Your orders? ",0,0,0,0,0,0,0,0);
+	        prompt ("Your orders? ");
 	        order = get_chx (); /* get a command */
 		do_command (order);
 	    }
@@ -78,7 +78,7 @@ do_command(char orders)
 	switch (orders) {
 	case 'A': /* turn on auto move mode */
 		automove = true;
-		error ("Now in Auto-Mode",0,0,0,0,0,0,0,0);
+		error ("Now in Auto-Mode");
 		user_move ();
 		comp_move (1);
 		save_game ();
@@ -89,7 +89,7 @@ do_command(char orders)
 		break;
 	
 	case 'D': /* display round number */
-		error ("Round #%d", date,0,0,0,0,0,0,0);
+		error ("Round #%d", date);
 		break;
 
 	case 'E': /* examine enemy map */
@@ -147,13 +147,13 @@ do_command(char orders)
 	
 	case 'T': /* trace: toggle save_movie flag */
 		save_movie = !save_movie;
-		if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.",0,0,0,0,0,0,0,0);
-		else comment ("No longer saving movie screens.",0,0,0,0,0,0,0,0);
+		if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
+		else comment ("No longer saving movie screens.");
 		break;
 
 	case 'W': /* watch movie */
 		if (resigned || debug) replay_movie ();
-		else error ("You cannot watch movie until computer resigns.",0,0,0,0,0,0,0,0);
+		else error ("You cannot watch movie until computer resigns.");
 		break;
 
 	case 'Z': /* print compressed map */
@@ -198,8 +198,8 @@ c_give(void) {
 		}
 	}
 	if (count == 0) {
-		error ("There are no unowned cities.",0,0,0,0,0,0,0,0);
-		ksend ("There are no unowned cities.",0,0,0,0,0,0,0,0);
+		error ("There are no unowned cities.");
+		ksend ("There are no unowned cities.");
 		return;
 	}
 	i = irand (count);
@@ -283,12 +283,12 @@ c_map(void) {
 	int i, j;
 	char line[MAP_HEIGHT+2];
 
-	prompt ("Filename? ",0,0,0,0,0,0,0,0);
+	prompt ("Filename? ");
 	get_str (jnkbuf, STRSIZE);
 
 	f = fopen (jnkbuf, "w");
 	if (f == NULL) {
-		error ("I can't open that file.",0,0,0,0,0,0,0,0);
+		error ("I can't open that file.");
 		return;
 	}
 	for (i = 0; i < MAP_WIDTH; i++) { /* for each column */
