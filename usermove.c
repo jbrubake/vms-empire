@@ -346,7 +346,6 @@ void
 move_ttload(piece_info_t *obj)
 {
     ABORT;
-    obj = obj;
 }
 
 /*
@@ -846,10 +845,6 @@ necessary, and attack if necessary.
 void
 user_dir_army(piece_info_t *obj, loc_t loc)
 {
-    bool enemy_killed;
-	
-    enemy_killed = false;
-
     if (user_map[loc].contents == 'O') /* attacking own city */
 	move_army_to_city (obj, loc);
 
@@ -859,6 +854,8 @@ user_dir_army(piece_info_t *obj, loc_t loc)
 	       "Your army jumped into the briny and drowned.");
 
     else if (map[loc].contents == '.') { /* going for a swim? */
+	bool enemy_killed = false;
+
 	if (!getyn ( /* thanks to Craig Hansen for this next message */
 		"Troops can't walk on water, sir.  Do you really want to go to sea? "))
 	    return;
@@ -935,10 +932,6 @@ a city, attacking self, attacking enemy.
 void
 user_dir_ship(piece_info_t *obj, loc_t loc)
 {
-    bool enemy_killed;
-
-    enemy_killed = false;
-
     if (map[loc].contents == '*') {
 	(void) sprintf (jnkbuf, "Your %s broke up on shore.",
 			piece_attr[obj->type].name);
@@ -949,6 +942,8 @@ user_dir_ship(piece_info_t *obj, loc_t loc)
     }
 
     else if (map[loc].contents == '+') { /* moving ashore? */
+	ool enemy_killed = false;
+
 	if (!getyn ("Ships need sea to float, sir.  Do you really want to go ashore? ")) return;
 
 	if (user_map[loc].contents == '+')

@@ -145,8 +145,8 @@ describe(piece_info_t *win_obj, piece_info_t *lose_obj, loc_t loc)
     *buf2 = '\0';
 	
     if (win_obj->owner != lose_obj->owner) {
-	int diff;
 	if (win_obj->owner == USER) {
+	    int diff;
 	    user_score += piece_attr[lose_obj->type].build_time; 
 	    ksend ("Enemy %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc)); //kermyt
 	    topmsg (1, "Enemy %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc));

@@ -89,7 +89,7 @@ lint: $(FILES)
 
 # cppcheck should run clean
 cppcheck:
-	cppcheck --inline-suppr --template gcc --enable=all --force *.[ch]
+	cppcheck --inline-suppr --suppress=unusedStructMember --suppress=unusedFunction  --template gcc --enable=all --force *.[ch]
 
 clean:
 	rm -f *.o TAGS vms-empire

@@ -55,7 +55,7 @@ empire(void)
 	}
 	else {
 	    prompt (""); /* blank top line */
-	    void redisplay();
+	    redisplay();
 	    prompt ("Your orders? ");
 	    order = get_chx (); /* get a command */
 	    do_command (order);
