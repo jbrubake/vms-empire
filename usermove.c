@@ -77,14 +77,14 @@ user_move(void) {
 		sector_change (); /* allow screen to be redrawn */
 
 		for (j = 0; j < NUM_OBJECTS; j++) /* loop through obj lists */
-		for (obj = user_obj[move_order[j]]; obj != NULL;
-			obj = next_obj) { /* loop through objs in list */
-			next_obj = obj->piece_link.next;
+			for (obj = user_obj[move_order[j]]; obj != NULL;
+				obj = next_obj) { /* loop through objs in list */
+				next_obj = obj->piece_link.next;
 
-			if (!obj->moved) /* object not moved yet? */
-				if (loc_sector (obj->loc) == sec) /* object in sector? */
-					piece_move (obj); /* yup; move the object */
-		}
+				if (!obj->moved) /* object not moved yet? */
+					if (loc_sector (obj->loc) == sec) /* object in sector? */
+						piece_move (obj); /* yup; move the object */
+			}
 		if (cur_sector () == sec) { /* is sector displayed? */
 			print_sector_u (sec); /* make screen up-to-date */
 			redisplay (); /* show it to the user */
