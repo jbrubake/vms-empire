@@ -16,25 +16,18 @@ real_maps, path_maps, and cont_maps.
 #include "empire.h"
 #include "extern.h"
 
-#ifndef PROFILE
-#define STATIC static
-#else
-#define STATIC
-/* can't get accurate profile when procedures are static */
-#endif
-
 #define SWAP(a,b) { \
 	perimeter_t *x; \
 	x = a; a = b; b = x; \
 }
 
-STATIC void expand_perimeter(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,perimeter_t *curp,int type,int cur_cost,int inc_wcost,int inc_lcost,perimeter_t *waterp,perimeter_t *landp);
-STATIC void expand_prune(view_map_t *vmap,path_map_t *pmap,loc_t loc,int type,perimeter_t *to,int *explored);
-STATIC int objective_cost(view_map_t *vmap,move_info_t *move_info,loc_t loc,int base_cost);
-STATIC int terrain_type(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,loc_t from_loc,loc_t to_loc);
-STATIC void start_perimeter(path_map_t *pmap,perimeter_t *perim,loc_t loc,int terrain);
-STATIC void add_cell(path_map_t *pmap,loc_t new_loc,perimeter_t *perim,int terrain,int cur_cost,int inc_cost);
-STATIC int vmap_count_path (path_map_t *pmap,loc_t loc);
+static void expand_perimeter(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,perimeter_t *curp,int type,int cur_cost,int inc_wcost,int inc_lcost,perimeter_t *waterp,perimeter_t *landp);
+static void expand_prune(view_map_t *vmap,path_map_t *pmap,loc_t loc,int type,perimeter_t *to,int *explored);
+static int objective_cost(view_map_t *vmap,move_info_t *move_info,loc_t loc,int base_cost);
+static int terrain_type(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,loc_t from_loc,loc_t to_loc);
+static void start_perimeter(path_map_t *pmap,perimeter_t *perim,loc_t loc,int terrain);
+static void add_cell(path_map_t *pmap,loc_t new_loc,perimeter_t *perim,int terrain,int cur_cost,int inc_cost);
+static int vmap_count_path (path_map_t *pmap,loc_t loc);
 
 static perimeter_t p1; /* perimeter list for use as needed */
 static perimeter_t p2;
@@ -400,7 +393,7 @@ Return the cost to reach the adjacent cell of the correct type
 with the lowest cost.
 */
 
-STATIC int
+static int
 best_adj(path_map_t *pmap, loc_t loc, int type)
 {
     int i;
@@ -485,7 +478,7 @@ constant and 'memcpy'.
 static path_map_t pmap_init[MAP_SIZE];
 static bool init_done = false;
 
-STATIC void
+static void
 start_perimeter(path_map_t *pmap, perimeter_t *perim, loc_t loc, int terrain)
 {
     /* zap the path map */
@@ -527,7 +520,7 @@ or the new land perimeter.
 We set the cost to reach the current perimeter.
 */
 
-STATIC void
+static void
 expand_perimeter(path_map_t *pmap, view_map_t *vmap, move_info_t *move_info, 
 		  perimeter_t *curp, 
 		  int type, int cur_cost, int inc_wcost, int inc_lcost, 
@@ -581,7 +574,7 @@ expand_perimeter(path_map_t *pmap, view_map_t *vmap, move_info_t *move_info,
 			
 /* Add a cell to a perimeter list. */
 	
-STATIC void
+static void
 add_cell(path_map_t *pmap, loc_t new_loc, 
 	  perimeter_t *perim, int terrain, int cur_cost, int inc_cost)
 {
@@ -597,7 +590,7 @@ add_cell(path_map_t *pmap, loc_t new_loc,
 
 /* Compute the cost to move to an objective. */
 
-STATIC int
+static int
 objective_cost(view_map_t *vmap, move_info_t *move_info, 
 		loc_t loc, int base_cost)
 {
@@ -635,7 +628,7 @@ objective_cost(view_map_t *vmap, move_info_t *move_info,
 Return the type of terrain at a vmap location.
 */
 
-STATIC int
+static int
 terrain_type(path_map_t *pmap, view_map_t *vmap, move_info_t *move_info,
 	      loc_t from_loc, loc_t to_loc)
 {
@@ -819,7 +812,7 @@ territory is incremented.
 Careful:  'loc' may be "off board".
 */
 
-STATIC void
+static void
 expand_prune(view_map_t *vmap, path_map_t *pmap,
 	      loc_t loc, int type, perimeter_t *to, int *explored)
 {
