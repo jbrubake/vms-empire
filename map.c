@@ -392,7 +392,7 @@ vmap_find_lwobj(path_map_t path_map[], view_map_t *vmap,
     }
 }
 
-#ifdef FUNCTION_WAS_NEVER_CALLED
+#ifdef __UNUSED__
 /*
 Return the cost to reach the adjacent cell of the correct type
 with the lowest cost.
@@ -406,7 +406,7 @@ best_adj(path_map_t *pmap, loc_t loc, int type)
     int best;
 
     best = INFINITY;
-	
+
     FOR_ADJ (loc, new_loc, i)
 	if (pmap[new_loc].terrain == type && pmap[new_loc].cost < best)
 	    best = pmap[new_loc].cost;

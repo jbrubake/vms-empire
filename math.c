@@ -38,6 +38,7 @@ long irand(long high)
 	return (rand() % high);
 }
 
+#ifdef __UNUSED__
 int rndint(int minp, int maxp)
 {
 	int size;
@@ -45,6 +46,7 @@ int rndint(int minp, int maxp)
 	size = maxp - minp + 1;
 	return ((rand() % size) + minp);
 }
+#endif
 
 /*
 Return the distance between two locations.  This is simply

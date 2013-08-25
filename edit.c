@@ -311,16 +311,13 @@ static char dirs[] = "WEDCXZAQ";
 void
 e_stasis(loc_t loc)
 {
-    char e;
-    char *p;
-	
     if (!isupper (user_map[loc].contents))
 	huh (); /* no object here */
     else if (user_map[loc].contents == 'X')
 	huh ();
     else {
-	e = get_chx(); /* get a direction */
-	p = strchr (dirs, e);
+	char e = get_chx(); /* get a direction */
+	char *p = strchr (dirs, e);
 
 	if (p == NULL)
 	    huh ();
@@ -446,13 +443,13 @@ End of move to location.
 
 void
 e_end(loc_t *path_start, loc_t loc, int path_type)
-{
-    city_info_t *cityp;
-	
-    if (*path_start == -1) huh (); /* no path started? */
-    else if (path_type == NOPIECE) e_set_func (*path_start, loc);
+{	
+    if (*path_start == -1)
+	huh (); /* no path started? */
+    else if (path_type == NOPIECE)
+	e_set_func (*path_start, loc);
     else {
-	cityp = find_city (*path_start);
+	city_info_t *cityp = find_city (*path_start);
 	ASSERT (cityp);
 	e_set_city_func (cityp, path_type, loc);
     }

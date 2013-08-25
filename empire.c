@@ -177,7 +177,6 @@ do_command(char orders)
 	else huh (); /* illegal command */
 	break;
     }
-    e = e; /* keep lint quiet */
 }
 
 /*

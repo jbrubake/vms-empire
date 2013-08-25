@@ -560,15 +560,13 @@ char city_char[] = {'*', 'O', 'X'};
 void
 update(view_map_t vmap[], loc_t loc)
 {
-    piece_info_t *p;
-
     vmap[loc].seen = date;
 	
     if (map[loc].cityp) /* is there a city here? */
 	vmap[loc].contents = city_char[map[loc].cityp->owner];
 	
     else {
-	p = find_obj_at_loc (loc);
+	piece_info_t *p = find_obj_at_loc (loc);
 		
 	if (p == NULL) /* nothing here? */
 	    vmap[loc].contents = map[loc].contents;

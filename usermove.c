@@ -295,7 +295,6 @@ move_armyload(piece_info_t *obj)
 {
     loc_t loc;
     piece_info_t *p;
-    int i;
 
     ABORT;
 	
@@ -307,6 +306,7 @@ move_armyload(piece_info_t *obj)
 	obj->func = NOFUNC;
     }
     else { /* look for nearest non-full transport */
+	int i;
 	(void) memcpy (amap, user_map, sizeof (view_map_t) * MAP_SIZE);
 
 	/* mark loading transports or cities building transports */
@@ -612,12 +612,9 @@ Print out help information.
 void
 user_help(void)
 {
-    char c;
-
     help (help_user, user_lines);
     prompt ("Press any key to continue: ");
-    c = get_chx ();
-    c = c; /* keep lint happy */
+    (void)get_chx ();
 }
 
 /*
@@ -888,7 +885,8 @@ user_dir_army(piece_info_t *obj, loc_t loc)
 	}
 	if (obj->hits > 0) {
 	    kill_obj (obj, loc);
-	    if (enemy_killed) scan (comp_map, loc);
+	    if (enemy_killed)
+		scan (comp_map, loc);
 	}
     }
 		
@@ -970,7 +968,8 @@ user_dir_ship(piece_info_t *obj, loc_t loc)
 	}
 	if (obj->hits > 0) {
 	    kill_obj (obj, loc);
-	    if (enemy_killed) scan (comp_map, loc);
+	    if (enemy_killed)
+		scan (comp_map, loc);
 	}
     }
 		
