@@ -25,41 +25,42 @@ void c_examine(void), c_movie(void);
  */
 
 void
-empire(void) {
-	void do_command(char);
-	void print_zoom();
+empire(void)
+{
+    void do_command(char);
+    void print_zoom();
 
-	char order;
-	int turn = 0;
+    char order;
+    int turn = 0;
 
-	ttinit (); /* init tty */
-	rndini (); /* init random number generator */
+    ttinit (); /* init tty */
+    rndini (); /* init random number generator */
 
-	clear_screen (); /* nothing on screen */
-	pos_str (7, 0, "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
-	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
-	(void) redisplay ();
+    clear_screen (); /* nothing on screen */
+    pos_str (7, 0, "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
+    pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
+    (void) redisplay ();
 
-	if (!restore_game ()) /* try to restore previous game */
-		init_game (); /* otherwise init a new game */
+    if (!restore_game ()) /* try to restore previous game */
+	init_game (); /* otherwise init a new game */
 
-	/* Command loop starts here. */
+    /* Command loop starts here. */
 
-	for (;;) { /* until user quits */
-	    if (automove) { /* don't ask for cmd in auto mode */
-		user_move ();
-		comp_move (1);
-		if (++turn % save_interval == 0)
-			save_game ();
-	    }
-	    else {
-		prompt (""); /* blank top line */
-		void redisplay();
-	        prompt ("Your orders? ");
-	        order = get_chx (); /* get a command */
-		do_command (order);
-	    }
+    for (;;) { /* until user quits */
+	if (automove) { /* don't ask for cmd in auto mode */
+	    user_move ();
+	    comp_move (1);
+	    if (++turn % save_interval == 0)
+		save_game ();
 	}
+	else {
+	    prompt (""); /* blank top line */
+	    void redisplay();
+	    prompt ("Your orders? ");
+	    order = get_chx (); /* get a command */
+	    do_command (order);
+	}
+    }
 }
 
 /*
@@ -69,114 +70,114 @@ Execute a command.
 void
 do_command(char orders)
 {
-	void c_debug(char order), c_quit(void), c_sector(void), c_map(void);
-	void c_give(void);
+    void c_debug(char order), c_quit(void), c_sector(void), c_map(void);
+    void c_give(void);
 
-	char e;
-	int ncycle;
+    char e;
+    int ncycle;
 
-	switch (orders) {
-	case 'A': /* turn on auto move mode */
-		automove = true;
-		error ("Now in Auto-Mode");
-		user_move ();
-		comp_move (1);
-		save_game ();
-		break;
+    switch (orders) {
+    case 'A': /* turn on auto move mode */
+	automove = true;
+	error ("Now in Auto-Mode");
+	user_move ();
+	comp_move (1);
+	save_game ();
+	break;
 
-	case 'C': /* give a city to the computer */
-		c_give ();
-		break;
+    case 'C': /* give a city to the computer */
+	c_give ();
+	break;
 	
-	case 'D': /* display round number */
-		error ("Round #%d", date);
-		break;
+    case 'D': /* display round number */
+	error ("Round #%d", date);
+	break;
 
-	case 'E': /* examine enemy map */
-		if (resigned) c_examine ();
-		else huh (); /* illegal command */
-		break;
+    case 'E': /* examine enemy map */
+	if (resigned) c_examine ();
+	else huh (); /* illegal command */
+	break;
 
-	case 'F': /* print map to file */
-		c_map ();
-		break;
+    case 'F': /* print map to file */
+	c_map ();
+	break;
 
-	case 'G': /* give one free enemy move */
-		comp_move (1);
-		break;
+    case 'G': /* give one free enemy move */
+	comp_move (1);
+	break;
 
-	case 'H': /* help */
-		help (help_cmd, cmd_lines);
-		break;
+    case 'H': /* help */
+	help (help_cmd, cmd_lines);
+	break;
 
-	case 'J': /* edit mode */
-		ncycle = cur_sector ();
-		if (ncycle == -1) ncycle = 0;
-		edit (sector_loc (ncycle));
-		break;
+    case 'J': /* edit mode */
+	ncycle = cur_sector ();
+	if (ncycle == -1) ncycle = 0;
+	edit (sector_loc (ncycle));
+	break;
 
-	case 'M': /* move */
-		user_move ();
-		comp_move (1);
-		save_game ();
-		break;
+    case 'M': /* move */
+	user_move ();
+	comp_move (1);
+	save_game ();
+	break;
 
-	case 'N': /* give enemy free moves */
-		ncycle = getint ("Number of free enemy moves: ");
-		comp_move (ncycle);
-		save_game ();
-		break;
+    case 'N': /* give enemy free moves */
+	ncycle = getint ("Number of free enemy moves: ");
+	comp_move (ncycle);
+	save_game ();
+	break;
 
-	case 'P': /* print a sector */
-		c_sector ();
-		break;
+    case 'P': /* print a sector */
+	c_sector ();
+	break;
 
-	case '\026': /* some interrupt */
-	case 'Q': /* quit */
-		c_quit ();
-		break;
+    case '\026': /* some interrupt */
+    case 'Q': /* quit */
+	c_quit ();
+	break;
 
-	case 'R': /* restore game */
-		clear_screen ();
-		e = restore_game ();
-		break;
+    case 'R': /* restore game */
+	clear_screen ();
+	e = restore_game ();
+	break;
 
-	case 'S': /* save game */
-		save_game ();
-		break;
+    case 'S': /* save game */
+	save_game ();
+	break;
 	
-	case 'T': /* trace: toggle save_movie flag */
-		save_movie = !save_movie;
-		if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
-		else comment ("No longer saving movie screens.");
-		break;
+    case 'T': /* trace: toggle save_movie flag */
+	save_movie = !save_movie;
+	if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
+	else comment ("No longer saving movie screens.");
+	break;
 
-	case 'W': /* watch movie */
-		if (resigned || debug) replay_movie ();
-		else error ("You cannot watch movie until computer resigns.");
-		break;
+    case 'W': /* watch movie */
+	if (resigned || debug) replay_movie ();
+	else error ("You cannot watch movie until computer resigns.");
+	break;
 
-	case 'Z': /* print compressed map */
-		print_zoom (user_map);
-		break;
+    case 'Z': /* print compressed map */
+	print_zoom (user_map);
+	break;
 
-	case '\014': /* redraw the screen */
-		redraw ();
-		break;
+    case '\014': /* redraw the screen */
+	redraw ();
+	break;
 
-	case '+': /* change debug state */
-		e = get_chx();
-		if ( e  ==  '+' ) debug = true;
-		else if ( e  ==  '-' ) debug = false;
-		else huh ();
-		break;
+    case '+': /* change debug state */
+	e = get_chx();
+	if ( e  ==  '+' ) debug = true;
+	else if ( e  ==  '-' ) debug = false;
+	else huh ();
+	break;
 
-	default:
-		if (debug) c_debug (orders); /* debug */
-		else huh (); /* illegal command */
-		break;
-	}
-	e = e; /* keep lint quiet */
+    default:
+	if (debug) c_debug (orders); /* debug */
+	else huh (); /* illegal command */
+	break;
+    }
+    e = e; /* keep lint quiet */
 }
 
 /*
@@ -186,28 +187,29 @@ it as the computers.
 */
 
 void
-c_give(void) {
-	int unowned[NUM_CITY];
-	count_t i, count;
+c_give(void)
+{
+    int unowned[NUM_CITY];
+    count_t i, count;
 
-	count = 0; /* nothing in list yet */
-	for (i = 0; i < NUM_CITY; i++) {
-		if (city[i].owner == UNOWNED) {
-			unowned[count] = i; /* remember this city */
-			count += 1;
-		}
+    count = 0; /* nothing in list yet */
+    for (i = 0; i < NUM_CITY; i++) {
+	if (city[i].owner == UNOWNED) {
+	    unowned[count] = i; /* remember this city */
+	    count += 1;
 	}
-	if (count == 0) {
-		error ("There are no unowned cities.");
-		ksend ("There are no unowned cities.");
-		return;
-	}
-	i = irand (count);
-	i = unowned[i]; /* get city index */
-	city[i].owner = COMP;
-	city[i].prod = NOPIECE;
-	city[i].work = 0;
-	scan (comp_map, city[i].loc);
+    }
+    if (count == 0) {
+	error ("There are no unowned cities.");
+	ksend ("There are no unowned cities.");
+	return;
+    }
+    i = irand (count);
+    i = unowned[i]; /* get city index */
+    city[i].owner = COMP;
+    city[i].prod = NOPIECE;
+    city[i].work = 0;
+    scan (comp_map, city[i].loc);
 }
 
 /*
@@ -218,32 +220,38 @@ The order cannot be any legal command.
 void
 c_debug(char order)
 {
-	char e;
+    char e;
 
-	switch (order) {
-	case '#' : c_examine (); break;
-	case '%' : c_movie (); break;
+    switch (order) {
+    case '#' : c_examine (); break;
+    case '%' : c_movie (); break;
 	
-	case '@': /* change trace state */
-		e = get_chx();
-		if ( e  ==  '+' ) trace_pmap = true;
-		else if ( e  ==  '-' ) trace_pmap = false;
-		else huh ();
-		break;
+    case '@': /* change trace state */
+	e = get_chx();
+	if ( e  ==  '+' )
+	    trace_pmap = true;
+	else if ( e  ==  '-' )
+	    trace_pmap = false;
+	else
+	    huh ();
+	break;
 
-	case '$': /* change print_debug state */
-		e = get_chx();
-		if ( e  ==  '+' ) print_debug = true;
-		else if ( e  ==  '-' ) print_debug = false;
-		else huh ();
-		break;
+    case '$': /* change print_debug state */
+	e = get_chx();
+	if ( e  ==  '+' )
+	    print_debug = true;
+	else if ( e  ==  '-' )
+	    print_debug = false;
+	else
+	    huh ();
+	break;
 
-	case '&': /* change print_vmap state */
-		print_vmap = get_chx();
-		break;
+    case '&': /* change print_vmap state */
+	print_vmap = get_chx();
+	break;
 
-	default: huh (); break;
-	}
+    default: huh (); break;
+    }
 }
 
 /*
@@ -251,10 +259,11 @@ The quit command.  Make sure the user really wants to quit.
 */
 
 void
-c_quit(void) {
-	if (getyn ("QUIT - Are you sure? ")) {
-	    empend ();
-	}
+c_quit(void)
+{
+    if (getyn ("QUIT - Are you sure? ")) {
+	empend ();
+    }
 }
 
 /*
@@ -263,11 +272,12 @@ and print it.
 */
 
 void
-c_sector(void) {
-	int num;
+c_sector(void)
+{
+    int num;
 
-	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
-	print_sector_u (num);
+    num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
+    print_sector_u (num);
 }
 
 /*
@@ -278,32 +288,33 @@ out the map.
 */
 
 void
-c_map(void) {
-	FILE *f;
-	int i, j;
-	char line[MAP_HEIGHT+2];
+c_map(void)
+{
+    FILE *f;
+    int i, j;
+    char line[MAP_HEIGHT+2];
 
-	prompt ("Filename? ");
-	get_str (jnkbuf, STRSIZE);
+    prompt ("Filename? ");
+    get_str (jnkbuf, STRSIZE);
 
-	f = fopen (jnkbuf, "w");
-	if (f == NULL) {
-		error ("I can't open that file.");
-		return;
+    f = fopen (jnkbuf, "w");
+    if (f == NULL) {
+	error ("I can't open that file.");
+	return;
+    }
+    for (i = 0; i < MAP_WIDTH; i++) { /* for each column */
+	for (j = MAP_HEIGHT-1; j >= 0; j--) { /* for each row */
+	    line[MAP_HEIGHT-1-j] = user_map[row_col_loc(j,i)].contents;
 	}
-	for (i = 0; i < MAP_WIDTH; i++) { /* for each column */
-		for (j = MAP_HEIGHT-1; j >= 0; j--) { /* for each row */
-                        line[MAP_HEIGHT-1-j] = user_map[row_col_loc(j,i)].contents;
-		}
-		j = MAP_HEIGHT-1;
-		while (j >= 0 && line[j] == ' ') /* scan off trailing blanks */
-			j -= 1;
+	j = MAP_HEIGHT-1;
+	while (j >= 0 && line[j] == ' ') /* scan off trailing blanks */
+	    j -= 1;
 			
-		line[++j] = '\n';
-		line[++j] = 0; /* trailing null */
-		(void) fputs (line, f);
-	}
-	(void) fclose (f);
+	line[++j] = '\n';
+	line[++j] = 0; /* trailing null */
+	(void) fputs (line, f);
+    }
+    (void) fclose (f);
 }
 
 /*
@@ -311,11 +322,12 @@ Allow user to examine the computer's map.
 */
 
 void
-c_examine(void) {
-	int num;
+c_examine(void)
+{
+    int num;
 
-	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
-	print_sector_c (num);
+    num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
+    print_sector_c (num);
 }
 
 /*
@@ -324,13 +336,16 @@ Print a "zoomed" version of the computer's map.
 */
 
 void
-c_movie(void) {
-	for (;;) {
-		comp_move (1);
-		print_zoom (comp_map);
-		save_game ();
+c_movie(void)
+{
+    for (;;) {
+	comp_move (1);
+	print_zoom (comp_map);
+	save_game ();
 #ifdef PROFILE
-		if (date == 125) empend();
+	if (date == 125) empend();
 #endif
-	}
+    }
 }
+
+/* end */

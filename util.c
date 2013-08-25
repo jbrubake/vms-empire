@@ -25,15 +25,15 @@ Report a bug.
 void
 assert(char *expression, char *file, int line)
 {
-	char buf[STRSIZE];
+    char buf[STRSIZE];
 
-	(void) move (lines, 0);
-	close_disp ();
+    (void) move (lines, 0);
+    close_disp ();
 
-	(void) sprintf (buf, "assert failed: file %s line %d: %s",
-			file, line, expression);
+    (void) sprintf (buf, "assert failed: file %s line %d: %s",
+		    file, line, expression);
 
-	kill(getpid(), SIGSEGV);	/* core dump */
+    kill(getpid(), SIGSEGV);	/* core dump */
 }
 
 /*
@@ -43,8 +43,8 @@ End the game by cleaning up the display.
 void
 empend(void)
 {
-	close_disp ();
-	exit (0);
+    close_disp ();
+    exit (0);
 }
 
 
@@ -78,80 +78,81 @@ static bool in_loc[LIST_SIZE]; /* true if object in a loc list */
 static bool in_cargo[LIST_SIZE]; /* true if object in a cargo list */
 
 void
-check(void) {
-	void check_cargo(), check_obj(), check_obj_cargo();
+check(void)
+{
+    void check_cargo(), check_obj(), check_obj_cargo();
 	
-	long i, j;
-	piece_info_t *p;
+    long i, j;
+    piece_info_t *p;
 	
-	/* nothing in any list yet */
-	for (i = 0; i < LIST_SIZE; i++) {
-		in_free[i] = 0;
-		in_obj[i] = 0;
-		in_loc[i] = 0;
-		in_cargo[i] = 0;
-	}
+    /* nothing in any list yet */
+    for (i = 0; i < LIST_SIZE; i++) {
+	in_free[i] = 0;
+	in_obj[i] = 0;
+	in_loc[i] = 0;
+	in_cargo[i] = 0;
+    }
 		
-	/* Mark all objects in free list.  Make sure objects in free list
-	have zero hits. */
+    /* Mark all objects in free list.  Make sure objects in free list
+       have zero hits. */
 	
-	for (p = free_list; p != NULL; p = p->piece_link.next) {
-		i = p - object;
-		ASSERT (!in_free[i]);
-		in_free[i] = 1;
-		ASSERT (p->hits == 0);
-		if (p->piece_link.prev)
-			ASSERT (p->piece_link.prev->piece_link.next == p);
-	}
+    for (p = free_list; p != NULL; p = p->piece_link.next) {
+	i = p - object;
+	ASSERT (!in_free[i]);
+	in_free[i] = 1;
+	ASSERT (p->hits == 0);
+	if (p->piece_link.prev)
+	    ASSERT (p->piece_link.prev->piece_link.next == p);
+    }
 	
-	/* Mark all objects in the map.
-	Check that cities are in corect location.
-	Check that objects are in correct location,
-	have a good owner, and good hits. */
+    /* Mark all objects in the map.
+       Check that cities are in corect location.
+       Check that objects are in correct location,
+       have a good owner, and good hits. */
 	
-	for (i = 0; i < MAP_SIZE; i++) {
-		if (map[i].cityp) ASSERT (map[i].cityp->loc == i);
+    for (i = 0; i < MAP_SIZE; i++) {
+	if (map[i].cityp) ASSERT (map[i].cityp->loc == i);
 		
-		for (p = map[i].objp; p != NULL; p = p->loc_link.next) {
-			ASSERT (p->loc == i);
-			ASSERT (p->hits > 0);
-			ASSERT (p->owner == USER || p->owner == COMP);
+	for (p = map[i].objp; p != NULL; p = p->loc_link.next) {
+	    ASSERT (p->loc == i);
+	    ASSERT (p->hits > 0);
+	    ASSERT (p->owner == USER || p->owner == COMP);
 				
-			j = p - object;
-			ASSERT (!in_loc[j]);
-			in_loc[j] = 1;
+	    j = p - object;
+	    ASSERT (!in_loc[j]);
+	    in_loc[j] = 1;
 			
-			if (p->loc_link.prev)
-				ASSERT (p->loc_link.prev->loc_link.next == p);
-		}
+	    if (p->loc_link.prev)
+		ASSERT (p->loc_link.prev->loc_link.next == p);
 	}
+    }
 
-	/* make sure all cities are on map */
+    /* make sure all cities are on map */
 
-	for (i = 0; i < NUM_CITY; i++)
-		ASSERT (map[city[i].loc].cityp == &(city[i]));
+    for (i = 0; i < NUM_CITY; i++)
+	ASSERT (map[city[i].loc].cityp == &(city[i]));
 
-	/* Scan object lists. */
+    /* Scan object lists. */
 	
-	check_obj (comp_obj, COMP);
-	check_obj (user_obj, USER);
+    check_obj (comp_obj, COMP);
+    check_obj (user_obj, USER);
 	
-	/* Scan cargo lists. */
+    /* Scan cargo lists. */
 	
-	check_cargo (user_obj[TRANSPORT], ARMY);
-	check_cargo (comp_obj[TRANSPORT], ARMY);
-	check_cargo (user_obj[CARRIER], FIGHTER);
-	check_cargo (comp_obj[CARRIER], FIGHTER);
+    check_cargo (user_obj[TRANSPORT], ARMY);
+    check_cargo (comp_obj[TRANSPORT], ARMY);
+    check_cargo (user_obj[CARRIER], FIGHTER);
+    check_cargo (comp_obj[CARRIER], FIGHTER);
 	
-	/* Make sure all objects with ship pointers are in cargo. */
+    /* Make sure all objects with ship pointers are in cargo. */
 
-	check_obj_cargo (comp_obj);
-	check_obj_cargo (user_obj);
+    check_obj_cargo (comp_obj);
+    check_obj_cargo (user_obj);
 	
-	/* Make sure every object is either free or in loc and obj list. */
+    /* Make sure every object is either free or in loc and obj list. */
 
-	for (i = 0; i < LIST_SIZE; i++)
-		ASSERT (in_free[i] != (in_loc[i] && in_obj[i]));
+    for (i = 0; i < LIST_SIZE; i++)
+	ASSERT (in_free[i] != (in_loc[i] && in_obj[i]));
 }
 
 /*
@@ -169,21 +170,21 @@ Check object lists.  We look for:
 void
 check_obj(piece_info_t **list, int owner)
 {
-	long i, j;
-	piece_info_t *p;
+    long i, j;
+    piece_info_t *p;
 	
-	for (i = 0; i < NUM_OBJECTS; i++)
+    for (i = 0; i < NUM_OBJECTS; i++)
 	for (p = list[i]; p != NULL; p = p->piece_link.next) {
-		ASSERT (p->owner == owner);
-		ASSERT (p->type == i);
-		ASSERT (p->hits > 0);
+	    ASSERT (p->owner == owner);
+	    ASSERT (p->type == i);
+	    ASSERT (p->hits > 0);
 		
-		j = p - object;
-		ASSERT (!in_obj[j]);
-		in_obj[j] = 1;
+	    j = p - object;
+	    ASSERT (!in_obj[j]);
+	    in_obj[j] = 1;
 	
-		if (p->piece_link.prev)
-			ASSERT (p->piece_link.prev->piece_link.next == p);
+	    if (p->piece_link.prev)
+		ASSERT (p->piece_link.prev->piece_link.next == p);
 	}
 }
 
@@ -210,28 +211,28 @@ Check for:
 void
 check_cargo(piece_info_t *list, int cargo_type)
 {
-	piece_info_t *p, *q;
-	long j, count;
+    piece_info_t *p, *q;
+    long j, count;
 	
-	for (p = list; p != NULL; p = p->piece_link.next) {
-		count = 0;
-		for (q = p->cargo; q != NULL; q = q->cargo_link.next) {
-			count += 1; /* count items in list */
-			ASSERT (q->type == cargo_type);
-			ASSERT (q->owner == p->owner);
-			ASSERT (q->hits > 0);
-			ASSERT (q->ship == p);
-			ASSERT (q->loc == p->loc);
+    for (p = list; p != NULL; p = p->piece_link.next) {
+	count = 0;
+	for (q = p->cargo; q != NULL; q = q->cargo_link.next) {
+	    count += 1; /* count items in list */
+	    ASSERT (q->type == cargo_type);
+	    ASSERT (q->owner == p->owner);
+	    ASSERT (q->hits > 0);
+	    ASSERT (q->ship == p);
+	    ASSERT (q->loc == p->loc);
 			
-			j = q - object;
-			ASSERT (!in_cargo[j]);
-			in_cargo[j] = 1;
+	    j = q - object;
+	    ASSERT (!in_cargo[j]);
+	    in_cargo[j] = 1;
 
-			if (p->cargo_link.prev)
-				ASSERT (p->cargo_link.prev->cargo_link.next == p);
-                }
-		ASSERT (count == p->count);
-        }
+	    if (p->cargo_link.prev)
+		ASSERT (p->cargo_link.prev->cargo_link.next == p);
+	}
+	ASSERT (count == p->count);
+    }
 }
 
 /*
@@ -243,11 +244,13 @@ lists are valid.
 void
 check_obj_cargo(piece_info_t **list)
 {
-	piece_info_t *p;
-	long i;
+    piece_info_t *p;
+    long i;
 
-	for (i = 0; i < NUM_OBJECTS; i++)
+    for (i = 0; i < NUM_OBJECTS; i++)
 	for (p = list[i]; p != NULL; p = p->piece_link.next) {
-		if (p->ship) ASSERT (in_cargo[p-object]);
+	    if (p->ship) ASSERT (in_cargo[p-object]);
 	}
 }
+
+/* end */
