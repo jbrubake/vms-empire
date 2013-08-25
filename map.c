@@ -21,13 +21,16 @@ real_maps, path_maps, and cont_maps.
 	x = a; a = b; b = x; \
 }
 
-static void expand_perimeter(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,perimeter_t *curp,int type,int cur_cost,int inc_wcost,int inc_lcost,perimeter_t *waterp,perimeter_t *landp);
-static void expand_prune(view_map_t *vmap,path_map_t *pmap,loc_t loc,int type,perimeter_t *to,int *explored);
-static int objective_cost(view_map_t *vmap,move_info_t *move_info,loc_t loc,int base_cost);
-static int terrain_type(path_map_t *pmap,view_map_t *vmap,move_info_t *move_info,loc_t from_loc,loc_t to_loc);
-static void start_perimeter(path_map_t *pmap,perimeter_t *perim,loc_t loc,int terrain);
-static void add_cell(path_map_t *pmap,loc_t new_loc,perimeter_t *perim,int terrain,int cur_cost,int inc_cost);
-static int vmap_count_path (path_map_t *pmap,loc_t loc);
+static void expand_perimeter(path_map_t *,view_map_t *,move_info_t *,
+			     perimeter_t *,int,int,int,int,
+			     perimeter_t *,perimeter_t *);
+static void expand_prune(view_map_t *,path_map_t *,
+			 loc_t,int,perimeter_t *,int *);
+static int objective_cost(view_map_t *,move_info_t *,loc_t,int);
+static int terrain_type(path_map_t *,view_map_t *,move_info_t *,loc_t,loc_t);
+static void start_perimeter(path_map_t *,perimeter_t *,loc_t,int);
+static void add_cell(path_map_t *,loc_t,perimeter_t *,int,int,int);
+static int vmap_count_path (path_map_t *,loc_t);
 
 static perimeter_t p1; /* perimeter list for use as needed */
 static perimeter_t p2;
