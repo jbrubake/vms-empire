@@ -162,9 +162,6 @@ void delay (void);
 void close_disp (void);
 void pos_str (int row, int col, char *str, ...);
 void pos_str1 (int row, int col, char *str, ...);
-void addprintf (char *str, int a, int b, int c, int d, int e, int f, int g, int h);
-void addprintf1 (char *str, char *a, int b, int c, int d, int e, int f, int g, int h);
-void addprintf2 (char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h);
 int direction();
 
 void init_game (void); /* game routines */

@@ -693,35 +693,6 @@ pos_str(int row, int col, char *str, ...)
 	va_end(ap);
 }
 
-void
-/* VARARGS1 */
-addprintf(char *str, int a, int b, int c, int d, int e, int f, int g, int h)
-{
-	char junkbuf[STRSIZE];
-	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
-	(void) addstr (junkbuf);
-}
-void
-/* VARARGS1 */
-addprintf1(char *str, char *a, int b, int c, int d, int e, int f, int g, int h)
-{
-	char junkbuf[STRSIZE];
-	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
-	(void) addstr (junkbuf);
-}
-
-void
-/* VARARGS1 */
-addprintf2(char *str, char *a, int b, int c, int d, char *e, char *f, int g, int h)
-{
-	char junkbuf[STRSIZE];
-	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
-	(void) addstr (junkbuf);
-}
-
 /*
 Print a single cell in condensed format.
 */

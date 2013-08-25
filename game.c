@@ -323,7 +323,7 @@ bool select_cities(void) {
 		userp = cont_tab[user_cont].cityp[useri];
 	} while (userp == compp);
 
-	addprintf ("Your city is at %d.", loc_disp(userp->loc),0,0,0,0,0,0,0);
+	topmsg(1, "Your city is at %d.", loc_disp(userp->loc));
 	delay (); /* let user see output before we set_prod */
 
 	/* update city and map */
