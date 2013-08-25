@@ -389,7 +389,7 @@ help(char **text, int nlines)
 	    r = i;
 	    c = 1;
 	}
-	pos_str1 (r + text_lines + NUMTOPS + 3, c,"%-12s%c     %c%6d%5d%6d",
+	pos_str (r + text_lines + NUMTOPS + 3, c,"%-12s%c     %c%6d%5d%6d",
 		  piece_attr[i].nickname,
 		  piece_attr[i].sname,
 		  tolower (piece_attr[i].sname),

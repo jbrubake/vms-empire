@@ -282,13 +282,14 @@ print_sector(int whose, view_map_t vmap[], int sector)
     /* print x-coordinates along bottom of screen */
     for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 	if (c % 10 == 0) {
-	    pos_str (lines-1, c-ref_col, "%d", c,0,0,0,0,0,0,0);
+	    pos_str (lines-1, c-ref_col, "%d", c);
 	}
     /* print y-coordinates along right of screen */
     for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++) {
 	if (r % 2 == 0)
-	    pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "%2d", r,0,0,0,0,0,0,0);
-	else pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ",0,0,0,0,0,0,0,0);
+	    pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "%2d", r);
+	else
+	    pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ");
     }
     /* print round number */
     (void) sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
@@ -450,7 +451,7 @@ print_zoom(view_map_t *vmap)
 	for (c = 0; c < MAP_WIDTH; c += col_inc)
 	    print_zoom_cell (vmap, r, c, row_inc, col_inc);
 
-    pos_str (0, 0, "Round #%d", date,0,0,0,0,0,0,0);
+    pos_str (0, 0, "Round #%d", date);
 	
     (void) refresh ();
 }
@@ -676,19 +677,6 @@ Position the cursor and output a string.
 
 void
 pos_str(int row, int col, char *str, ...)
-{
-    va_list ap;
-    char junkbuf[STRSIZE];
-
-    va_start(ap, str);
-    (void) move (row, col);
-    vsprintf(junkbuf, str, ap);
-    (void) addstr (junkbuf);
-    va_end(ap);
-}
-
-void
-pos_str1(int row, int col, char *str, ...)
 {
     va_list ap;
     char junkbuf[STRSIZE];

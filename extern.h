@@ -161,7 +161,6 @@ void complain (void);
 void delay (void);
 void close_disp (void);
 void pos_str (int row, int col, char *str, ...);
-void pos_str1 (int row, int col, char *str, ...);
 int direction();
 
 void init_game (void); /* game routines */

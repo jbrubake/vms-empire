@@ -942,7 +942,7 @@ user_dir_ship(piece_info_t *obj, loc_t loc)
     }
 
     else if (map[loc].contents == '+') { /* moving ashore? */
-	ool enemy_killed = false;
+	bool enemy_killed = false;
 
 	if (!getyn ("Ships need sea to float, sir.  Do you really want to go ashore? ")) return;
 
