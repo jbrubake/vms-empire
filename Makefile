@@ -60,19 +60,20 @@ all: vms-empire
 vms-empire: $(OFILES)
 	$(CC) $(PROFILE) -o vms-empire $(OFILES) $(LIBS)
 
-attack.o:: extern.h
-compmove.o:: extern.h
-display.o:: extern.h
-edit.o:: extern.h
-empire.o:: extern.h
-game.o:: extern.h
-main.o:: extern.h
-map.o:: extern.h
-math.o:: extern.h
-object.o:: extern.h
-term.o:: extern.h
-usermove.o:: extern.h
-util.o:: extern.h
+attack.o:: extern.h empire.h
+compmove.o:: extern.h empire.h
+data.o:: empire.h
+display.o:: extern.h empire.h
+edit.o:: extern.h empire.h
+empire.o:: extern.h empire.h
+game.o:: extern.h empire.h
+main.o:: extern.h empire.h
+map.o:: extern.h empire.h
+math.o:: extern.h empire.h
+object.o:: extern.h empire.h
+term.o:: extern.h empire.h
+usermove.o:: extern.h empire.h
+util.o:: extern.h empire.h
 
 empire.6: vms-empire.xml
 	xmlto man vms-empire.xml
