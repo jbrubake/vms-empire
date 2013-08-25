@@ -853,7 +853,7 @@ user_dir_army(piece_info_t *obj, loc_t loc)
 	       "Sorry, sir.  There is no more room on the transport.  Do you insist? ",
 	       "Your army jumped into the briny and drowned.");
 
-    else if (map[loc].contents == '.') { /* going for a swim? */
+    else if (map[loc].contents == MAP_SEA) { /* going for a swim? */
 	bool enemy_killed = false;
 
 	if (!getyn ( /* thanks to Craig Hansen for this next message */
@@ -865,7 +865,7 @@ user_dir_army(piece_info_t *obj, loc_t loc)
 	    comment ("Your army jumped into the briny and drowned.");
 	    ksend ("Your army jumped into the briny and drowned.\n");
 	}
-	else if (user_map[loc].contents == '.')
+	else if (user_map[loc].contents == MAP_SEA)
 	{
 	    comment ("Your army marched dutifully into the sea and drowned.");
 	    ksend ("Your army marched dutifully into the sea and drowned.\n");
@@ -907,7 +907,7 @@ three cases:  attacking a city, attacking ourself, attacking the enemy.
 void
 user_dir_fighter(piece_info_t *obj, loc_t loc)
 {
-    if (map[loc].contents == '*')
+    if (map[loc].contents == MAP_CITY)
 	fatal (obj, loc,
 	       "That's never worked before, sir.  Do you really want to try? ",
 	       "Your fighter was shot down.");
@@ -932,7 +932,7 @@ a city, attacking self, attacking enemy.
 void
 user_dir_ship(piece_info_t *obj, loc_t loc)
 {
-    if (map[loc].contents == '*') {
+    if (map[loc].contents == MAP_CITY) {
 	(void) sprintf (jnkbuf, "Your %s broke up on shore.",
 			piece_attr[obj->type].name);
 
@@ -941,12 +941,12 @@ user_dir_ship(piece_info_t *obj, loc_t loc)
 	       jnkbuf);
     }
 
-    else if (map[loc].contents == '+') { /* moving ashore? */
+    else if (map[loc].contents == MAP_LAND) { /* moving ashore? */
 	bool enemy_killed = false;
 
 	if (!getyn ("Ships need sea to float, sir.  Do you really want to go ashore? ")) return;
 
-	if (user_map[loc].contents == '+')
+	if (user_map[loc].contents == MAP_LAND)
 	{
 	    comment ("Your %s broke up on shore.", piece_attr[obj->type].name);
 	    ksend ("Your %s broke up on shore.", piece_attr[obj->type].name);
@@ -1056,7 +1056,7 @@ awake(piece_info_t *obj)
     for (i = 0; i < 8; i++) { /* for each surrounding cell */
 	c = user_map[obj->loc+dir_offset[i]].contents;
 
-	if (islower (c) || c == '*' || c == 'X') {
+	if (islower (c) || c == MAP_CITY || c == 'X') {
 	    if (obj->func < 0) obj->func = NOFUNC; /* awaken */
 	    return (true);
 	}

@@ -555,7 +555,7 @@ contents starting with armies, then fighters, then boats, and the
 city type.
 */
 
-char city_char[] = {'*', 'O', 'X'};
+char city_char[] = {MAP_CITY, 'O', 'X'};
 
 void
 update(view_map_t vmap[], loc_t loc)

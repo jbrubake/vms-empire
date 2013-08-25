@@ -114,7 +114,7 @@ attack_obj(piece_info_t *att_obj, loc_t loc)
 void
 attack(piece_info_t *att_obj, loc_t loc)
 {
-    if (map[loc].contents == '*') /* attacking a city? */
+    if (map[loc].contents == MAP_CITY) /* attacking a city? */
 	attack_city (att_obj, loc);
     else attack_obj (att_obj, loc); /* attacking a piece */
 }

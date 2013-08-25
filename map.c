@@ -90,8 +90,10 @@ vmap_mark_up_cont(int *cont_map, view_map_t *vmap, loc_t loc, char bad_terrain)
 		    if (vmap[new_loc].contents == ' ')
 			cont_map[new_loc] = 1;
 		    else {
-			if (vmap[new_loc].contents == '+') this_terrain = '+';
-			else if (vmap[new_loc].contents == '.') this_terrain = '.';
+			if (vmap[new_loc].contents == MAP_LAND)
+			    this_terrain = MAP_LAND;
+			else if (vmap[new_loc].contents == MAP_SEA)
+			    this_terrain = MAP_SEA;
 			else this_terrain = map[new_loc].contents;
 				
 			if (this_terrain != bad_terrain) { /* on continent? */
@@ -186,11 +188,11 @@ vmap_cont_scan(int *cont_map, view_map_t *vmap)
 		COUNT ('t', counts.comp_objects[TRANSPORT]);
 		COUNT ('c', counts.comp_objects[CARRIER]);
 		COUNT ('b', counts.comp_objects[BATTLESHIP]);
-		COUNT ('*', counts.unowned_cities);
-	    case '+': break;
-	    case '.': break;
+		COUNT (MAP_CITY, counts.unowned_cities);
+	    case MAP_LAND: break;
+	    case MAP_SEA: break;
 	    default: /* check for city underneath */
-		if (map[i].contents == '*') {
+		if (map[i].contents == MAP_CITY) {
 		    switch (map[i].cityp->owner) {
 			COUNT (USER, counts.user_cities);
 			COUNT (COMP, counts.comp_cities);
@@ -219,7 +221,7 @@ rmap_cont_scan(int *cont_map)
     for (i = 0; i < MAP_SIZE; i++) {
 	if (cont_map[i]) { /* cell on continent? */
 	    counts.size += 1;
-	    if (map[i].contents == '*')
+	    if (map[i].contents == MAP_CITY)
 		counts.unowned_cities += 1;
 	}
     }
@@ -637,18 +639,19 @@ STATIC int
 terrain_type(path_map_t *pmap, view_map_t *vmap, move_info_t *move_info,
 	      loc_t from_loc, loc_t to_loc)
 {
-    if (vmap[to_loc].contents == '+') return T_LAND;
-    if (vmap[to_loc].contents == '.') return T_WATER;
+    if (vmap[to_loc].contents == MAP_LAND) return T_LAND;
+    if (vmap[to_loc].contents == MAP_SEA) return T_WATER;
     if (vmap[to_loc].contents == '%') return T_UNKNOWN; /* magic objective */
     if (vmap[to_loc].contents == ' ') return pmap[from_loc].terrain;
 	
     switch (map[to_loc].contents) {
-    case '.': return T_WATER;
-    case '+': return T_LAND;
-    case '*':
+    case MAP_SEA: return T_WATER;
+    case MAP_LAND: return T_LAND;
+    case MAP_CITY:
 	if (map[to_loc].cityp->owner == move_info->city_owner)
 	    return T_WATER;
-	else return T_UNKNOWN; /* cannot cross */
+	else
+	    return T_UNKNOWN; /* cannot cross */
     }
     ABORT;
     /*NOTREACHED*/
@@ -709,7 +712,7 @@ vmap_prune_explore_locs(view_map_t *vmap)
 	    FOR_ADJ (loc, new_loc, i) {
 		if (new_loc < 0 || new_loc >= MAP_SIZE); /* ignore off map */
 		else if (vmap[new_loc].contents == ' '); /* ignore adjacent unexplored */
-		else if (map[new_loc].contents != '.')
+		else if (map[new_loc].contents != MAP_SEA)
 		    pmap[loc].cost += 1; /* count land */
 		else pmap[loc].inc_cost += 1; /* count water */
 	    }
@@ -825,8 +828,10 @@ expand_prune(view_map_t *vmap, path_map_t *pmap,
 	
     *explored += 1;
 	
-    if (type == T_LAND) vmap[loc].contents = '+';
-    else vmap[loc].contents = '.';
+    if (type == T_LAND)
+	vmap[loc].contents = MAP_LAND;
+    else
+	vmap[loc].contents = MAP_SEA;
 	
     FOR_ADJ (loc, new_loc, i)
 	if (new_loc >= 0 && new_loc < MAP_SIZE && vmap[new_loc].contents == ' ') {
@@ -1090,7 +1095,8 @@ rmap_shore(loc_t loc)
     loc_t i, j;
 
     FOR_ADJ_ON (loc, j, i)
-	if (map[j].contents == '.') return (true);
+	if (map[j].contents == MAP_SEA)
+	    return (true);
 
     return (false);
 }
@@ -1101,7 +1107,9 @@ vmap_shore(view_map_t *vmap, loc_t loc)
     loc_t i, j;
 
     FOR_ADJ_ON (loc, j, i)
-	if (vmap[j].contents != ' ' && vmap[j].contents != '+' && map[j].contents == '.')
+	if (vmap[j].contents != ' ' &&
+	    vmap[j].contents != MAP_LAND &&
+	    map[j].contents == MAP_SEA)
 	    return (true);
 
     return (false);
@@ -1117,9 +1125,12 @@ vmap_at_sea(view_map_t *vmap, loc_t loc)
 {
     loc_t i, j;
 
-    if (map[loc].contents != '.') return (false);
+    if (map[loc].contents != MAP_SEA)
+	return (false);
     FOR_ADJ_ON (loc, j, i)
-	if (vmap[j].contents == ' ' || vmap[j].contents == '+' || map[j].contents != '.')
+	if (vmap[j].contents == ' '
+	    || vmap[j].contents == MAP_LAND
+	    || map[j].contents != MAP_SEA)
 	    return (false);
 
     return (true);
@@ -1130,9 +1141,11 @@ rmap_at_sea (loc_t loc)
 {
     loc_t i, j;
 
-    if (map[loc].contents != '.') return (false);
+    if (map[loc].contents != MAP_SEA)
+	return (false);
     FOR_ADJ_ON (loc, j, i) {
-	if (map[j].contents != '.') return (false);
+	if (map[j].contents != MAP_SEA)
+	    return (false);
     }
     return (true);
 }

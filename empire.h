@@ -199,14 +199,14 @@ You can change them and the code will adjust properly.
 #define NUM_CITY ((100 * (MAP_WIDTH + MAP_HEIGHT)) / 228)
 
 typedef struct real_map { /* a cell of the actual map */
-	char contents; /* '+', '.', or '*' */
+	char contents; /* MAP_LAND, MAP_SEA, or MAP_CITY */
 	bool on_board; /* TRUE iff on the board */
 	city_info_t *cityp; /* ptr to city at this location */
 	piece_info_t *objp; /* list of objects at this location */
 } real_map_t;
 
 typedef struct view_map { /* a cell of one player's world view */
-	char contents; /* '+', '.', '*', 'A', 'a', etc */
+	char contents; /* MAP_LAND, MAP_SEA, MAP_CITY, 'A', 'a', etc */
 	long seen; /* date when last updated */
 } view_map_t;
 
@@ -263,5 +263,9 @@ typedef struct {
 } perimeter_t;
 
 enum win_t {no_win, wipeout_win, ratio_win};
+
+#define MAP_LAND	'+'
+#define MAP_SEA 	'.'
+#define MAP_CITY	'*'
 
 /* end */

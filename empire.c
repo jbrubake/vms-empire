@@ -167,14 +167,18 @@ do_command(char orders)
 
     case '+': /* change debug state */
 	e = get_chx();
-	if ( e  ==  '+' ) debug = true;
-	else if ( e  ==  '-' ) debug = false;
+	if ( e  ==  '+' )
+	    debug = true;
+	else if ( e  ==  '-' )
+	    debug = false;
 	else huh ();
 	break;
 
     default:
-	if (debug) c_debug (orders); /* debug */
-	else huh (); /* illegal command */
+	if (debug)
+	    c_debug (orders); /* debug */
+	else
+	    huh (); /* illegal command */
 	break;
     }
 }

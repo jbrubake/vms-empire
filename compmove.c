@@ -146,7 +146,7 @@ comp_prod(city_info_t *cityp, bool is_lake)
     /* Make sure we have army producers for current continent. */
 	
     /* map out city's continent */
-    vmap_cont (cont_map, comp_map, cityp->loc, '.');
+    vmap_cont (cont_map, comp_map, cityp->loc, MAP_SEA);
 
     /* count items of interest on the continent */
     counts = vmap_cont_scan (cont_map, comp_map);
@@ -350,7 +350,7 @@ lake(loc_t loc)
     int cont_map[MAP_SIZE];
     scan_counts_t counts;
 
-    vmap_cont (cont_map, emap, loc, '+'); /* map lake */
+    vmap_cont (cont_map, emap, loc, MAP_LAND); /* map lake */
     counts = vmap_cont_scan (cont_map, emap);
 
     return !(counts.unowned_cities || counts.user_cities || counts.unexplored);
@@ -505,7 +505,7 @@ army_move(piece_info_t *obj)
 		
     if (new_loc != obj->loc) { /* something to attack? */
 	attack (obj, new_loc); /* attack it */
-	if (map[new_loc].contents == '.' /* moved to ocean? */
+	if (map[new_loc].contents == MAP_SEA /* moved to ocean? */
 	    && obj->hits > 0) { /* object still alive? */
 	    kill_obj (obj, new_loc);
 	    scan (user_map, new_loc); /* rescan for user */
@@ -531,7 +531,7 @@ army_move(piece_info_t *obj)
 	case 'O':
 	    cross_cost = 60; /* high cost if enemy present */
 	    break;
-	case '*':
+	case MAP_CITY:
 	    cross_cost = 30; /* medium cost for attackable city */
 	    break;
 	case ' ':
@@ -687,13 +687,13 @@ make_unload_map(view_map_t *xmap, view_map_t *vmap)
 
     for (i = 0; i < NUM_CITY; i++)
 	if (city[i].owner == COMP)
-	    vmap_mark_up_cont (owncont_map, xmap, city[i].loc, '.');
+	    vmap_mark_up_cont (owncont_map, xmap, city[i].loc, MAP_SEA);
 
     for (i = 0; i < MAP_SIZE; i++)
 	if (strchr ("O*", vmap[i].contents)) {
 	    int total_cities;
 		
-	    vmap_cont (tcont_map, xmap, i, '.'); /* map continent */
+	    vmap_cont (tcont_map, xmap, i, MAP_SEA); /* map continent */
 	    counts = vmap_cont_scan (tcont_map, xmap);
 		
 	    total_cities = counts.unowned_cities

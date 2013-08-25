@@ -71,8 +71,8 @@ void init_game(void)
 
     do {
 	for (i = 0; i < MAP_SIZE; i ++) { /* remove cities */
-	    if (map[i].contents == '*')
-		map[i].contents = '+'; /* land */
+	    if (map[i].contents == MAP_CITY)
+		map[i].contents = MAP_LAND; /* land */
 	}
 	place_cities (); /* place cities on map */
     } while
@@ -145,8 +145,8 @@ void make_map(void)
     /* mark the land and water */
     for (i = 0; i < MAP_SIZE; i ++) {
 	if (height[from][i] > loc)
-	    map[i].contents = '+'; /* land */
-	else map[i].contents = '.'; /* water */
+	    map[i].contents = MAP_LAND;
+	else map[i].contents = MAP_SEA;
 
 	map[i].objp = NULL; /* nothing in cell yet */
 	map[i].cityp = NULL;
@@ -193,7 +193,7 @@ void place_cities(void)
 	for (i = 0; i < NUM_OBJECTS; i++)
 	    city[placed].func[i] = NOFUNC; /* no function */
 			
-	map[loc].contents = '*';
+	map[loc].contents = MAP_CITY;
 	map[loc].cityp = &(city[placed]);
 	placed++;
 
@@ -215,7 +215,7 @@ count_t regen_land(count_t placed)
 
     num_land = 0;
     for (i = 0; i < MAP_SIZE; i++) {
-	if (map[i].on_board && map[i].contents == '+') {
+	if (map[i].on_board && map[i].contents == MAP_LAND) {
 	    land[num_land] = i; /* remember piece of land */
 	    num_land++; /* remember number of pieces */
 	}
@@ -378,7 +378,8 @@ bool find_next(loc_t *mapi)
 	if (*mapi >= MAP_SIZE) return (false);
 
 	if (!map[*mapi].on_board || marked[*mapi]
-	    || map[*mapi].contents == '.') *mapi += 1;
+	    || map[*mapi].contents == MAP_SEA)
+	    *mapi += 1;
 	else if (good_cont (*mapi)) {
 	    rank_tab[ncont] = ncont; /* insert cont in rank tab */
 	    val = cont_tab[ncont].value;
@@ -445,13 +446,15 @@ mark_cont(loc_t mapi)
 {
     int i;
 
-    if (marked[mapi] || map[mapi].contents == '.'
-	|| !map[mapi].on_board) return;
+    if (marked[mapi] 
+	|| map[mapi].contents == MAP_SEA
+	|| !map[mapi].on_board)
+	return;
 
     marked[mapi] = 1; /* mark this cell seen */
     nland++; /* count land on continent */
 
-    if (map[mapi].contents == '*') { /* a city? */
+    if (map[mapi].contents == MAP_CITY) { /* a city? */
 	cont_tab[ncont].cityp[ncity] = map[mapi].cityp;
 	ncity++;
 	if (rmap_shore (mapi)) nshore++;

@@ -316,10 +316,10 @@ static void disp_square(view_map_t *vp)
 
     switch(vp->contents)
     {
-    case '+':
+    case MAP_LAND:
 	attr = COLOR_PAIR(COLOR_GREEN);
 	break;
-    case '.':
+    case MAP_SEA:
 	attr = COLOR_PAIR(COLOR_CYAN);
 	break;
     case 'a':
