@@ -82,8 +82,8 @@ user_move(void) {
 			next_obj = obj->piece_link.next;
 
 			if (!obj->moved) /* object not moved yet? */
-			if (loc_sector (obj->loc) == sec) /* object in sector? */
-			piece_move (obj); /* yup; move the object */
+				if (loc_sector (obj->loc) == sec) /* object in sector? */
+					piece_move (obj); /* yup; move the object */
 		}
 		if (cur_sector () == sec) { /* is sector displayed? */
 			print_sector_u (sec); /* make screen up-to-date */
