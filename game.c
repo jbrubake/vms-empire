@@ -805,7 +805,7 @@ void stat_display(char *mbuf, int round)
     int user_cost, comp_cost;
     char *p;
 	
-    (void) bzero ((char *)counts, sizeof (counts));
+    (void) memset ((char *)counts, '\0', sizeof (counts));
 	
     for (i = 0; i < MAP_SIZE; i++) {
 	p = strchr (pieces, mbuf[i]);

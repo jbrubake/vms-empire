@@ -51,8 +51,8 @@ or lakes.
 void
 vmap_cont (int *cont_map, view_map_t *vmap, loc_t loc, char bad_terrain)
 {
-	(void) bzero ((char *)cont_map, MAP_SIZE * sizeof (int));
-	vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain);
+    (void) memset ((char *)cont_map, '\0', MAP_SIZE * sizeof (int));
+    vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain);
 }
 
 /*
@@ -116,7 +116,7 @@ static void rmap_mark_up_cont(int *cont_map, loc_t loc, char bad_terrain);
 void
 rmap_cont(int *cont_map, loc_t loc, char bad_terrain)
 {
-    (void) bzero ((char *)cont_map, MAP_SIZE * sizeof (int));
+    (void) memset ((char *)cont_map, '\0', MAP_SIZE * sizeof (int));
     rmap_mark_up_cont (cont_map, loc, bad_terrain);
 }
 
@@ -158,7 +158,7 @@ vmap_cont_scan(int *cont_map, view_map_t *vmap)
     scan_counts_t counts;
     count_t i;
 
-    (void) bzero ((char *)&counts, sizeof (scan_counts_t));
+    (void) memset ((char *)&counts, '\0', sizeof (scan_counts_t));
 	
     for (i = 0; i < MAP_SIZE; i++) {
 	if (cont_map[i]) { /* cell on continent? */
@@ -212,7 +212,7 @@ rmap_cont_scan(int *cont_map)
     scan_counts_t counts;
     count_t i;
 
-    (void) bzero ((char *)&counts, sizeof (scan_counts_t));
+    (void) memset ((char *)&counts, '\0', sizeof (scan_counts_t));
 	
     for (i = 0; i < MAP_SIZE; i++) {
 	if (cont_map[i]) { /* cell on continent? */
@@ -694,7 +694,7 @@ vmap_prune_explore_locs(view_map_t *vmap)
     count_t i;
     long copied;
 
-    (void) bzero (pmap, sizeof (pmap));
+    (void) memset (pmap, '\0', sizeof (pmap));
     from = &p1;
     to = &p2;
     from->len = 0;
@@ -955,7 +955,7 @@ vmap_mark_near_path(path_map_t path_map[], loc_t loc)
     loc_t new_loc, xloc;
     int hit_loc[8];
 
-    (void) bzero ((char *)hit_loc, sizeof(int)*8);
+    (void) memset ((char *)hit_loc, '\0', sizeof(int)*8);
 	
     FOR_ADJ_ON (loc, new_loc, i) {
 	FOR_ADJ_ON (new_loc, xloc, j)
