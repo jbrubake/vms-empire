@@ -877,7 +877,7 @@ user_dir_army(piece_info_t *obj, loc_t loc)
 	    if (obj->hits > 0) /* ship won? */
 	    {
 		comment ("Your army regretfully drowns after its successful assault.");
-		ksend ("Your army regretfully drowns after it's successful assault.");
+		ksend ("Your army regretfully drowns after its successful assault.");
 	    }
 	}
 	if (obj->hits > 0) {
