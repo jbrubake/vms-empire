@@ -15,10 +15,14 @@ XBS-Destinations: freecode
 
 Homepage: http://www.catb.org/~esr/vms-empire
 
+XBS-HTML-Template: index.html
+
 XBS-Gitorious-URL: https://gitorious.org/vms-empire
 
 XBS-Ohloh-URL: https://www.ohloh.net/p/vms-empire
 
-XBS-Project-Tag-List: Games/Entertainment
+XBS-Freecode-Tags: Games/Entertainment
 
 XBS-Logo: empire-logo.png
+
+XBS-VC-Tag-Template: %(version)s
