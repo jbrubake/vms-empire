@@ -93,7 +93,7 @@ cppcheck:
 
 clean:
 	rm -f *.o TAGS vms-empire
-	rm -f *.6 *.html SHIPPER.*
+	rm -f *.6 *.html
 
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
@@ -109,4 +109,4 @@ vms-empire-$(VERS).tar.gz: $(SOURCES)
 dist: vms-empire-$(VERS).tar.gz
 
 release: vms-empire-$(VERS).tar.gz vms-empire.html
-	shipper -u -m -t; make clean
+	shipper sion=$(VERS) | sh -e -x
