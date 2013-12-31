@@ -1,5 +1,9 @@
 			vms-empire news
 
+Repository head:
+	Clean up code to modern C, apply cppcheck.
+	Fix code typo reported as Debian bug #593434
+
 1.10: 2013-08-22T23:46:03
 	Fix core dump when a satellite bounced off the world edge.
 	Full ANSIfication of function prototypes (which fixed the 
