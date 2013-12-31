@@ -605,7 +605,7 @@ set_prod(city_info_t *cityp)
 			
 	else {
 	    cityp->prod = i;
-	    city->work = -(piece_attr[i].build_time / 5);
+	    cityp->work = -(piece_attr[i].build_time / 5);
 	    return;
 	}
     }
