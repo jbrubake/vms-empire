@@ -286,13 +286,13 @@ transport.</para>
 sea, and they move 8 squares per round.  Their high speed and great
 mobility make fighters ideal for exploring.  However, fighters must
 periodically land at user-owned cities for refueling.  A fighter can
-travel 32 squares without refeuling.  Fighters are also shot down if
+travel 32 squares without refueling.  Fighters are also shot down if
 they attempt to fly over a city which is not owned by the user.</para>
 
 <para><emphasis remap='B'>Patrol boats</emphasis> are fast but lightly
 armored.  Therefore they are useful for patrolling ocean waters and
 exploring.  In an attack against a stronger boat, however, patrol
-boats will suffer heavy casulties.</para>
+boats will suffer heavy casualties.</para>
 
 <para><emphasis remap='B'>Destroyers</emphasis> are fairly heavily
 armored and reasonably quick to produce.  Thus they are useful for
@@ -321,7 +321,7 @@ carrier.</para>
 
 <para><emphasis remap='B'>Battleships</emphasis> are similar to
 destroyers except that they are much stronger.</para>
-<para><emphasis remap='B'>Satellites</emphasis> are only useful for reconaissance.  They can not
+<para><emphasis remap='B'>Satellites</emphasis> are only useful for reconnaissance.  They can not
 be attacked.  They are launched in a random diagonal orbit, and
 stay up for 50 turns.  They can see one square farther than other
 objects.</para>
