@@ -1,6 +1,6 @@
 			vms-empire news
 
-Repository head:
+1.11: 2013-12-31T17:28:06
 	Clean up code to modern C, apply cppcheck.
 	Fix code typo reported as Debian bug #593434
 
