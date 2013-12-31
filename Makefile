@@ -109,4 +109,4 @@ vms-empire-$(VERS).tar.gz: $(SOURCES)
 dist: vms-empire-$(VERS).tar.gz
 
 release: vms-empire-$(VERS).tar.gz vms-empire.html
-	shipper sion=$(VERS) | sh -e -x
+	shipper version=$(VERS) | sh -e -x
