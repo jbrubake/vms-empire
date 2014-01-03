@@ -38,7 +38,6 @@ char *argv[];
     int c;
     extern char *optarg;
     extern int optind;
-    extern int opterr;      /* set to 1 to suppress error msg */
     int errflg = 0;
     int wflg, sflg, dflg, Sflg;
     int land;
