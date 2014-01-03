@@ -63,7 +63,7 @@ static void vtopmsg(int line, const char *fmt, va_list varglist)
     if (line < 1 || line > NUMTOPS)
 	line = 1;
     (void) move (line - 1, 0);
-    vsprintf(junkbuf, fmt, varglist);
+    vsnprintf(junkbuf, sizeof(junkbuf), fmt, varglist);
     (void) addstr (junkbuf);
     (void) clrtoeol();
 }
