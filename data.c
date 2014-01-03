@@ -227,6 +227,7 @@ char *help_user[] = {
 	"Print:    redraw screen",
 	"Random:   set func to random",
 	"Sentry:   set func to sentry",
+	"Transport:set func to transport",
 	"Upgrade:  set func to repair",
 	"V <piece> <func>:  set city func",
 	"Y:        set func to attack",
