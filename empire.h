@@ -36,7 +36,15 @@ typedef long count_t;	/* for iterating over or counting board locations */
 
 #define NUMTOPS 3 /* number of lines at top of screen for messages */
 #define NUMSIDES 6 /* number of lines at side of screen */
-#define STRSIZE 80 /* number of characters in a string */
+
+/*
+ * This used to be 80, and that was appropriate back when this game was
+ * played on hardware terminals.  Nowadays it's almost certain to be running 
+ * on a software terminal emulator that would have been considered 
+ * dizzyingly huge back in the day.  Memory is cheap, we'll leave some
+ * headroom.
+ */
+#define STRSIZE 400 /* number of characters in a string */
 
 /* Information we maintain about cities. */
 
