@@ -98,7 +98,7 @@ clean:
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = README NEWS control empire.6 COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) empire-logo.png
+SOURCES = README NEWS control empire.6 empire.xml COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) empire-logo.png
 
 vms-empire-$(VERS).tar.gz: $(SOURCES)
 	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
