@@ -49,7 +49,7 @@ we finish printing information to the screen.
 void
 topini(void)
 {
-    info (0, 0, 0);
+    info ("", "", "");
 }
 /*
 Write a message to one of the top lines.
@@ -234,7 +234,7 @@ get_strq(char *buf, int sizep)
     (void) refresh ();
     (void) getnstr (buf, sizep);
     need_delay = false;
-    info (0, 0, 0);
+    info ("", "", "");
     (void) crmode ();
 }
 
