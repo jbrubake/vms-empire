@@ -2,6 +2,7 @@
 
 Repository head:
 	Incorporated Dennis Pinckard's fix for a Mac OS/X port bug.
+	Added desktop file.
 
 1.11: 2013-12-31T17:28:06
 	Clean up code to modern C, apply cppcheck.
