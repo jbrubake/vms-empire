@@ -12,7 +12,7 @@ modern ANSI C.  It is known to run not only on Linux but
 also under Windows and Mac OS X; all you need is a local
 port of the curses library.
 
-The files HACKING and BUGS will be of interest id you intend
+The files HACKING and BUGS will be of interest if you intend
 to modify this code.
 
 The ancestral code was by Chuck Simmons <chuck@amdahl.com>.  Since
