@@ -35,6 +35,8 @@ edit(loc_t edit_cursor)
 	
     path_start = -1; /* not building a path yet */
 	
+    comment ("Edit mode...");
+
     for (;;) { /* until user gives command to leave */
 	display_loc_u (edit_cursor); /* position cursor */
 	e = e_cursor (&edit_cursor); /* handle cursor movement */
@@ -68,7 +70,7 @@ edit(loc_t edit_cursor)
 	case 'N': /* end move to location */
 	    e_end (&path_start, edit_cursor, path_type);
 	    break;
-	case 'O': /* leave display mode */
+	case 'O': /* leave edit mode */
 	    e_leave ();
 	    return;
 	case 'P': /* print new sector */
@@ -144,6 +146,7 @@ Leave edit mode.
 void
 e_leave(void)
 {
+    comment ("Exiting edit mode.");
 }
 
 /*
