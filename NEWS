@@ -1,5 +1,8 @@
 			vms-empire news
 
+Repository head:
+	Comment on entry to and exit from edit mode.
+
 1.12: 2014-05-20:
 	Incorporated Dennis Pinckard's fix for a Mac OS/X port bug.
 	Added desktop file.
