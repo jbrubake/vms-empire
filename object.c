@@ -182,7 +182,7 @@ anything in the object, it is killed as well.
 
 void kill_obj(piece_info_t *obj, loc_t loc)
 {
-    void kill_one();
+    void kill_one(piece_info_t **, piece_info_t *);
 
     piece_info_t **list;
     view_map_t *vmap;

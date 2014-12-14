@@ -24,7 +24,7 @@ extern int get_piece_name(void);
 void
 user_move(void)
 {
-    void piece_move();
+    void piece_move(piece_info_t *);
 
     int i, j, sec, sec_start;
     piece_info_t *obj, *next_obj;
@@ -104,10 +104,12 @@ the piece has not moved after this, we ask the user what to do.
 void
 piece_move(piece_info_t *obj)
 {
-    void move_random(), move_fill(), move_land(), move_explore();
-    void move_path(), move_dir(), move_armyload(), ask_user();
-    void move_armyattack(), move_ttload(), move_repair();
-    void move_transport();
+    void move_random(piece_info_t *), move_fill(piece_info_t *);
+    void move_land(piece_info_t *), move_explore(piece_info_t *);
+    void move_path(piece_info_t *), move_dir(piece_info_t *); 
+    void move_armyload(piece_info_t *), ask_user(piece_info_t *);
+    void move_armyattack(piece_info_t *), move_ttload(piece_info_t *);
+    void move_repair(piece_info_t *), move_transport(piece_info_t *);
 
     bool changed_loc;
     int speed, max_hits;

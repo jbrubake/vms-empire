@@ -34,7 +34,7 @@ void comp_prod(city_info_t *, bool);
 void
 comp_move(int nmoves) 
 {
-    void do_cities(), do_pieces(), check_endgame();
+    void do_cities(void), do_pieces(void), check_endgame(void);
 
     int i;
     piece_info_t *obj;
@@ -366,7 +366,7 @@ static path_map_t path_map[MAP_SIZE];
 void
 do_pieces(void) 
 {
-    void cpiece_move();
+    void cpiece_move(piece_info_t *);
 
     int i;
     piece_info_t *obj, *next_obj;
@@ -389,7 +389,7 @@ objective.
 void
 cpiece_move(piece_info_t *obj)
 {
-    void move1();
+    void move1(piece_info_t *);
 
     bool changed_loc;
     int max_hits;
@@ -441,7 +441,8 @@ Move a piece one square.
 void
 move1(piece_info_t *obj)
 {
-    void army_move(), transport_move(), fighter_move(), ship_move();
+    void army_move(piece_info_t *), transport_move(piece_info_t *);
+    void fighter_move(piece_info_t *), ship_move(piece_info_t *);
 
     switch (obj->type) {
     case ARMY: army_move (obj); break;
