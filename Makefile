@@ -91,6 +91,24 @@ lint: $(FILES)
 cppcheck:
 	cppcheck --inline-suppr --suppress=unusedStructMember --suppress=unusedFunction  --template gcc --enable=all --force *.[ch]
 
+install: empire.6 uninstall
+	install -m 0755 -d $(DESTDIR)/usr/bin
+	install -m 0755 -d $(DESTDIR)/usr/share/man/man6
+	install -m 0755 -d $(DESTDIR)/usr/share/applications/
+	install -m 0755 -d $(DESTDIR)/usr/share/icons/hicolor/48x48/apps/
+	install -m 0755 -d $(DESTDIR)/usr/share/appdata
+	install -m 0755 vms-empire $(DESTDIR)/usr/bin/
+	install -m 0644 empire.6 $(DESTDIR)/usr/share/man/man6/vms-empire.6
+	install -m 0644 vms-empire.desktop $(DESTDIR)/usr/share/applications/
+	install -m 0644 vms-empire.png $(DESTDIR)/usr/share/icons/hicolor/48x48/apps/
+	install -m 0644 vms-empire.xml $(DESTDIR)/usr/share/appdata/
+
+uninstall:
+	rm -f /usr/bin/vms-empire /usr/share/man/man6/vms-empire.6
+	rm -f /usr/share/applications/vms-empire.desktop
+	rm -f /usr/share/icons/hicolor/48x48/apps/vms-empire.png
+	rm -f /usr/share/appdata/vms-empire.xml
+
 clean:
 	rm -f *.o TAGS vms-empire
 	rm -f *.6 *.html
@@ -98,7 +116,7 @@ clean:
 clobber: clean
 	rm -f vms-empire vms-empire-*.tar*
 
-SOURCES = README HACKING NEWS control empire.6 vms-empire.xml COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) empire-logo.png empire.desktop
+SOURCES = README HACKING NEWS control empire.6 vms-empire.xml COPYING Makefile BUGS AUTHORS $(FILES) $(HEADERS) vms-empire.png vms-empire.desktop
 
 vms-empire-$(VERS).tar.gz: $(SOURCES)
 	@ls $(SOURCES) | sed s:^:vms-empire-$(VERS)/: >MANIFEST
