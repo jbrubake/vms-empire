@@ -176,7 +176,7 @@ would not be very useful on a world with only 10% water.  (Still,
 there are checks to prevent ships from being built in inappropriate
 cities, so this may not be too much of a problem.)
 
-Potentially, the computer should use a more dynamic alogorithm
+Potentially, the computer should use a more dynamic algorithm
 where it "notices" that certain kinds of pieces are going to be
 need in the near future and then builds these things.  I've no ideas
 in this area for concrete algorithms, however.

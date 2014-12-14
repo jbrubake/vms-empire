@@ -23,6 +23,6 @@ XBS-Ohloh-URL: https://www.ohloh.net/p/vms-empire
 
 XBS-Freecode-Tags: Games/Entertainment
 
-XBS-Logo: empire-logo.png
+XBS-Logo: vms-empire.png
 
 XBS-VC-Tag-Template: %(version)s
