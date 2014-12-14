@@ -232,7 +232,7 @@ void
 print_sector(int whose, view_map_t vmap[], int sector)
 /* whose is USER or COMP, vmap is map to display, sector is sector to display */
 {
-    void display_screen();
+    void display_screen(view_map_t []);
 
     int first_row, first_col, last_row, last_col;
     int display_rows, display_cols;
@@ -437,7 +437,7 @@ char zoom_list[] = "XO*tcbsdpfaTCBSDPFAzZ+. ";
 void
 print_zoom(view_map_t *vmap)
 {
-    void print_zoom_cell ();
+    void print_zoom_cell (view_map_t *, int, int, int, int);
 
     int row_inc, col_inc;
     int r, c;
@@ -485,7 +485,7 @@ Print a condensed version of a pathmap.
 void
 print_pzoom(char *s, path_map_t *pmap, view_map_t *vmap)
 {
-    void print_pzoom_cell();
+    void print_pzoom_cell(path_map_t *, view_map_t *, int, int, int, int);
 
     int row_inc, col_inc;
     int r, c;

@@ -512,7 +512,7 @@ on top.
 void
 scan(view_map_t vmap[], loc_t loc)
 {
-    void update(), check(void);
+    void update(view_map_t [], loc_t), check(void);
 
     int i;
     loc_t xloc;

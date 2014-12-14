@@ -547,7 +547,7 @@ We return true if we succeed, otherwise false.
 
 int restore_game(void)
 {
-    void read_embark();
+    void read_embark(piece_info_t *, int);
 	
     FILE *f; /* file to save game in */
     long i;
@@ -749,7 +749,7 @@ print it using a zoomed display.
 void
 replay_movie(void)
 {
-    void print_movie_cell();
+    void print_movie_cell(char *, int, int, int, int);
 
     FILE *f; /* file to save game in */
     int row_inc, col_inc;

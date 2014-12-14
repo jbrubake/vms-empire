@@ -506,12 +506,15 @@ Ask the user to move her piece.
 
 void ask_user(piece_info_t *obj)
 {
-    void user_skip(), user_fill(), user_dir(), user_set_dir();
-    void user_wake(), user_set_city_func(), user_cancel_auto();
-    void user_redraw(), user_random(), user_land(), user_sentry();
-    void user_help(), reset_func(), user_explore();
-    void user_build(), user_transport();
-    void user_armyattack(), user_repair();
+    void user_skip(piece_info_t *), user_fill(piece_info_t *);
+    void user_dir(piece_info_t *, int), user_set_dir(piece_info_t *);
+    void user_wake(piece_info_t *), user_set_city_func(piece_info_t *);
+    void user_cancel_auto(void), user_redraw(void);
+    void user_random(piece_info_t *), user_land(piece_info_t *);
+    void user_sentry(piece_info_t *), user_help(void);
+    void reset_func(piece_info_t *), user_explore(piece_info_t *);
+    void user_build(piece_info_t *), user_transport(piece_info_t *);
+    void user_armyattack(piece_info_t *), user_repair(piece_info_t *);
 
     char c;
 
@@ -740,9 +743,13 @@ Set a city's function.
 void
 user_set_city_func(piece_info_t *obj)
 {
-    void e_city_fill(), e_city_explore(), e_city_stasis();
-    void e_city_wake(), e_city_random(), e_city_repair();
-    void e_city_attack();
+    void e_city_fill(city_info_t *, int);
+    void e_city_explore(city_info_t *, int);
+    void e_city_stasis(city_info_t *, int);
+    void e_city_wake(city_info_t *, int);
+    void e_city_random(city_info_t *, int);
+    void e_city_repair(city_info_t *, int);
+    void e_city_attack(city_info_t *, int);
 	
     int type;
     char e;
@@ -816,7 +823,9 @@ This routine handles attacking objects.
 void
 user_dir(piece_info_t *obj, int dir)
 {
-    void user_dir_army(), user_dir_fighter(), user_dir_ship();
+    void user_dir_army(piece_info_t *, loc_t);
+    void user_dir_fighter(piece_info_t *, loc_t);
+    void user_dir_ship(piece_info_t *, loc_t);
 
     loc_t loc;
 

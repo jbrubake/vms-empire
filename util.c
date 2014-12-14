@@ -80,7 +80,9 @@ static bool in_cargo[LIST_SIZE]; /* true if object in a cargo list */
 void
 check(void)
 {
-    void check_cargo(), check_obj(), check_obj_cargo();
+    void check_cargo(piece_info_t *, int);
+    void check_obj(piece_info_t **, int);
+    void check_obj_cargo(piece_info_t **);
 	
     long i, j;
     piece_info_t *p;

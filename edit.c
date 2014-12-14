@@ -22,12 +22,14 @@ extern int get_piece_name(void);
 void
 edit(loc_t edit_cursor)
 {
-    char e_cursor();
-    void e_leave(), e_print(), e_random();
-    void e_stasis(), e_end(), e_wake(), e_sleep();
-    void e_info(), e_prod(), e_help(), e_explore();
-    void e_fill(), e_land(), e_city_func(), e_transport();
-    void e_attack(), e_repair();
+    char e_cursor(loc_t *);
+    void e_leave(void), e_print(loc_t *), e_random(loc_t);
+    void e_stasis(loc_t), e_end(loc_t *, loc_t, int);
+    void e_wake(loc_t), e_sleep(loc_t);
+    void e_info(loc_t), e_prod(loc_t), e_help(void), e_explore(loc_t);
+    void e_fill(loc_t), e_land(loc_t), e_transport(loc_t);
+    void e_city_func(loc_t *, loc_t, int *);
+    void e_attack(loc_t), e_repair(loc_t);
 
     loc_t path_start;
     int path_type;

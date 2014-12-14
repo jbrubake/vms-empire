@@ -79,8 +79,9 @@ First we have to figure out what is being attacked.
 void
 attack_obj(piece_info_t *att_obj, loc_t loc)
 {
-    void describe(), survive();
-	
+    void describe(piece_info_t *, piece_info_t *, loc_t);
+    void survive(piece_info_t *, loc_t);
+
     piece_info_t *def_obj; /* defender */
     int owner;
 

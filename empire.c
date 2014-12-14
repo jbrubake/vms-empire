@@ -28,7 +28,7 @@ void
 empire(void)
 {
     void do_command(char);
-    void print_zoom();
+    void print_zoom(view_map_t *);
 
     char order;
     int turn = 0;

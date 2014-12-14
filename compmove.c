@@ -484,10 +484,12 @@ destination.  (If there is no destination, sit around and wait.)
 void
 army_move(piece_info_t *obj)
 {
-    loc_t move_away();
-    loc_t find_attack();
-    void make_army_load_map(), make_unload_map(), make_tt_load_map();
-    void board_ship();
+    loc_t move_away(view_map_t *, loc_t, char *);
+    loc_t find_attack(loc_t, char *, char *);
+    void make_army_load_map(piece_info_t *, view_map_t *, view_map_t *);
+    void make_unload_map(view_map_t *, view_map_t *);
+    void make_tt_load_map(view_map_t *, view_map_t *);
+    void board_ship(piece_info_t *, path_map_t *, loc_t);
 	
     loc_t new_loc;
     path_map_t path_map2[MAP_SIZE];
@@ -852,8 +854,6 @@ Transports become 'loading' when empty, and 'unloading' when full.
 void
 transport_move(piece_info_t *obj)
 {
-    void tt_do_move();
-
     loc_t new_loc;
 
     /* empty transports can attack */
