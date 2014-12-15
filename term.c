@@ -323,9 +323,9 @@ a valid response.  We return true iff the user replies 'y'.
 bool
 getyn(char *message)
 {
-    char c;
-
     for (;;) {
+	char c;
+
 	prompt (message,0,0,0,0,0,0,0,0);
 	c = get_chx ();
 
@@ -343,10 +343,8 @@ Input an integer in a range.
 int
 get_range(char *message, int low, int high)
 {
-    int result;
-
     for (;;) {
-	result = getint (message);
+	int result = getint (message);
 
 	if (result >= low && result <= high) return (result);
 

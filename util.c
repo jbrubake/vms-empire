@@ -214,10 +214,10 @@ void
 check_cargo(piece_info_t *list, int cargo_type)
 {
     piece_info_t *p, *q;
-    long j, count;
+    long j;
 	
     for (p = list; p != NULL; p = p->piece_link.next) {
-	count = 0;
+	long count = 0;
 	for (q = p->cargo; q != NULL; q = q->cargo_link.next) {
 	    count += 1; /* count items in list */
 	    ASSERT (q->type == cargo_type);

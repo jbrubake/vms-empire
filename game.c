@@ -174,13 +174,15 @@ void place_cities(void)
 {
     count_t regen_land();
 
-    count_t placed, i;
-    loc_t loc;
+    count_t placed;
     count_t num_land;
 
     num_land = 0; /* nothing in land array yet */
     placed = 0; /* nothing placed yet */
     while (placed < NUM_CITY) {
+	count_t i;
+	loc_t loc;
+
 	while (num_land == 0) num_land = regen_land (placed);
 	i = irand (num_land-1); /* select random piece of land */
 	loc = land[i];
@@ -302,7 +304,7 @@ bool select_cities(void)
 {
     void find_cont(void), make_pair(void);
 
-    loc_t compi, useri;
+    loc_t compi;
     city_info_t *compp, *userp;
     int comp_cont, user_cont;
     int pair;
@@ -324,7 +326,7 @@ bool select_cities(void)
     compp = cont_tab[comp_cont].cityp[compi];
 
     do { /* select different user city */
-	useri = irand ((long)cont_tab[user_cont].ncity);
+	loc_t useri = irand ((long)cont_tab[user_cont].ncity);
 	userp = cont_tab[user_cont].cityp[useri];
     } while (userp == compp);
 
@@ -639,10 +641,9 @@ void read_embark(piece_info_t *list, int piece_type)
 
     piece_info_t *ship;
     piece_info_t *obj;
-    int count;
 
     for (ship = list; ship != NULL; ship = ship->piece_link.next) {
-	count = ship->count; /* get # of pieces we need */
+	int count = ship->count; /* get # of pieces we need */
 	if (count < 0) inconsistent ();
 	ship->count = 0; /* nothing on board yet */
 	for (obj = map[ship->loc].objp; obj && count;
@@ -752,7 +753,6 @@ replay_movie(void)
     void print_movie_cell(char *, int, int, int, int);
 
     FILE *f; /* file to save game in */
-    int row_inc, col_inc;
     int r, c;
     int round;
 
@@ -765,6 +765,7 @@ replay_movie(void)
     round = 0;
     clear_screen ();
     for (;;) {
+	int row_inc, col_inc;
 	if (fread ((char *)mapbuf, 1, sizeof (mapbuf), f) != sizeof (mapbuf))
 	    break;
 	round += 1;
@@ -803,12 +804,11 @@ void stat_display(char *mbuf, int round)
     count_t i;
     int counts[2*NUM_OBJECTS+2];
     int user_cost, comp_cost;
-    char *p;
 	
     (void) memset ((char *)counts, '\0', sizeof (counts));
 	
     for (i = 0; i < MAP_SIZE; i++) {
-	p = strchr (pieces, mbuf[i]);
+	char *p = strchr (pieces, mbuf[i]);
 	if (p) counts[p-pieces] += 1;
     }
     user_cost = 0;

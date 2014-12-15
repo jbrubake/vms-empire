@@ -120,12 +120,10 @@ loc_t
 find_transport(int owner, loc_t loc)
 {
     int i;
-    loc_t new_loc;
-    piece_info_t *t;
 
     for (i = 0; i < 8; i++) { /* look around */
-	new_loc = loc + dir_offset[i];
-	t = find_nfull (TRANSPORT, new_loc);
+	loc_t new_loc = loc + dir_offset[i];
+	piece_info_t *t = find_nfull (TRANSPORT, new_loc);
 	if (t != NULL && t->owner == owner) return (new_loc);
     }
     return (loc); /* no tt found */
@@ -217,11 +215,9 @@ to unowned.  We scan around the city's location.
 
 void kill_city(city_info_t *cityp)
 {
-    view_map_t *vmap;
     piece_info_t *p;
     piece_info_t *next_p;
     piece_info_t **list;
-    int i;
 	
     /* change ownership of hardware at this location; but not satellites */
     for (p = map[cityp->loc].objp; p; p = next_p) {
@@ -246,7 +242,8 @@ void kill_city(city_info_t *cityp)
     }
 
     if (cityp->owner != UNOWNED) {
-	vmap = MAP(cityp->owner);
+	view_map_t *vmap = MAP(cityp->owner);
+	int i;
 	cityp->owner = UNOWNED;
 	cityp->work = 0;
 	cityp->prod = NOPIECE;
@@ -515,7 +512,6 @@ scan(view_map_t vmap[], loc_t loc)
     void update(view_map_t [], loc_t), check(void);
 
     int i;
-    loc_t xloc;
 
 #ifdef DEBUG
     check (); /* perform a consistency check */
@@ -523,7 +519,7 @@ scan(view_map_t vmap[], loc_t loc)
     ASSERT (map[loc].on_board); /* passed loc must be on board */
 
     for (i = 0; i < 8; i++) { /* for each surrounding cell */
-	xloc = loc + dir_offset[i];
+	loc_t xloc = loc + dir_offset[i];
 	update (vmap, xloc);
     }
     update (vmap, loc); /* update current location as well */
@@ -537,12 +533,11 @@ void
 scan_sat(view_map_t vmap[], loc_t loc)
 {
 	int i;
-	loc_t xloc;
 	
 	ASSERT (map[loc].on_board);
 
 	for (i = 0; i < 8; i++) { /* for each surrounding cell */
-		xloc = loc + 2 * dir_offset[i];
+		loc_t xloc = loc + 2 * dir_offset[i];
 		if (xloc >= 0 && xloc < MAP_SIZE && map[xloc].on_board)
 			scan (vmap, xloc);
 	}
@@ -590,12 +585,12 @@ asking until we get a valid answer.
 void
 set_prod(city_info_t *cityp)
 {
-    int i;
-
     scan (user_map, cityp->loc);
     display_loc_u (cityp->loc);
 
     for (;;) {
+	int i;
+
 	prompt ("What do you want the city at %d to produce? ",loc_disp(cityp->loc));
 
 	i = get_piece_name ();

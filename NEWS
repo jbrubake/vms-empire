@@ -1,5 +1,8 @@
 			vms-empire news
 
+Repository head:
+        Full ANSI prototypes for all functions.
+
 1.13: 2014-12-14:
 	Comment on entry to and exit from edit mode.
 	Cleaned up packaging and install/uninstall productions.

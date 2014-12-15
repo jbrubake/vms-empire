@@ -393,8 +393,6 @@ cpiece_move(piece_info_t *obj)
 
     bool changed_loc;
     int max_hits;
-    loc_t saved_loc;
-    city_info_t *cityp;
 
     if (obj->type == SATELLITE) {
 	move_sat (obj);
@@ -406,11 +404,12 @@ cpiece_move(piece_info_t *obj)
     max_hits = piece_attr[obj->type].max_hits;
 
     if (obj->type == FIGHTER) { /* init fighter range */
-	cityp = find_city (obj->loc);
+	city_info_t *cityp = find_city (obj->loc);
 	if (cityp != NULL) obj->range = piece_attr[FIGHTER].range;
     }
 	
     while (obj->moved < obj_moves (obj)) {
+	loc_t saved_loc;
 	saved_loc = obj->loc; /* remember starting location */
 	move1 (obj);
 	if (saved_loc != obj->loc) changed_loc = true;
@@ -763,12 +762,11 @@ load_army(piece_info_t *obj)
 {
     piece_info_t *p;
     int i;
-    loc_t x_loc;
 
     p = find_best_tt (obj->ship, obj->loc); /* look here first */
 
     for (i = 0; i < 8; i++) { /* try surrounding squares */
-	x_loc = obj->loc + dir_offset[i];
+	loc_t x_loc = obj->loc + dir_offset[i];
 	if (map[x_loc].on_board)
 	    p = find_best_tt (p, x_loc);
 
@@ -795,11 +793,10 @@ the correct terrain.
 loc_t
 move_away(view_map_t *vmap, loc_t loc, char *terrain)
 {
-    loc_t new_loc;
     int i;
 
     for (i = 0; i < 8; i++) {
-	new_loc = loc + dir_offset[i];
+	loc_t new_loc = loc + dir_offset[i];
 	if (map[new_loc].on_board
 	    && strchr (terrain, vmap[new_loc].contents))
 	    return (new_loc);
@@ -818,14 +815,14 @@ best of these.
 loc_t
 find_attack(loc_t loc, char *obj_list, char *terrain)
 {
-    loc_t new_loc, best_loc;
+    loc_t best_loc;
     int i, best_val;
     char *p;
 
     best_loc = loc; /* nothing found yet */
     best_val = INFINITY;
     for (i = 0; i < 8; i++) {
-	new_loc = loc + dir_offset[i];
+	loc_t new_loc = loc + dir_offset[i];
 
 	if (map[new_loc].on_board /* can we move here? */
 	    && strchr (terrain, map[new_loc].contents)) {

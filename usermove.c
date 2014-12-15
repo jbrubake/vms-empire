@@ -26,7 +26,7 @@ user_move(void)
 {
     void piece_move(piece_info_t *);
 
-    int i, j, sec, sec_start;
+    int i, j, sec_start;
     piece_info_t *obj, *next_obj;
     int prod;
 
@@ -74,7 +74,7 @@ user_move(void)
 
     /* loop through sectors, moving every piece in the sector */
     for (i = sec_start; i < sec_start + NUM_SECTORS; i++) {
-	sec = i % NUM_SECTORS;
+	int sec = i % NUM_SECTORS;
 	sector_change (); /* allow screen to be redrawn */
 
 	for (j = 0; j < NUM_OBJECTS; j++) /* loop through obj lists */
@@ -113,9 +113,7 @@ piece_move(piece_info_t *obj)
 
     bool changed_loc;
     int speed, max_hits;
-    int saved_moves;
     bool need_input;
-    loc_t saved_loc;
     city_info_t *cityp;
 
     /* set func for piece if on city */
@@ -130,8 +128,8 @@ piece_move(piece_info_t *obj)
     need_input = false; /* don't require user input yet */
 
     while (obj->moved < obj_moves (obj)) {
-	saved_moves = obj->moved; /* save moves made */
-	saved_loc = obj->loc; /* remember starting location */
+	int saved_moves = obj->moved; /* save moves made */
+	loc_t saved_loc = obj->loc; /* remember starting location */
 
 	if (awake (obj) || need_input){ /* need user input? */
 	    ask_user (obj);
@@ -210,12 +208,11 @@ void move_random(piece_info_t *obj)
 {
     loc_t loc_list[8];
     int i, nloc;
-    loc_t loc;
 
     nloc = 0;
 
     for (i = 0; i < 8; i++) {
-	loc = obj->loc + dir_offset[i];
+	loc_t loc = obj->loc + dir_offset[i];
 	if (good_loc (obj, loc)) {
 	    loc_list[nloc] = loc; /* remember this location */
 	    nloc++; /* count locations we can move to */
@@ -408,13 +405,12 @@ move_land(piece_info_t *obj)
 {
     long best_dist;
     loc_t best_loc;
-    long new_dist;
     piece_info_t *p;
 
     best_dist = find_nearest_city (obj->loc, USER, &best_loc);
 
     for (p = user_obj[CARRIER]; p != NULL; p = p->piece_link.next) {
-	new_dist = dist (obj->loc, p->loc);
+	long new_dist = dist (obj->loc, p->loc);
 	if (new_dist < best_dist) {
 	    best_dist = new_dist;
 	    best_loc = p->loc;
@@ -516,9 +512,9 @@ void ask_user(piece_info_t *obj)
     void user_build(piece_info_t *), user_transport(piece_info_t *);
     void user_armyattack(piece_info_t *), user_repair(piece_info_t *);
 
-    char c;
-
     for (;;) {
+	char c;
+
 	display_loc_u (obj->loc); /* display piece to move */
 	describe_obj (obj); /* describe object to be moved */
 	display_score (); /* show current score */
@@ -1048,7 +1044,6 @@ bool
 awake(piece_info_t *obj)
 {
     int i;
-    char c;
     long t;
 
     if (obj->type == ARMY && vmap_at_sea (user_map, obj->loc)) {
@@ -1065,7 +1060,7 @@ awake(piece_info_t *obj)
 	return (true);
     }
     for (i = 0; i < 8; i++) { /* for each surrounding cell */
-	c = user_map[obj->loc+dir_offset[i]].contents;
+	char c = user_map[obj->loc+dir_offset[i]].contents;
 
 	if (islower (c) || c == MAP_CITY || c == 'X') {
 	    if (obj->func < 0) obj->func = NOFUNC; /* awaken */

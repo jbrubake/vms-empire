@@ -1003,7 +1003,7 @@ vmap_find_dir(path_map_t path_map[], view_map_t *vmap,
 	      loc_t loc, char *terrain, char *adj_char)
 {
     int i, count, bestcount;
-    loc_t bestloc, new_loc;
+    loc_t bestloc;
     int path_count, bestpath;
     char *p;
 	
@@ -1015,7 +1015,7 @@ vmap_find_dir(path_map_t path_map[], view_map_t *vmap,
     bestloc = loc;
 	
     for (i = 0; i < 8; i++) { /* for each adjacent square */
-	new_loc = loc + dir_offset[order[i]];
+	loc_t new_loc = loc + dir_offset[order[i]];
 	if (path_map[new_loc].terrain == T_PATH) { /* which is on path */
 	    p = strchr (terrain, vmap[new_loc].contents);
 			

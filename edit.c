@@ -33,13 +33,13 @@ edit(loc_t edit_cursor)
 
     loc_t path_start;
     int path_type;
-    char e;
 	
     path_start = -1; /* not building a path yet */
 	
     comment ("Edit mode...");
 
     for (;;) { /* until user gives command to leave */
+	char e;
 	display_loc_u (edit_cursor); /* position cursor */
 	e = e_cursor (&edit_cursor); /* handle cursor movement */
 
@@ -119,7 +119,6 @@ char
 e_cursor(loc_t *edit_cursor)
 {
     chtype e;
-    int p;
 	
     /* set up terminal */
     (void) crmode ();
@@ -128,6 +127,7 @@ e_cursor(loc_t *edit_cursor)
     topini (); /* clear any error messages */
 
     for (;;) {
+	int p;
 	p = direction (e);
 	if (p == -1) break;
 
@@ -355,10 +355,10 @@ e_wake(loc_t loc)
 {
     city_info_t *cityp;
     piece_info_t *obj;
-    int i;
 
     cityp = find_city (loc);
     if (cityp != NULL) {
+	int i;
 	for (i = 0; i < NUM_OBJECTS; i++)
 	    cityp->func[i] = NOFUNC;
     }
