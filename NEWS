@@ -2,7 +2,7 @@
 
 Repository head:
         Add an identifying magic cookie and version to save files.
-        Full ANSI prototypes for all functions.
+        Full ANSI prototypes for private functions as well as public.
 
 1.13: 2014-12-14T17:06:26Z
 	Comment on entry to and exit from edit mode.
