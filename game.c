@@ -509,6 +509,10 @@ tell the user why.
 #define wbuf(buf) if (!xwrite (f, (char *)buf, sizeof (buf))) return
 #define wval(val) if (!xwrite (f, (char *)&val, sizeof (val))) return
 
+#define SAVECOOKIE	"EMPSAVE 1\n"	/* increase digit when format changes */
+
+static char buf[32];
+
 void save_game(void)
 {
     FILE *f; /* file to save game in */
@@ -518,6 +522,7 @@ void save_game(void)
 	perror ("Cannot save saved game");
 	return;
     }
+    wbuf(SAVECOOKIE);
     wbuf (map);
     wbuf (comp_map);
     wbuf (user_map);
@@ -561,6 +566,11 @@ int restore_game(void)
 	perror ("Cannot open saved game");
 	return (false);
     }
+    if (fgets(buf, sizeof(buf), f) == NULL)
+	return false;
+    else if (strcmp(buf, SAVECOOKIE) != 0)
+	return false;
+    i = fread(buf, 1, sizeof(char), f);	/* skip trailing nul after cookie */ 
     rbuf (map);
     rbuf (comp_map);
     rbuf (user_map);

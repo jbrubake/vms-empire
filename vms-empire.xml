@@ -1066,6 +1066,8 @@ a "movie".</para>
 
 <para>No doubt numerous.</para>
 
+<para>The savefile format changed incompatibly after version 1.13.</para>
+
 <para>Satellites are not completely implemented.  You should be able to
 move to a square that contains a satellite, but the program won't
 let you.  Enemy satellites should not cause your pieces to awaken.</para>
