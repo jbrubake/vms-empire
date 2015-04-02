@@ -17,9 +17,11 @@ Homepage: http://www.catb.org/~esr/vms-empire
 
 XBS-HTML-Target: index.html
 
-XBS-Gitorious-URL: https://gitorious.org/vms-empire
+XBS-Repository-URL: http://thyrsus.com/gitweb/?p=vms-empire.git
 
-XBS-Ohloh-URL: https://www.ohloh.net/p/vms-empire
+XBS-Clone-From: git@thyrsus.com:vms-empire
+
+XBS-Openhub-URL: https://www.openhub.net/p/vms-empire
 
 XBS-Freecode-Tags: Games/Entertainment
 
