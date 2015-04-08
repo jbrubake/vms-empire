@@ -128,3 +128,6 @@ dist: vms-empire-$(VERS).tar.gz
 
 release: vms-empire-$(VERS).tar.gz vms-empire.html
 	shipper version=$(VERS) | sh -e -x
+
+refresh: vms-empire.html
+	shipper -N -w version=$(VERS) | sh -e -x

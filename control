@@ -3,7 +3,7 @@
 
 Package: vms-empire
 
-Description: The ancestor of all 4x (expand/explore/exploit/exterminate) games.
+Description: The ancestor of all expand/explore/exploit/exterminate games.
  Empire is a simulation of a full-scale war between two emperors, the
  computer and you.  Naturally, there is only room for one, so the
  object of the game is to destroy the other.  The computer plays by the
@@ -11,7 +11,7 @@ Description: The ancestor of all 4x (expand/explore/exploit/exterminate) games.
  expand/explore/exploit/exterminate games, including Civilization and
  Master of Orion.
 
-XBS-Destinations: freecode
+#XBS-Destinations: freshcode
 
 Homepage: http://www.catb.org/~esr/vms-empire
 
@@ -19,11 +19,13 @@ XBS-HTML-Target: index.html
 
 XBS-Repository-URL: http://thyrsus.com/gitweb/?p=vms-empire.git
 
-XBS-Clone-From: git@thyrsus.com:vms-empire
+XBS-Developer-Clone: git@thyrsus.com:vms-empire
 
-XBS-Openhub-URL: https://www.openhub.net/p/vms-empire
+XBS-Anonymous-Clone: git://thyrsus.com/repositories/vms-empire.git
 
-XBS-Freecode-Tags: Games/Entertainment
+XBS-OpenHub-URL: https://www.openhub.net/p/vms-empire
+
+#XBS-Project-Tags: Games/Entertainment
 
 XBS-Logo: vms-empire.png
 
