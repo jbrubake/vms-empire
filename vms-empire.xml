@@ -351,12 +351,12 @@ on the side will defeat the piece listed at the top in a battle.
     <colspec colname='c6'/>
     <tbody>
       <row rowsep='1'>
+	<entry align='center'></entry>
         <entry align='left' colsep='1'>AFPT</entry>
         <entry align='center' colsep='1'>D</entry>
         <entry align='center' colsep='1'>S</entry>
         <entry align='center' colsep='1'>C</entry>
         <entry align='center' colsep='1'>B</entry>
-        <entry align='center'></entry>
       </row>
       <row>
         <entry align='left' colsep='1'>AFPT</entry>
