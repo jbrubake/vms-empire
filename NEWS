@@ -1,8 +1,9 @@
 			vms-empire news
 
-Repository head:
+1.14: 2016-01-05 06:49:17Z
         Add an identifying magic cookie and version to save files.
         Full ANSI prototypes for private functions as well as public.
+	Markup fix for probability table.
 
 1.13: 2014-12-14T17:06:26Z
 	Comment on entry to and exit from edit mode.
