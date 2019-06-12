@@ -17,11 +17,7 @@ Homepage: http://www.catb.org/~esr/vms-empire
 
 XBS-HTML-Target: index.html
 
-XBS-Repository-URL: http://thyrsus.com/gitweb/?p=vms-empire.git
-
-XBS-Developer-Clone: git@thyrsus.com:vms-empire
-
-XBS-Anonymous-Clone: git://thyrsus.com/repositories/vms-empire.git
+XBS-Repository-URL: https://gitlab.com/esr/vms-empire
 
 XBS-OpenHub-URL: https://www.openhub.net/p/vms-empire
 
