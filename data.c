@@ -246,6 +246,7 @@ char *help_edit[] = {
 	"Grope:    set func to explore",
 	"Help:     display this text",
 	"I <dir>:  set func to dir",
+	"J:        show all city's production",
 	"Kill:     set func to awake",
 	"Land:     set func to land",
 	"Mark:     mark piece",

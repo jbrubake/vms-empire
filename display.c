@@ -31,6 +31,7 @@ static bool change_ok = true; /* true if new sector may be displayed */
 
 static void show_loc(view_map_t vmap[],loc_t loc);
 static void disp_square(view_map_t *vp);
+static void disp_city_prod(loc_t t);
 static bool on_screen(loc_t loc);
 
 #ifdef A_COLOR
@@ -204,7 +205,11 @@ show_loc (view_map_t vmap[], loc_t loc)
     r = loc_row (loc);
     c = loc_col (loc);
     (void) move (r-ref_row+NUMTOPS, c-ref_col);
-    disp_square(&vmap[loc]);
+
+    if (showprod && vmap[loc].contents == 'O')
+        disp_city_prod(loc);
+    else
+        disp_square(&vmap[loc]);
     save_cursor = loc; /* remember cursor location */
     (void) move (r-ref_row+NUMTOPS, c-ref_col);
 }
@@ -338,6 +343,7 @@ static void disp_square(view_map_t *vp)
 	attr = COLOR_PAIR(COLOR_WHITE);
 	break;
     }
+
     attron(attr);
 #endif /* A_COLOR */
     (void) addch ((chtype)vp->contents);
@@ -346,6 +352,27 @@ static void disp_square(view_map_t *vp)
     attron(COLOR_PAIR(COLOR_WHITE));
 #endif /* A_COLOR */
 }
+
+/*
+Routine to show city production instead of boring O
+*/
+
+static void disp_city_prod(loc_t t) {
+    chtype attr;
+    city_info_t *cityp;
+
+    cityp = find_city (t);
+    ASSERT (cityp != NULL);
+
+    attr = COLOR_PAIR(COLOR_CYAN);
+    attron(attr);
+
+    (void) addch ((chtype)piece_attr[(int)cityp->prod].sname);
+
+    attroff(attr);
+    attron(COLOR_PAIR(COLOR_WHITE));
+}
+
 
 
 /*
@@ -365,7 +392,10 @@ void display_screen(view_map_t vmap[])
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++) {
 	    t = row_col_loc (r, c);
 	    (void) move (r-ref_row+NUMTOPS, c-ref_col);
-	    disp_square(&vmap[t]);
+        if (showprod && vmap[t].contents == 'O')
+            disp_city_prod(t);
+        else
+            disp_square(&vmap[t]);
 	}
 }
 

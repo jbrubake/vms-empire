@@ -83,6 +83,7 @@ bool save_movie; /* true iff we should save movie screens */
 int user_score; /* "score" for user and computer */
 int comp_score;
 char *savefile;
+bool showprod;
 
 /* Screen updating macros */
 #define display_loc_u(loc) display_loc(USER,user_map,loc)
