@@ -417,7 +417,7 @@ cpiece_move(piece_info_t *obj)
 	if (obj->type == FIGHTER && obj->hits > 0) {
 	    if (comp_map[obj->loc].contents == 'X')
 		obj->moved = piece_attr[FIGHTER].speed;
-	    else if (obj->range == 0) {
+	    else if (obj->range <= 0) {
 		pdebug ("Fighter at %d crashed and burned\n", loc_disp(obj->loc));
 		ksend ("Fighter at %d crashed and burned\n", loc_disp(obj->loc));
 		kill_obj (obj, obj->loc); /* crash & burn */

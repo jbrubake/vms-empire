@@ -416,7 +416,7 @@ move_sat(piece_info_t *obj)
 	
     while (obj->moved < obj_moves (obj)) {
 	move_sat1 (obj);
-	if (obj->range == 0) {
+	if (obj->range <= 0) {
 	    if (obj->owner == USER)
 		comment ("Satellite at %d crashed and burned.", loc_disp(obj->loc));
 	    ksend ("Satellite at %d crashed and burned.", loc_disp(obj->loc));

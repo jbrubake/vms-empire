@@ -181,7 +181,9 @@ piece_move(piece_info_t *obj)
 		obj->func = NOFUNC;
 		comment ("Landing confirmed.");
 	    }
-	    else if (obj->range == 0) {
+     /* range can be less than zero if fighter survives many attacks.
+        It loses 1 unit of range on every attack it survives. */
+	    else if (obj->range <= 0) {
 		comment ("Fighter at %d crashed and burned.",loc_disp(obj->loc));
 		kill_obj (obj, obj->loc);
 	    }
