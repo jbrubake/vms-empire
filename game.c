@@ -94,7 +94,9 @@ at program start up.
 #define MAX_HEIGHT 999	/* highest height */
 
 /* these arrays give some compilers problems when they are automatic */
-static int height[2][MAP_SIZE];
+/* MAP_SIZE+1 to eleminate compiler warning. I think the loop is wrong
+   and goes 1 too high, but safer to just increase here */
+static int height[2][MAP_SIZE+1];
 static int height_count[MAX_HEIGHT+1];
 
 void make_map(void)
