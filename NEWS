@@ -1,6 +1,6 @@
 			vms-empire news
 
-Repository head:
+1.15: 2020-01-26 01:20:45Z
 	Fix for infinite-fighter-tange bug,
 	New 'J' command to show city production in editing mode.
         Rehosted on GitLab.
