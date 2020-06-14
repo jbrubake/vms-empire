@@ -61,8 +61,8 @@ edit(loc_t edit_cursor)
 	    e_stasis (edit_cursor);
 	    break;
 	case 'J': /* Redraw map showing city production */
-        game.showprod = true;
-        sector_change (); // Force redraw */
+	    game.showprod = true;
+	    sector_change (); // Force redraw */
 	    break;
 	case 'K': /* wake up anything and everything */
 	    e_wake (edit_cursor);
@@ -78,10 +78,10 @@ edit(loc_t edit_cursor)
 	    e_end (&path_start, edit_cursor, path_type);
 	    break;
 	case 'O': /* leave edit mode */
-        if (game.showprod) {
-            game.showprod = false;
-            sector_change (); // Force redraw */
-        }
+	    if (game.showprod) {
+		game.showprod = false;
+		sector_change (); // Force redraw */
+	    }
 	    e_leave ();
 	    return;
 	case 'P': /* print new sector */

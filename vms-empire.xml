@@ -897,6 +897,12 @@ that you want produced.</para>
   </listitem>
   </varlistentry>
   <varlistentry>
+  <term><emphasis remap='B'>J</emphasis><emphasis remap='I'>dir</emphasis></term>
+  <listitem>
+<para>Toggle displaying the production of all cities.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
   <term><emphasis remap='B'>Kill</emphasis></term>
   <listitem>
 <para>Wake all pieces at the current location.  If the location is a city,
