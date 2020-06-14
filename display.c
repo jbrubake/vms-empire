@@ -206,7 +206,7 @@ show_loc (view_map_t vmap[], loc_t loc)
     c = loc_col (loc);
     (void) move (r-ref_row+NUMTOPS, c-ref_col);
 
-    if (showprod && vmap[loc].contents == 'O')
+    if (game.showprod && vmap[loc].contents == 'O')
         disp_city_prod(loc);
     else
         disp_square(&vmap[loc]);
@@ -246,8 +246,8 @@ print_sector(int whose, view_map_t vmap[], int sector)
     save_sector = sector; /* remember last sector displayed */
     change_ok = false; /* we are displaying a new sector */
 
-    display_rows = lines - NUMTOPS - 1; /* num lines to display */
-    display_cols = cols - NUMSIDES;
+    display_rows = game.lines - NUMTOPS - 1; /* num lines to display */
+    display_cols = game.cols - NUMSIDES;
 
     /* compute row and column edges of sector */
     first_row = sector_row (sector) * ROWS_PER_SECTOR;
@@ -287,21 +287,21 @@ print_sector(int whose, view_map_t vmap[], int sector)
     /* print x-coordinates along bottom of screen */
     for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 	if (c % 10 == 0) {
-	    pos_str (lines-1, c-ref_col, "%d", c);
+	    pos_str (game.lines-1, c-ref_col, "%d", c);
 	}
     /* print y-coordinates along right of screen */
     for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++) {
 	if (r % 2 == 0)
-	    pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "%2d", r);
+	    pos_str (r-ref_row+NUMTOPS, game.cols-NUMSIDES+1, "%2d", r);
 	else
-	    pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ");
+	    pos_str (r-ref_row+NUMTOPS, game.cols-NUMSIDES+1, "  ");
     }
     /* print round number */
-    (void) sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
-    for (r = 0; jnkbuf[r] != '\0'; r++) {
+    (void) sprintf (game.jnkbuf, "Sector %d Round %ld", sector, game.date);
+    for (r = 0; game.jnkbuf[r] != '\0'; r++) {
 	if (r+NUMTOPS >= MAP_HEIGHT) break;
-	(void) move (r+NUMTOPS, cols-NUMSIDES+4);
-	(void) addch ((chtype)jnkbuf[r]);
+	(void) move (r+NUMTOPS, game.cols-NUMSIDES+4);
+	(void) addch ((chtype)game.jnkbuf[r]);
     }
 }
 
@@ -385,14 +385,14 @@ void display_screen(view_map_t vmap[])
     int r, c;
     loc_t t;
 
-    display_rows = lines - NUMTOPS - 1; /* num lines to display */
-    display_cols = cols - NUMSIDES;
+    display_rows = game.lines - NUMTOPS - 1; /* num lines to display */
+    display_cols = game.cols - NUMSIDES;
 
     for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++) {
 	    t = row_col_loc (r, c);
 	    (void) move (r-ref_row+NUMTOPS, c-ref_col);
-        if (showprod && vmap[t].contents == 'O')
+        if (game.showprod && vmap[t].contents == 'O')
             disp_city_prod(t);
         else
             disp_square(&vmap[t]);
@@ -413,7 +413,7 @@ move_cursor(loc_t *cursor, int offset)
     int r, c;
  
     t = *cursor + offset; /* proposed location */
-    if (!map[t].on_board) return (false); /* trying to move off map */
+    if (!game.real_map[t].on_board) return (false); /* trying to move off map */
     if (!on_screen (t)) return (false); /* loc is off screen */
 	
     *cursor = t; /* update cursor position */
@@ -438,9 +438,9 @@ bool on_screen (loc_t loc)
     new_c = loc_col (loc);
 
     if (new_r < ref_row /* past top of screen */
-	|| new_r - ref_row > lines - NUMTOPS - 1 /* past bot of screen? */
+	|| new_r - ref_row > game.lines - NUMTOPS - 1 /* past bot of screen? */
 	|| new_c < ref_col /* past left edge of screen? */
-	|| new_c - ref_col > cols - NUMSIDES) /* past right edge of screen? */
+	|| new_c - ref_col > game.cols - NUMSIDES) /* past right edge of screen? */
 	return (false);
 
     return (true);
@@ -474,14 +474,14 @@ print_zoom(view_map_t *vmap)
 
     kill_display ();
 
-    row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
-    col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
+    row_inc = (MAP_HEIGHT + game.lines - NUMTOPS - 1) / (game.lines - NUMTOPS);
+    col_inc = (MAP_WIDTH + game.cols - 1) / (game.cols - 1);
 
     for (r = 0; r < MAP_HEIGHT; r += row_inc)
 	for (c = 0; c < MAP_WIDTH; c += col_inc)
 	    print_zoom_cell (vmap, r, c, row_inc, col_inc);
 
-    pos_str (0, 0, "Round #%d", date);
+    pos_str (0, 0, "Round #%d", game.date);
 	
     (void) refresh ();
 }
@@ -522,8 +522,8 @@ print_pzoom(char *s, path_map_t *pmap, view_map_t *vmap)
 
     kill_display ();
 
-    row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
-    col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
+    row_inc = (MAP_HEIGHT + game.lines - NUMTOPS - 1) / (game.lines - NUMTOPS);
+    col_inc = (MAP_WIDTH + game.cols - 1) / (game.cols - 1);
 
     for (r = 0; r < MAP_HEIGHT; r += row_inc)
 	for (c = 0; c < MAP_WIDTH; c += col_inc)
@@ -588,8 +588,8 @@ Display the score off in the corner of the screen.
 void
 display_score(void)
 {
-    pos_str (1, cols-12, " User  Comp");
-    pos_str (2, cols-12, "%5d %5d", user_score, comp_score);
+    pos_str (1, game.cols-12, " User  Comp");
+    pos_str (2, game.cols-12, "%5d %5d", game.user_score, game.comp_score);
 }
 
 /*
@@ -616,12 +616,12 @@ ttinit(void)
 #ifdef A_COLOR
     init_colors();
 #endif /* A_COLOR */
-    lines = LINES;
-    cols = COLS;
-    if (lines > MAP_HEIGHT + NUMTOPS + 1)
-	lines = MAP_HEIGHT + NUMTOPS + 1;
-    if (cols > MAP_WIDTH + NUMSIDES)
-	cols = MAP_WIDTH + NUMSIDES;
+    game.lines = LINES;
+    game.cols = COLS;
+    if (game.lines > MAP_HEIGHT + NUMTOPS + 1)
+	game.lines = MAP_HEIGHT + NUMTOPS + 1;
+    if (game.cols > MAP_WIDTH + NUMSIDES)
+	game.cols = MAP_WIDTH + NUMSIDES;
 }
 
 
@@ -673,7 +673,7 @@ the screen and pause for a few milliseconds.
 void
 delay(void)
 {
-    int t = delay_time;
+    int t = game.delay_time;
     int i = 500;
     (void) refresh ();
     if (t > i) {

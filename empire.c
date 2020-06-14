@@ -14,6 +14,8 @@ parser, and the simple commands.
 #include "empire.h"
 #include "extern.h"
 
+gamestate_t game;
+
 void c_examine(void), c_movie(void);
 
 /*
@@ -47,10 +49,10 @@ empire(void)
     /* Command loop starts here. */
 
     for (;;) { /* until user quits */
-	if (automove) { /* don't ask for cmd in auto mode */
+	if (game.automove) { /* don't ask for cmd in auto mode */
 	    user_move ();
 	    comp_move (1);
-	    if (++turn % save_interval == 0)
+	    if (++turn % game.save_interval == 0)
 		save_game ();
 	}
 	else {
@@ -78,7 +80,7 @@ do_command(char orders)
 
     switch (orders) {
     case 'A': /* turn on auto move mode */
-	automove = true;
+	game.automove = true;
 	error ("Now in Auto-Mode");
 	user_move ();
 	comp_move (1);
@@ -90,11 +92,11 @@ do_command(char orders)
 	break;
 	
     case 'D': /* display round number */
-	error ("Round #%d", date);
+	error ("Round #%d", game.date);
 	break;
 
     case 'E': /* examine enemy map */
-	if (resigned) c_examine ();
+	if (game.resigned) c_examine ();
 	else huh (); /* illegal command */
 	break;
 
@@ -146,19 +148,19 @@ do_command(char orders)
 	save_game ();
 	break;
 	
-    case 'T': /* trace: toggle save_movie flag */
-	save_movie = !save_movie;
-	if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
+    case 'T': /* trace: toggle game.save_movie flag */
+	game.save_movie = !game.save_movie;
+	if (game.save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
 	else comment ("No longer saving movie screens.");
 	break;
 
     case 'W': /* watch movie */
-	if (resigned || debug) replay_movie ();
+	if (game.resigned || game.debug) replay_movie ();
 	else error ("You cannot watch movie until computer resigns.");
 	break;
 
     case 'Z': /* print compressed map */
-	print_zoom (user_map);
+	print_zoom (game.user_map);
 	break;
 
     case '\014': /* redraw the screen */
@@ -168,14 +170,14 @@ do_command(char orders)
     case '+': /* change debug state */
 	e = get_chx();
 	if ( e  ==  '+' )
-	    debug = true;
+	    game.debug = true;
 	else if ( e  ==  '-' )
-	    debug = false;
+	    game.debug = false;
 	else huh ();
 	break;
 
     default:
-	if (debug)
+	if (game.debug)
 	    c_debug (orders); /* debug */
 	else
 	    huh (); /* illegal command */
@@ -197,7 +199,7 @@ c_give(void)
 
     count = 0; /* nothing in list yet */
     for (i = 0; i < NUM_CITY; i++) {
-	if (city[i].owner == UNOWNED) {
+	if (game.city[i].owner == UNOWNED) {
 	    unowned[count] = i; /* remember this city */
 	    count += 1;
 	}
@@ -209,10 +211,10 @@ c_give(void)
     }
     i = irand (count);
     i = unowned[i]; /* get city index */
-    city[i].owner = COMP;
-    city[i].prod = NOPIECE;
-    city[i].work = 0;
-    scan (comp_map, city[i].loc);
+    game.city[i].owner = COMP;
+    game.city[i].prod = NOPIECE;
+    game.city[i].work = 0;
+    scan (game.comp_map, game.city[i].loc);
 }
 
 /*
@@ -232,25 +234,25 @@ c_debug(char order)
     case '@': /* change trace state */
 	e = get_chx();
 	if ( e  ==  '+' )
-	    trace_pmap = true;
+	    game.trace_pmap = true;
 	else if ( e  ==  '-' )
-	    trace_pmap = false;
+	    game.trace_pmap = false;
 	else
 	    huh ();
 	break;
 
-    case '$': /* change print_debug state */
+    case '$': /* change game.print_debug state */
 	e = get_chx();
 	if ( e  ==  '+' )
-	    print_debug = true;
+	    game.print_debug = true;
 	else if ( e  ==  '-' )
-	    print_debug = false;
+	    game.print_debug = false;
 	else
 	    huh ();
 	break;
 
-    case '&': /* change print_vmap state */
-	print_vmap = get_chx();
+    case '&': /* change game.print_vmap state */
+	game.print_vmap = get_chx();
 	break;
 
     default: huh (); break;
@@ -298,16 +300,16 @@ c_map(void)
     char line[MAP_HEIGHT+2];
 
     prompt ("Filename? ");
-    get_str (jnkbuf, STRSIZE);
+    get_str (game.jnkbuf, STRSIZE);
 
-    f = fopen (jnkbuf, "w");
+    f = fopen (game.jnkbuf, "w");
     if (f == NULL) {
 	error ("I can't open that file.");
 	return;
     }
     for (i = 0; i < MAP_WIDTH; i++) { /* for each column */
 	for (j = MAP_HEIGHT-1; j >= 0; j--) { /* for each row */
-	    line[MAP_HEIGHT-1-j] = user_map[row_col_loc(j,i)].contents;
+	    line[MAP_HEIGHT-1-j] = game.user_map[row_col_loc(j,i)].contents;
 	}
 	j = MAP_HEIGHT-1;
 	while (j >= 0 && line[j] == ' ') /* scan off trailing blanks */
@@ -343,10 +345,10 @@ c_movie(void)
 {
     for (;;) {
 	comp_move (1);
-	print_zoom (comp_map);
+	print_zoom (game.comp_map);
 	save_game ();
 #ifdef PROFILE
-	if (date == 125) empend();
+	if (game.date == 125) empend();
 #endif
     }
 }

@@ -173,7 +173,7 @@ pdebug(char *fmt, ...)
 {
     va_list ap;
 
-    if (!print_debug) return;
+    if (!game.print_debug) return;
 
     va_start(ap, fmt);
     if (need_delay)

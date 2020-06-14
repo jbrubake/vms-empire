@@ -46,7 +46,7 @@ char *argv[];
     sflg = 5;
     dflg = 2000;
     Sflg = 10;
-    savefile = "empsave.dat";
+    game.savefile = "empsave.dat";
 
     /*
      * extract command line options
@@ -67,7 +67,7 @@ char *argv[];
 	    Sflg = atoi (optarg);
 	    break;
 	case 'f':
-	    savefile = optarg;
+	    game.savefile = optarg;
 	    break;
 	case '?': /* illegal option? */
 	    errflg++;
@@ -93,15 +93,15 @@ char *argv[];
 	exit (1);
     }
 
-    SMOOTH = sflg;
-    WATER_RATIO = wflg;
-    delay_time = dflg;
-    save_interval = Sflg;
+    game.SMOOTH = sflg;
+    game.WATER_RATIO = wflg;
+    game.delay_time = dflg;
+    game.save_interval = Sflg;
 
     /* compute min distance between cities */
-    land = MAP_SIZE * (100 - WATER_RATIO) / 100; /* available land */
+    land = MAP_SIZE * (100 - game.WATER_RATIO) / 100; /* available land */
     land /= NUM_CITY; /* land per city */
-    MIN_CITY_DIST = isqrt (land); /* distance between cities */
+    game.MIN_CITY_DIST = isqrt (land); /* distance between cities */
 
     empire (); /* call main routine */
     return (0);

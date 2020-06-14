@@ -37,44 +37,44 @@ void init_game(void)
     count_t i;
 
     kill_display (); /* nothing on screen */
-    automove = false;
-    resigned = false;
-    debug = false;
-    print_debug = false;
-    print_vmap = false;
-    trace_pmap = false;
-    save_movie = false;
-    win = no_win;
-    date = 0; /* no date yet */
-    user_score = 0;
-    comp_score = 0;
+    game.automove = false;
+    game.resigned = false;
+    game.debug = false;
+    game.print_debug = false;
+    game.print_vmap = false;
+    game.trace_pmap = false;
+    game.save_movie = false;
+    game.win = no_win;
+    game.date = 0; /* no date yet */
+    game.user_score = 0;
+    game.comp_score = 0;
 	
     for (i = 0; i < MAP_SIZE; i++) {
-	user_map[i].contents = ' '; /* nothing seen yet */
-	user_map[i].seen = 0;
-	comp_map[i].contents = ' ';
-	comp_map[i].seen = 0;
+	game.user_map[i].contents = ' '; /* nothing seen yet */
+	game.user_map[i].seen = 0;
+	game.comp_map[i].contents = ' ';
+	game.comp_map[i].seen = 0;
     }
     for (i = 0; i < NUM_OBJECTS; i++) {
-	user_obj[i] = NULL;
-	comp_obj[i] = NULL;
+	game.user_obj[i] = NULL;
+	game.comp_obj[i] = NULL;
     }
-    free_list = NULL; /* nothing free yet */
+    game.free_list = NULL; /* nothing free yet */
     for (i = 0; i < LIST_SIZE; i++) { /* for each object */
-	piece_info_t *obj = &(object[i]);
+	piece_info_t *obj = &(game.object[i]);
 	obj->hits = 0; /* mark object as dead */
 	obj->owner = UNOWNED;
-	LINK (free_list, obj, piece_link); 
+	LINK (game.free_list, obj, piece_link); 
     }
 
     make_map (); /* make land and water */
 
     do {
 	for (i = 0; i < MAP_SIZE; i ++) { /* remove cities */
-	    if (map[i].contents == MAP_CITY)
-		map[i].contents = MAP_LAND; /* land */
+	    if (game.real_map[i].contents == MAP_CITY)
+		game.real_map[i].contents = MAP_LAND; /* land */
 	}
-	place_cities (); /* place cities on map */
+	place_cities (); /* place cities on game.real_map */
     } while
 	(!select_cities ()); /* choose a city for each player */
 }
@@ -105,12 +105,12 @@ void make_map(void)
     count_t i, j, sum;
     loc_t loc;
 
-    for (i = 0; i < MAP_SIZE; i++) /* fill map with random sand */
+    for (i = 0; i < MAP_SIZE; i++) /* fill game.real_map with random sand */
 	height[0][i] = irand (MAX_HEIGHT);
 
     from = 0;
     to = 1;
-    for (i = 0; i < SMOOTH; i++) { /* smooth the map */
+    for (i = 0; i < game.SMOOTH; i++) { /* smooth the game.real_map */
 	for (j = 0; j < MAP_SIZE; j++) {
 	    sum = height[from][j];
 	    for (k = 0; k < 8; k++) {
@@ -138,7 +138,7 @@ void make_map(void)
     sum = 0;
     for (i = 0; i <= MAX_HEIGHT; i++) {
 	sum += height_count[i];
-	if (sum * 100 / MAP_SIZE > WATER_RATIO && sum >= NUM_CITY) {
+	if (sum * 100 / MAP_SIZE > game.WATER_RATIO && sum >= NUM_CITY) {
 	    loc = i; /* this is last height that is water */
 	    break;
 	}
@@ -147,16 +147,16 @@ void make_map(void)
     /* mark the land and water */
     for (i = 0; i < MAP_SIZE; i ++) {
 	if (height[from][i] > loc)
-	    map[i].contents = MAP_LAND;
-	else map[i].contents = MAP_SEA;
+	    game.real_map[i].contents = MAP_LAND;
+	else game.real_map[i].contents = MAP_SEA;
 
-	map[i].objp = NULL; /* nothing in cell yet */
-	map[i].cityp = NULL;
+	game.real_map[i].objp = NULL; /* nothing in cell yet */
+	game.real_map[i].cityp = NULL;
 
 	j = loc_col (i);
 	k = loc_row (i);
 
-	map[i].on_board = !(j == 0 || j == MAP_WIDTH-1 
+	game.real_map[i].on_board = !(j == 0 || j == MAP_WIDTH-1
 			    || k == 0 || k == MAP_HEIGHT-1);
     }
 }
@@ -189,16 +189,16 @@ void place_cities(void)
 	i = irand (num_land-1); /* select random piece of land */
 	loc = land[i];
 		
-	city[placed].loc = loc;
-	city[placed].owner = UNOWNED;
-	city[placed].work = 0;
-	city[placed].prod = NOPIECE;
+	game.city[placed].loc = loc;
+	game.city[placed].owner = UNOWNED;
+	game.city[placed].work = 0;
+	game.city[placed].prod = NOPIECE;
 		
 	for (i = 0; i < NUM_OBJECTS; i++)
-	    city[placed].func[i] = NOFUNC; /* no function */
+	    game.city[placed].func[i] = NOFUNC; /* no function */
 			
-	map[loc].contents = MAP_CITY;
-	map[loc].cityp = &(city[placed]);
+	game.real_map[loc].contents = MAP_CITY;
+	game.real_map[loc].cityp = &(game.city[placed]);
 	placed++;
 
 	/* Now remove any land too close to selected land. */
@@ -219,17 +219,17 @@ count_t regen_land(count_t placed)
 
     num_land = 0;
     for (i = 0; i < MAP_SIZE; i++) {
-	if (map[i].on_board && map[i].contents == MAP_LAND) {
+	if (game.real_map[i].on_board && game.real_map[i].contents == MAP_LAND) {
 	    land[num_land] = i; /* remember piece of land */
 	    num_land++; /* remember number of pieces */
 	}
     }
     if (placed > 0) { /* don't decrement 1st time */
-	MIN_CITY_DIST -= 1;
-	ASSERT (MIN_CITY_DIST >= 0);
+	game.MIN_CITY_DIST -= 1;
+	ASSERT (game.MIN_CITY_DIST >= 0);
     }
     for (i = 0; i < placed; i++) { /* for each placed city */
-	num_land = remove_land (city[i].loc, num_land);
+	num_land = remove_land (game.city[i].loc, num_land);
     }
     return (num_land);
 }
@@ -244,7 +244,7 @@ count_t remove_land(loc_t loc, count_t num_land)
 
     new = 0; /* nothing kept yet */
     for (i = 0; i < num_land; i++) {
-	if (dist (loc, land[i]) >= MIN_CITY_DIST) {
+	if (dist (loc, land[i]) >= game.MIN_CITY_DIST) {
 	    land[new] = land[i];
 	    new++;
 	}
@@ -316,11 +316,11 @@ bool select_cities(void)
 
     make_pair (); /* create list of ranked pairs */
 
-    (void) sprintf (jnkbuf,
+    (void) sprintf (game.jnkbuf,
 		    "Choose a difficulty level where 0 is easy and %d is hard: ",
 		    ncont*ncont-1);
 
-    pair = get_range (jnkbuf, 0, ncont*ncont-1);
+    pair = get_range (game.jnkbuf, 0, ncont*ncont-1);
     comp_cont = pair_tab[pair].comp_cont;
     user_cont = pair_tab[pair].user_cont;
 
@@ -339,11 +339,11 @@ bool select_cities(void)
     compp->owner = COMP;
     compp->prod = ARMY;
     compp->work = 0;
-    scan (comp_map, compp->loc);
+    scan (game.comp_map, compp->loc);
 
     userp->owner = USER;
     userp->work = 0;
-    scan (user_map, userp->loc);
+    scan (game.user_map, userp->loc);
     set_prod (userp);
     return (true);
 }
@@ -381,8 +381,8 @@ bool find_next(loc_t *mapi)
     for (;;) {
 	if (*mapi >= MAP_SIZE) return (false);
 
-	if (!map[*mapi].on_board || marked[*mapi]
-	    || map[*mapi].contents == MAP_SEA)
+	if (!game.real_map[*mapi].on_board || marked[*mapi]
+	    || game.real_map[*mapi].contents == MAP_SEA)
 	    *mapi += 1;
 	else if (good_cont (*mapi)) {
 	    rank_tab[ncont] = ncont; /* insert cont in rank tab */
@@ -451,15 +451,15 @@ mark_cont(loc_t mapi)
     int i;
 
     if (marked[mapi] 
-	|| map[mapi].contents == MAP_SEA
-	|| !map[mapi].on_board)
+	|| game.real_map[mapi].contents == MAP_SEA
+	|| !game.real_map[mapi].on_board)
 	return;
 
     marked[mapi] = 1; /* mark this cell seen */
     nland++; /* count land on continent */
 
-    if (map[mapi].contents == MAP_CITY) { /* a city? */
-	cont_tab[ncont].cityp[ncity] = map[mapi].cityp;
+    if (game.real_map[mapi].contents == MAP_CITY) { /* a city? */
+	cont_tab[ncont].cityp[ncity] = game.real_map[mapi].cityp;
 	ncity++;
 	if (rmap_shore (mapi)) nshore++;
     }
@@ -519,28 +519,28 @@ void save_game(void)
 {
     FILE *f; /* file to save game in */
 
-    f = fopen (savefile, "w"); /* open for output */
+    f = fopen (game.savefile, "w"); /* open for output */
     if (f == NULL) {
 	perror ("Cannot save saved game");
 	return;
     }
     wbuf(SAVECOOKIE);
-    wbuf (map);
-    wbuf (comp_map);
-    wbuf (user_map);
-    wbuf (city);
-    wbuf (object);
-    wbuf (user_obj);
-    wbuf (comp_obj);
-    wval (free_list);
-    wval (date);
-    wval (automove);
-    wval (resigned);
-    wval (debug);
-    wval (win);
-    wval (save_movie);
-    wval (user_score);
-    wval (comp_score);
+    wbuf (game.real_map);
+    wbuf (game.comp_map);
+    wbuf (game.user_map);
+    wbuf (game.city);
+    wbuf (game.object);
+    wbuf (game.user_obj);
+    wbuf (game.comp_obj);
+    wval (game.free_list);
+    wval (game.date);
+    wval (game.automove);
+    wval (game.resigned);
+    wval (game.debug);
+    wval (game.win);
+    wval (game.save_movie);
+    wval (game.user_score);
+    wval (game.comp_score);
 
     (void) fclose (f);
     topmsg (3, "Game saved.");
@@ -563,7 +563,7 @@ int restore_game(void)
     piece_info_t **list;
     piece_info_t *obj;
 
-    f = fopen (savefile, "r"); /* open for input */
+    f = fopen (game.savefile, "r"); /* open for input */
     if (f == NULL) {
 	perror ("Cannot open saved game");
 	return (false);
@@ -573,67 +573,67 @@ int restore_game(void)
     else if (strcmp(buf, SAVECOOKIE) != 0)
 	return false;
     i = fread(buf, 1, sizeof(char), f);	/* skip trailing nul after cookie */ 
-    rbuf (map);
-    rbuf (comp_map);
-    rbuf (user_map);
-    rbuf (city);
-    rbuf (object);
-    rbuf (user_obj);
-    rbuf (comp_obj);
-    rval (free_list);
-    rval (date);
-    rval (automove);
-    rval (resigned);
-    rval (debug);
-    rval (win);
-    rval (save_movie);
-    rval (user_score);
-    rval (comp_score);
+    rbuf (game.real_map);
+    rbuf (game.comp_map);
+    rbuf (game.user_map);
+    rbuf (game.city);
+    rbuf (game.object);
+    rbuf (game.user_obj);
+    rbuf (game.comp_obj);
+    rval (game.free_list);
+    rval (game.date);
+    rval (game.automove);
+    rval (game.resigned);
+    rval (game.debug);
+    rval (game.win);
+    rval (game.save_movie);
+    rval (game.user_score);
+    rval (game.comp_score);
 
     /* Our pointers may not be valid because of source
        changes or other things.  We recreate them. */
 	
-    free_list = NULL; /* zero all ptrs */
+    game.free_list = NULL; /* zero all ptrs */
     for (i = 0; i < MAP_SIZE; i++) {
-	map[i].cityp = NULL;
-	map[i].objp = NULL;
+	game.real_map[i].cityp = NULL;
+	game.real_map[i].objp = NULL;
     }
     for (i = 0; i < LIST_SIZE; i++) {
-	object[i].loc_link.next = NULL;
-	object[i].loc_link.prev = NULL;
-	object[i].cargo_link.next = NULL;
-	object[i].cargo_link.prev = NULL;
-	object[i].piece_link.next = NULL;
-	object[i].piece_link.prev = NULL;
-	object[i].ship = NULL;
-	object[i].cargo = NULL;
+	game.object[i].loc_link.next = NULL;
+	game.object[i].loc_link.prev = NULL;
+	game.object[i].cargo_link.next = NULL;
+	game.object[i].cargo_link.prev = NULL;
+	game.object[i].piece_link.next = NULL;
+	game.object[i].piece_link.prev = NULL;
+	game.object[i].ship = NULL;
+	game.object[i].cargo = NULL;
     }
     for (i = 0; i < NUM_OBJECTS; i++) {
-	comp_obj[i] = NULL;
-	user_obj[i] = NULL;
+	game.comp_obj[i] = NULL;
+	game.user_obj[i] = NULL;
     }
-    /* put cities on map */
+    /* put cities on game.real_map */
     for (i = 0; i < NUM_CITY; i++)
-	map[city[i].loc].cityp = &(city[i]);
+	game.real_map[game.city[i].loc].cityp = &(game.city[i]);
 	
     /* put pieces in free list or on map and in object lists */
     for (i = 0; i < LIST_SIZE; i++) {
-	obj = &(object[i]);
-	if (object[i].owner == UNOWNED || object[i].hits == 0) {
-	    LINK (free_list, obj, piece_link);
+	obj = &(game.object[i]);
+	if (game.object[i].owner == UNOWNED || game.object[i].hits == 0) {
+	    LINK (game.free_list, obj, piece_link);
 	}
 	else {
-	    list = LIST (object[i].owner);
-	    LINK (list[object[i].type], obj, piece_link);
-	    LINK (map[object[i].loc].objp, obj, loc_link);
+	    list = LIST (game.object[i].owner);
+	    LINK (list[game.object[i].type], obj, piece_link);
+	    LINK (game.real_map[game.object[i].loc].objp, obj, loc_link);
 	}
     }
 	
     /* Embark armies and fighters. */
-    read_embark (user_obj[TRANSPORT], ARMY);
-    read_embark (user_obj[CARRIER], FIGHTER);
-    read_embark (comp_obj[TRANSPORT], ARMY);
-    read_embark (comp_obj[CARRIER], FIGHTER);
+    read_embark (game.user_obj[TRANSPORT], ARMY);
+    read_embark (game.user_obj[CARRIER], FIGHTER);
+    read_embark (game.comp_obj[TRANSPORT], ARMY);
+    read_embark (game.comp_obj[CARRIER], FIGHTER);
 	
     (void) fclose (f);
     kill_display (); /* what we had is no longer good */
@@ -658,7 +658,7 @@ void read_embark(piece_info_t *list, int piece_type)
 	int count = ship->count; /* get # of pieces we need */
 	if (count < 0) inconsistent ();
 	ship->count = 0; /* nothing on board yet */
-	for (obj = map[ship->loc].objp; obj && count;
+	for (obj = game.real_map[ship->loc].objp; obj && count;
 	     obj = obj->loc_link.next) {
 	    if (obj->ship == NULL && obj->type == piece_type) {
 		embark (ship, obj);
@@ -740,11 +740,11 @@ save_movie_screen(void)
     }
 
     for (i = 0; i < MAP_SIZE; i++) {
-	if (map[i].cityp) mapbuf[i] = city_char[map[i].cityp->owner];
+	if (game.real_map[i].cityp) mapbuf[i] = city_char[game.real_map[i].cityp->owner];
 	else {
 	    p = find_obj_at_loc (i);
 			
-	    if (!p) mapbuf[i] = map[i].contents;
+	    if (!p) mapbuf[i] = game.real_map[i].contents;
 	    else if (p->owner == USER)
 		mapbuf[i] = piece_attr[p->type].sname;
 	    else mapbuf[i] = tolower (piece_attr[p->type].sname);
@@ -784,8 +784,8 @@ replay_movie(void)
 		
 	stat_display (mapbuf, round);
 		
-	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
-	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
+	row_inc = (MAP_HEIGHT + game.lines - NUMTOPS - 1) / (game.lines - NUMTOPS);
+	col_inc = (MAP_WIDTH + game.cols - 1) / (game.cols - 1);
 	
 	for (r = 0; r < MAP_HEIGHT; r += row_inc)
 	    for (c = 0; c < MAP_WIDTH; c += col_inc)

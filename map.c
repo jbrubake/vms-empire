@@ -8,8 +8,8 @@
 /*
 map.c
 
-This file contains routines for playing around with view_maps,
-real_maps, path_maps, and cont_maps.
+This file contains routines for playing around with view maps,
+real maps, path_maps, and cont_maps.
 */
 
 #include <string.h>
@@ -90,7 +90,7 @@ vmap_mark_up_cont(int *cont_map, view_map_t *vmap, loc_t loc, char bad_terrain)
 			    this_terrain = MAP_LAND;
 			else if (vmap[new_loc].contents == MAP_SEA)
 			    this_terrain = MAP_SEA;
-			else this_terrain = map[new_loc].contents;
+			else this_terrain = game.real_map[new_loc].contents;
 				
 			if (this_terrain != bad_terrain) { /* on continent? */
 			    cont_map[new_loc] = 1;
@@ -134,9 +134,9 @@ rmap_mark_up_cont(int *cont_map, loc_t loc, char bad_terrain)
     int i;
     loc_t new_loc;
 	
-    if (!map[loc].on_board) return; /* off board */
+    if (!game.real_map[loc].on_board) return; /* off board */
     if (cont_map[loc]) return; /* already marked */
-    if (map[loc].contents == bad_terrain) return; /* off continent */
+    if (game.real_map[loc].contents == bad_terrain) return; /* off continent */
 	
     cont_map[loc] = 1; /* on continent */
 
@@ -188,8 +188,8 @@ vmap_cont_scan(int *cont_map, view_map_t *vmap)
 	    case MAP_LAND: break;
 	    case MAP_SEA: break;
 	    default: /* check for city underneath */
-		if (map[i].contents == MAP_CITY) {
-		    switch (map[i].cityp->owner) {
+		if (game.real_map[i].contents == MAP_CITY) {
+		    switch (game.real_map[i].cityp->owner) {
 			COUNT (USER, counts.user_cities);
 			COUNT (COMP, counts.comp_cities);
 			COUNT (UNOWNED, counts.unowned_cities);
@@ -217,7 +217,7 @@ rmap_cont_scan(int *cont_map)
     for (i = 0; i < MAP_SIZE; i++) {
 	if (cont_map[i]) { /* cell on continent? */
 	    counts.size += 1;
-	    if (map[i].contents == MAP_CITY)
+	    if (game.real_map[i].contents == MAP_CITY)
 		counts.unowned_cities += 1;
 	}
     }
@@ -292,7 +292,7 @@ vmap_find_xobj(path_map_t path_map[], view_map_t *vmap,
 	expand_perimeter (path_map, vmap, move_info, from, expand,
 			  cur_cost, 1, 1, to, to);
 		
-	if (trace_pmap)
+	if (game.trace_pmap)
 	    print_pzoom ("After xobj loop:", path_map, vmap);
 
 	cur_cost += 1;
@@ -377,7 +377,7 @@ vmap_find_lwobj(path_map_t path_map[], view_map_t *vmap,
 	expand_perimeter (path_map, vmap, move_info, new_water,
 			  T_WATER, cur_cost+1, 1, 1, cur_water, NULL);
 				  
-	if (trace_pmap)
+	if (game.trace_pmap)
 	    print_pzoom ("After lwobj loop:", path_map, vmap);
 		
 	cur_cost += 2;
@@ -458,7 +458,7 @@ vmap_find_wlobj(path_map_t path_map[], view_map_t *vmap,
 	expand_perimeter (path_map, vmap, move_info, new_water,
 			  T_WATER, cur_cost+1, 1, 1, cur_water, NULL);
 				  
-	if (trace_pmap)
+	if (game.trace_pmap)
 	    print_pzoom ("After wlobj loop:", path_map, vmap);
 		
 	cur_cost += 2;
@@ -528,7 +528,7 @@ expand_perimeter(path_map_t *pmap, view_map_t *vmap, move_info_t *move_info,
 		  perimeter_t *curp, 
 		  int type, int cur_cost, int inc_wcost, int inc_lcost, 
 		  perimeter_t *waterp, perimeter_t *landp)
-/* pmap = path map to update */
+/* pmap = path map to up1date */
 /* move_info = objectives and weights */
 /* curp = perimeter to expand */
 /* type = type of terrain to expand */
@@ -640,11 +640,11 @@ terrain_type(path_map_t *pmap, view_map_t *vmap, move_info_t *move_info,
     if (vmap[to_loc].contents == '%') return T_UNKNOWN; /* magic objective */
     if (vmap[to_loc].contents == ' ') return pmap[from_loc].terrain;
 	
-    switch (map[to_loc].contents) {
+    switch (game.real_map[to_loc].contents) {
     case MAP_SEA: return T_WATER;
     case MAP_LAND: return T_LAND;
     case MAP_CITY:
-	if (map[to_loc].cityp->owner == move_info->city_owner)
+	if (game.real_map[to_loc].cityp->owner == move_info->city_owner)
 	    return T_WATER;
 	else
 	    return T_UNKNOWN; /* cannot cross */
@@ -708,7 +708,7 @@ vmap_prune_explore_locs(view_map_t *vmap)
 	    FOR_ADJ (loc, new_loc, i) {
 		if (new_loc < 0 || new_loc >= MAP_SIZE); /* ignore off map */
 		else if (vmap[new_loc].contents == ' '); /* ignore adjacent unexplored */
-		else if (map[new_loc].contents != MAP_SEA)
+		else if (game.real_map[new_loc].contents != MAP_SEA)
 		    pmap[loc].cost += 1; /* count land */
 		else pmap[loc].inc_cost += 1; /* count water */
 	    }
@@ -719,7 +719,7 @@ vmap_prune_explore_locs(view_map_t *vmap)
 	}
     }
 				
-    if (print_vmap == 'I')
+    if (game.print_vmap == 'I')
 	print_xzoom (vmap);
 		
     for (;;) { /* do high probability predictions */
@@ -751,7 +751,7 @@ vmap_prune_explore_locs(view_map_t *vmap)
 	SWAP (from, to);
     }
 	
-    if (print_vmap == 'I')
+    if (game.print_vmap == 'I')
 	print_xzoom (vmap);
 		
     /* one pass for medium probability predictions */
@@ -772,13 +772,13 @@ vmap_prune_explore_locs(view_map_t *vmap)
     }
     SWAP (from, to);
 
-    if (print_vmap == 'I') print_xzoom (vmap);
+    if (game.print_vmap == 'I') print_xzoom (vmap);
 		
     /* multiple low probability passes */
     for (;;) {
 	/* return if very little left to explore */
 	if (from->len + explored >= MAP_SIZE - MAP_HEIGHT) {
-	    if (print_vmap == 'I') print_xzoom (vmap);
+	    if (game.print_vmap == 'I') print_xzoom (vmap);
 	    return;
 	}
 	to->len = 0;
@@ -803,7 +803,7 @@ vmap_prune_explore_locs(view_map_t *vmap)
 	if (copied == from->len) break; /* nothing expanded */
 	SWAP (from, to);
     }
-    if (print_vmap == 'I') print_xzoom (vmap);
+    if (game.print_vmap == 'I') print_xzoom (vmap);
 }
 
 /*
@@ -1007,7 +1007,7 @@ vmap_find_dir(path_map_t path_map[], view_map_t *vmap,
     int path_count, bestpath;
     char *p;
 	
-    if (trace_pmap)
+    if (game.trace_pmap)
 	print_pzoom ("Before vmap_find_dir:", path_map, vmap);
 		
     bestcount = -INFINITY; /* no best yet */
@@ -1091,7 +1091,7 @@ rmap_shore(loc_t loc)
     loc_t i, j;
 
     FOR_ADJ_ON (loc, j, i)
-	if (map[j].contents == MAP_SEA)
+	if (game.real_map[j].contents == MAP_SEA)
 	    return (true);
 
     return (false);
@@ -1105,7 +1105,7 @@ vmap_shore(view_map_t *vmap, loc_t loc)
     FOR_ADJ_ON (loc, j, i)
 	if (vmap[j].contents != ' ' &&
 	    vmap[j].contents != MAP_LAND &&
-	    map[j].contents == MAP_SEA)
+	    game.real_map[j].contents == MAP_SEA)
 	    return (true);
 
     return (false);
@@ -1121,12 +1121,12 @@ vmap_at_sea(view_map_t *vmap, loc_t loc)
 {
     loc_t i, j;
 
-    if (map[loc].contents != MAP_SEA)
+    if (game.real_map[loc].contents != MAP_SEA)
 	return (false);
     FOR_ADJ_ON (loc, j, i)
 	if (vmap[j].contents == ' '
 	    || vmap[j].contents == MAP_LAND
-	    || map[j].contents != MAP_SEA)
+	    || game.real_map[j].contents != MAP_SEA)
 	    return (false);
 
     return (true);
@@ -1137,10 +1137,10 @@ rmap_at_sea (loc_t loc)
 {
     loc_t i, j;
 
-    if (map[loc].contents != MAP_SEA)
+    if (game.real_map[loc].contents != MAP_SEA)
 	return (false);
     FOR_ADJ_ON (loc, j, i) {
-	if (map[j].contents != MAP_SEA)
+	if (game.real_map[j].contents != MAP_SEA)
 	    return (false);
     }
     return (true);

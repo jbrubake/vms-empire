@@ -36,7 +36,7 @@ edit(loc_t edit_cursor)
 	
     path_start = -1; /* not building a path yet */
 	
-    showprod = false;
+    game.showprod = false;
     comment ("Edit mode...");
 
     for (;;) { /* until user gives command to leave */
@@ -61,7 +61,7 @@ edit(loc_t edit_cursor)
 	    e_stasis (edit_cursor);
 	    break;
 	case 'J': /* Redraw map showing city production */
-        showprod = true;
+        game.showprod = true;
         sector_change (); // Force redraw */
 	    break;
 	case 'K': /* wake up anything and everything */
@@ -78,8 +78,8 @@ edit(loc_t edit_cursor)
 	    e_end (&path_start, edit_cursor, path_type);
 	    break;
 	case 'O': /* leave edit mode */
-        if (showprod) {
-            showprod = false;
+        if (game.showprod) {
+            game.showprod = false;
             sector_change (); // Force redraw */
         }
 	    e_leave ();
@@ -223,7 +223,7 @@ Put a ship in fill mode.
 void
 e_fill(loc_t loc)
 {
-    if (user_map[loc].contents == 'T' || user_map[loc].contents == 'C')
+    if (game.user_map[loc].contents == 'T' || game.user_map[loc].contents == 'C')
 	e_set_func (loc, FILL);
     else huh ();
 }
@@ -259,7 +259,7 @@ Set a fighter to land.
 void
 e_land(loc_t loc)
 {
-    if (user_map[loc].contents == 'F')
+    if (game.user_map[loc].contents == 'F')
 	e_set_func (loc, LAND);
     else huh ();
 }
@@ -271,7 +271,7 @@ Set an army's function to TRANSPORT.
 void
 e_transport(loc_t loc)
 {
-    if (user_map[loc].contents == 'A')
+    if (game.user_map[loc].contents == 'A')
 	e_set_func (loc, WFTRANSPORT);
     else huh ();
 }
@@ -283,7 +283,7 @@ Set an army's function to ATTACK.
 void
 e_attack(loc_t loc)
 {
-    if (user_map[loc].contents == 'A')
+    if (game.user_map[loc].contents == 'A')
 	e_set_func (loc, ARMYATTACK);
     else huh ();
 }
@@ -303,7 +303,7 @@ Set a ship's function to REPAIR.
 void
 e_repair(loc_t loc)
 {
-    if (strchr ("PDSTBC", user_map[loc].contents))
+    if (strchr ("PDSTBC", game.user_map[loc].contents))
 	e_set_func (loc, REPAIR);
     else huh ();
 }
@@ -325,9 +325,9 @@ static char dirs[] = "WEDCXZAQ";
 void
 e_stasis(loc_t loc)
 {
-    if (!isupper (user_map[loc].contents))
+    if (!isupper (game.user_map[loc].contents))
 	huh (); /* no object here */
-    else if (user_map[loc].contents == 'X')
+    else if (game.user_map[loc].contents == 'X')
 	huh ();
     else {
 	char e = get_chx(); /* get a direction */
@@ -371,7 +371,7 @@ e_wake(loc_t loc)
 	for (i = 0; i < NUM_OBJECTS; i++)
 	    cityp->func[i] = NOFUNC;
     }
-    for (obj = map[loc].objp; obj != NULL; obj = obj->loc_link.next)
+    for (obj = game.real_map[loc].objp; obj != NULL; obj = obj->loc_link.next)
 	obj->func = NOFUNC;
 }
 
@@ -446,8 +446,8 @@ Beginning of move to location.
 void
 e_move(loc_t *path_start, loc_t loc)
 {
-    if (!isupper(user_map[loc].contents)) huh (); /* nothing there? */
-    else if (user_map[loc].contents == 'X') huh (); /* enemy city? */
+    if (!isupper(game.user_map[loc].contents)) huh (); /* nothing there? */
+    else if (game.user_map[loc].contents == 'X') huh (); /* enemy city? */
     else *path_start = loc;
 }
 
@@ -478,7 +478,7 @@ Put a piece to sleep.
 void
 e_sleep(loc_t loc)
 {
-    if (user_map[loc].contents == 'O') huh (); /* can't sleep a city */
+    if (game.user_map[loc].contents == 'O') huh (); /* can't sleep a city */
     else e_set_func (loc, SENTRY);
 }
 
@@ -493,15 +493,15 @@ e_info(loc_t edit_cursor)
 
     char ab;
 
-    ab = user_map[edit_cursor].contents;
+    ab = game.user_map[edit_cursor].contents;
 
     if (ab == 'O')
 	e_city_info (edit_cursor);
-    else if (ab == 'X' && debug)
+    else if (ab == 'X' && game.debug)
 	e_city_info (edit_cursor);
     else if ((ab >= 'A') && (ab <= 'T'))
 	e_piece_info (edit_cursor, ab);
-    else if ((ab >= 'a') && (ab <= 't') && (debug))
+    else if ((ab >= 'a') && (ab <= 't') && (game.debug))
 	e_piece_info (edit_cursor, ab);
     else
 	huh ();
@@ -544,23 +544,23 @@ e_city_info(loc_t edit_cursor)
     error (""); /* clear line */
 
     f = 0; /* no fighters counted yet */
-    for (obj = map[edit_cursor].objp; obj != NULL;
+    for (obj = game.real_map[edit_cursor].objp; obj != NULL;
 	 obj = obj->loc_link.next)
 	if (obj->type == FIGHTER) f++;
 
     s = 0; /* no ships counted yet */
-    for (obj = map[edit_cursor].objp; obj != NULL;
+    for (obj = game.real_map[edit_cursor].objp; obj != NULL;
 	 obj = obj->loc_link.next)
 	if (obj->type >= DESTROYER) s++;
 
     if (f == 1 && s == 1) 
-	(void) sprintf (jnkbuf, "1 fighter landed, 1 ship docked");
+	(void) sprintf (game.jnkbuf, "1 fighter landed, 1 ship docked");
     else if (f == 1)
-	(void) sprintf (jnkbuf, "1 fighter landed, %d ships docked", s);
+	(void) sprintf (game.jnkbuf, "1 fighter landed, %d ships docked", s);
     else if (s == 1)
-	(void) sprintf (jnkbuf, "%d fighters landed, 1 ship docked", f);
+	(void) sprintf (game.jnkbuf, "%d fighters landed, 1 ship docked", f);
     else
-	(void) sprintf (jnkbuf, "%d fighters landed, %d ships docked", f, s);
+	(void) sprintf (game.jnkbuf, "%d fighters landed, %d ships docked", f, s);
 
     cityp = find_city (edit_cursor);
     ASSERT (cityp != NULL);
@@ -582,9 +582,9 @@ e_city_info(loc_t edit_cursor)
 		    "City at location %d will complete %s on round %ld",
 		    loc_disp(cityp->loc),
 		    piece_attr[(int)cityp->prod].article,
-		    date + piece_attr[(int)cityp->prod].build_time - cityp->work);
+		    game.date + piece_attr[(int)cityp->prod].build_time - cityp->work);
 
-    info (junk_buf2, jnkbuf, func_buf);
+    info (junk_buf2, game.jnkbuf, func_buf);
 }
 
 /*

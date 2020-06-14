@@ -34,11 +34,11 @@ find_nearest_city(loc_t loc, int owner, loc_t *city_loc)
     best_loc = loc;
 	
     for (i = 0; i < NUM_CITY; i++) 
-	if (city[i].owner == owner) {
-	    new_dist = dist (loc, city[i].loc);
+	if (game.city[i].owner == owner) {
+	    new_dist = dist (loc, game.city[i].loc);
 	    if (new_dist < best_dist) {
 		best_dist = new_dist;
-		best_loc = city[i].loc;
+		best_loc = game.city[i].loc;
 	    }
 	}
     *city_loc = best_loc;
@@ -51,7 +51,7 @@ Given the location of a city, return the index of that city.
 
 city_info_t *find_city(loc_t loc)
 {
-    return (map[loc].cityp);
+    return (game.real_map[loc].cityp);
 }
 
 /*
@@ -90,7 +90,7 @@ piece_info_t *find_obj(int type, loc_t loc)
 {
     piece_info_t *p;
 
-    for (p = map[loc].objp; p != NULL; p = p->loc_link.next)
+    for (p = game.real_map[loc].objp; p != NULL; p = p->loc_link.next)
 	if (p->type == type) return (p);
 
     return (NULL);
@@ -104,7 +104,7 @@ piece_info_t *find_nfull(int type, loc_t loc)
 {
     piece_info_t *p;
 
-    for (p = map[loc].objp; p != NULL; p = p->loc_link.next)
+    for (p = game.real_map[loc].objp; p != NULL; p = p->loc_link.next)
 	if (p->type == type) {
 	    if (obj_capacity (p) > p->count) return (p);
 	}
@@ -139,7 +139,7 @@ find_obj_at_loc(loc_t loc)
 {
     piece_info_t *p, *best;
 	
-    best = map[loc].objp;
+    best = game.real_map[loc].objp;
     if (best == NULL) return (NULL); /* nothing here */
 
     for (p = best->loc_link.next; p != NULL; p = p->loc_link.next)
@@ -200,10 +200,10 @@ void kill_obj(piece_info_t *obj, loc_t loc)
 void kill_one(piece_info_t **list, piece_info_t *obj)
 {
     UNLINK (list[obj->type], obj, piece_link); /* unlink obj from all lists */
-    UNLINK (map[obj->loc].objp, obj, loc_link);
+    UNLINK (game.real_map[obj->loc].objp, obj, loc_link);
     disembark (obj);
 
-    LINK (free_list, obj, piece_link); /* return object to free list */
+    LINK (game.free_list, obj, piece_link); /* return object to free list */
     obj->hits = 0; /* let all know this object is dead */
     obj->moved = piece_attr[obj->type].speed; /* object has moved */
 }
@@ -220,7 +220,7 @@ void kill_city(city_info_t *cityp)
     piece_info_t **list;
 	
     /* change ownership of hardware at this location; but not satellites */
-    for (p = map[cityp->loc].objp; p; p = next_p) {
+    for (p = game.real_map[cityp->loc].objp; p; p = next_p) {
 	next_p = p->loc_link.next;
 		
 	if (p->type == ARMY) kill_obj (p, cityp->loc);
@@ -271,11 +271,11 @@ produce(city_info_t *cityp)
 
     cityp->work -= piece_attr[(int)cityp->prod].build_time;
 	
-    ASSERT (free_list); /* can we allocate? */
-    new = free_list;
-    UNLINK (free_list, new, piece_link);
+    ASSERT (game.free_list); /* can we allocate? */
+    new = game.free_list;
+    UNLINK (game.free_list, new, piece_link);
     LINK (list[(int)cityp->prod], new, piece_link);
-    LINK (map[cityp->loc].objp, new, loc_link);
+    LINK (game.real_map[cityp->loc].objp, new, loc_link);
     new->cargo_link.next = NULL;
     new->cargo_link.prev = NULL;
 	
@@ -319,19 +319,19 @@ void move_obj(piece_info_t *obj, loc_t new_loc)
 	
     disembark (obj); /* remove object from any ship */
 	
-    UNLINK (map[old_loc].objp, obj, loc_link);
-    LINK (map[new_loc].objp, obj, loc_link);
+    UNLINK (game.real_map[old_loc].objp, obj, loc_link);
+    LINK (game.real_map[new_loc].objp, obj, loc_link);
 
     /* move any objects contained in object */
     for (p = obj->cargo; p != NULL; p = p->cargo_link.next) {
 	p->loc = new_loc;
-	UNLINK (map[old_loc].objp, p, loc_link);
-	LINK (map[new_loc].objp, p, loc_link);
+	UNLINK (game.real_map[old_loc].objp, p, loc_link);
+	LINK (game.real_map[new_loc].objp, p, loc_link);
     }
 	
     switch (obj->type) { /* board new ship */
     case FIGHTER:
-	if (map[obj->loc].cityp == NULL) { /* not in a city? */
+	if (game.real_map[obj->loc].cityp == NULL) { /* not in a city? */
 	    p = find_nfull (CARRIER, obj->loc);
 	    if (p != NULL) embark (p, obj);
 	}
@@ -363,10 +363,10 @@ bounce(loc_t loc, loc_t dir1, loc_t dir2, loc_t dir3)
     int new_loc;
 
     new_loc = loc + dir_offset[MOVE_DIR (dir1)];
-    if (map[new_loc].on_board) return dir1;
+    if (game.real_map[new_loc].on_board) return dir1;
 
     new_loc = loc + dir_offset[MOVE_DIR (dir2)];
-    if (map[new_loc].on_board) return dir2;
+    if (game.real_map[new_loc].on_board) return dir2;
 
     return dir3;
 }
@@ -382,7 +382,7 @@ move_sat1(piece_info_t *obj)
     dir = MOVE_DIR(obj->func);
     new_loc = obj->loc + dir_offset[dir];
 
-    if (!map[new_loc].on_board) {
+    if (!game.real_map[new_loc].on_board) {
 	switch (obj->func) {
 	case MOVE_NE:
 	    obj->func = bounce (obj->loc, MOVE_NW, MOVE_SE, MOVE_SW);
@@ -438,7 +438,7 @@ bool good_loc(piece_info_t *obj, loc_t loc)
     view_map_t *vmap;
     piece_info_t *p;
 	
-    if (!map[loc].on_board) return (false);
+    if (!game.real_map[loc].on_board) return (false);
 
     vmap = MAP (obj->owner);
 
@@ -452,7 +452,7 @@ bool good_loc(piece_info_t *obj, loc_t loc)
     }
 
     /* ships and fighters can move into cities */
-    if (map[loc].cityp && map[loc].cityp->owner == obj->owner)
+    if (game.real_map[loc].cityp && game.real_map[loc].cityp->owner == obj->owner)
 	return (true);
 
     /* fighters can move onto unfull carriers */
@@ -516,7 +516,7 @@ scan(view_map_t vmap[], loc_t loc)
 #ifdef DEBUG
     check (); /* perform a consistency check */
 #endif
-    ASSERT (map[loc].on_board); /* passed loc must be on board */
+    ASSERT (game.real_map[loc].on_board); /* passed loc must be on board */
 
     for (i = 0; i < 8; i++) { /* for each surrounding cell */
 	loc_t xloc = loc + dir_offset[i];
@@ -534,11 +534,11 @@ scan_sat(view_map_t vmap[], loc_t loc)
 {
 	int i;
 	
-	ASSERT (map[loc].on_board);
+	ASSERT (game.real_map[loc].on_board);
 
 	for (i = 0; i < 8; i++) { /* for each surrounding cell */
 		loc_t xloc = loc + 2 * dir_offset[i];
-		if (xloc >= 0 && xloc < MAP_SIZE && map[xloc].on_board)
+		if (xloc >= 0 && xloc < MAP_SIZE && game.real_map[xloc].on_board)
 			scan (vmap, xloc);
 	}
 	scan (vmap, loc);
@@ -555,25 +555,26 @@ char city_char[] = {MAP_CITY, 'O', 'X'};
 void
 update(view_map_t vmap[], loc_t loc)
 {
-    vmap[loc].seen = date;
+    vmap[loc].seen = game.date;
 	
-    if (map[loc].cityp) /* is there a city here? */
-	vmap[loc].contents = city_char[map[loc].cityp->owner];
+    if (game.real_map[loc].cityp) /* is there a city here? */
+	vmap[loc].contents = city_char
+	    [game.real_map[loc].cityp->owner];
 	
     else {
 	piece_info_t *p = find_obj_at_loc (loc);
 		
 	if (p == NULL) /* nothing here? */
-	    vmap[loc].contents = map[loc].contents;
+	    vmap[loc].contents = game.real_map[loc].contents;
 	else if (p->owner == USER)
 	    vmap[loc].contents = piece_attr[p->type].sname;
 	else
 	    vmap[loc].contents = tolower (piece_attr[p->type].sname);
     }
-    if (vmap == comp_map)
-	display_locx (COMP, comp_map, loc);
-    else if (vmap == user_map)
-	display_locx (USER, user_map, loc);
+    if (vmap == game.comp_map)
+	display_locx (COMP, game.comp_map, loc);
+    else if (vmap == game.user_map)
+	display_locx (USER, game.user_map, loc);
 }
 
 /*
@@ -585,7 +586,7 @@ asking until we get a valid answer.
 void
 set_prod(city_info_t *cityp)
 {
-    scan (user_map, cityp->loc);
+    scan (game.user_map, cityp->loc);
     display_loc_u (cityp->loc);
 
     for (;;) {

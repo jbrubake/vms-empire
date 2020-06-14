@@ -115,7 +115,7 @@ attack_obj(piece_info_t *att_obj, loc_t loc)
 void
 attack(piece_info_t *att_obj, loc_t loc)
 {
-    if (map[loc].contents == MAP_CITY) /* attacking a city? */
+    if (game.real_map[loc].contents == MAP_CITY) /* attacking a city? */
 	attack_city (att_obj, loc);
     else attack_obj (att_obj, loc); /* attacking a piece */
 }
@@ -148,7 +148,7 @@ describe(piece_info_t *win_obj, piece_info_t *lose_obj, loc_t loc)
     if (win_obj->owner != lose_obj->owner) {
 	if (win_obj->owner == USER) {
 	    int diff;
-	    user_score += piece_attr[lose_obj->type].build_time; 
+	    game.user_score += piece_attr[lose_obj->type].build_time; 
 	    ksend ("Enemy %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc)); //kermyt
 	    topmsg (1, "Enemy %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc));
 	    ksend ("Your %s has %d hits left\n",piece_attr[win_obj->type].name,win_obj->hits); //kermyt
@@ -167,7 +167,7 @@ describe(piece_info_t *win_obj, piece_info_t *lose_obj, loc_t loc)
 		}
 	}
 	else {
-	    comp_score += piece_attr[lose_obj->type].build_time;
+	    game.comp_score += piece_attr[lose_obj->type].build_time;
 	    ksend ("Your %s at %d destroyed.\n",piece_attr[lose_obj->type].name,loc_disp(loc)); //kermyt
 	    topmsg (3, "Your %s at %d destroyed.",piece_attr[lose_obj->type].name,loc_disp(loc));
 	}
