@@ -17,3 +17,16 @@ to modify this code.
 
 The ancestral code was by Chuck Simmons <chuck@amdahl.com>.  Since
 around 1990 it has been maintained by Eric S. Raymond <esr@thyrsus.com>
+
+Stay Synced with Upstream
+-------------------------
+
+After cloning this repo, add the upstream repository and create a branch to
+track upstream/master
+
+```sh
+$ git remote add upstream "https://gitlab.com/esr/vms-empire"
+$ git fetch upstream
+$ git branch upstream upstream/master
+```
+
