@@ -14,6 +14,8 @@ DEBUG = -O2
 #PROFILE = -p -DPROFILE
 PROFILE =
 
+PREFIX = $(DESTDIR)/usr/local
+
 LIBS = -lncurses
 
 # You shouldn't have to modify anything below this line.
@@ -92,22 +94,22 @@ cppcheck:
 	cppcheck --inline-suppr --suppress=unusedStructMember --suppress=unusedFunction  --template gcc --enable=all --force *.[ch]
 
 install: empire.6 uninstall
-	install -m 0755 -d $(DESTDIR)/usr/bin
-	install -m 0755 -d $(DESTDIR)/usr/share/man/man6
-	install -m 0755 -d $(DESTDIR)/usr/share/applications/
-	install -m 0755 -d $(DESTDIR)/usr/share/icons/hicolor/48x48/apps/
-	install -m 0755 -d $(DESTDIR)/usr/share/appdata
-	install -m 0755 vms-empire $(DESTDIR)/usr/bin/
-	install -m 0644 empire.6 $(DESTDIR)/usr/share/man/man6/vms-empire.6
-	install -m 0644 vms-empire.desktop $(DESTDIR)/usr/share/applications/
-	install -m 0644 vms-empire.png $(DESTDIR)/usr/share/icons/hicolor/48x48/apps/
-	install -m 0644 vms-empire.xml $(DESTDIR)/usr/share/appdata/
+	install -m 0755 -d $(PREFIX)/games
+	install -m 0755 -d $(PREFIX)/share/man/man6
+	install -m 0755 -d $(PREFIX)/share/applications/
+	install -m 0755 -d $(PREFIX)/share/icons/hicolor/48x48/apps/
+	install -m 0755 -d $(PREFIX)/share/vms-empire/
+	install -m 0755 vms-empire $(PREFIX)/games/
+	install -m 0644 empire.6 $(PREFIX)/share/man/man6/vms-empire.6
+	install -m 0644 vms-empire.desktop $(PREFIX)/share/applications/
+	install -m 0644 vms-empire.png $(PREFIX)/share/icons/hicolor/48x48/apps/
+	install -m 0644 vms-empire.xml $(PREFIX)/share/vms-empire/
 
 uninstall:
-	rm -f /usr/bin/vms-empire /usr/share/man/man6/vms-empire.6
-	rm -f /usr/share/applications/vms-empire.desktop
-	rm -f /usr/share/icons/hicolor/48x48/apps/vms-empire.png
-	rm -f /usr/share/appdata/vms-empire.xml
+	rm -f $(PREFIX)/games/vms-empire $(PREFIX)/share/man/man6/vms-empire.6
+	rm -f $(PREFIX)/share/applications/vms-empire.desktop
+	rm -f $(PREFIX)/share/icons/hicolor/48x48/apps/vms-empire.png
+	rm -f $(PREFIX)/share/vms-empire/vms-empire.xml
 
 clean:
 	rm -f *.o TAGS vms-empire
